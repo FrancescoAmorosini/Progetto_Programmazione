@@ -19,7 +19,6 @@ public:
     Face face;
     float spellSpeed = 3.5;
     int spellRange=0;
-    int static maxSpellRange;
 
     sf::Clock static projectileLife;
     sf::Time static projectileLifeSpan;

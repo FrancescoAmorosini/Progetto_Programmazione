@@ -4,7 +4,7 @@
 
 #include "GameLevel.h"
 
-GameLevel::GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> chests,std::vector<Weapon*> weapons ,
+GameLevel::GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> chests,
                      std::vector<Orb*> orbs, std::vector<Enemy*> enemies, std::vector<Heart*> hearts)
         : map(map),hero(hero), chests(chests),orbs(orbs), enemies(enemies), hearts(hearts){
 
@@ -89,6 +89,7 @@ void GameLevel::updateLevel() {
         hero->walkingCounter = 0;
     checkOrbsCollisions();      //picks up orbs
     checkHeartsCollisions();   //picks up hearts
+    checkWeaponsCollisions();  // picks up weapons
     checkEnemiesCollisions(); //gets damaged
 
     //Manages enemies
@@ -110,7 +111,7 @@ void GameLevel::updateLevel() {
         if (checkChestCollision(spells[i]->rect, spells[i]->face, &chestIndex) ||         //checks colllisions with chests
             checkWallCollision(spells[i]->rect, spells[i]->face, &wallIndex))          //checks collisions with walls
             spells.erase(spells.begin() + i);
-        if (spells[i]->spellRange > Spell::maxSpellRange)                           //erases spells far enough
+        if (spells[i]->projectileLife.getElapsedTime().asSeconds() > 1)                           //erases spells far enough
             spells.erase(spells.begin() + i);
     }
 }
@@ -150,6 +151,18 @@ void GameLevel::checkHeartsCollisions(){
                 break;
             }
     }
+
+void GameLevel::checkWeaponsCollisions() {
+    for (int i = 0; i < weapons.size(); i++) {
+        if (hero->rect.getGlobalBounds().intersects(weapons[i]->rect.getGlobalBounds()))
+        {
+            hero->setWeapon(weapons[i]);
+            weapons.erase(weapons.begin() + i);
+            break;
+        }
+    }
+}
+
 void GameLevel::checkEnemiesCollisions() {
     for (int i = 0; i < enemies.size(); i++) {
         if (hero->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds()) &&
@@ -263,15 +276,12 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
 }
 
 WeaponType GameLevel::matchRole() {
-    switch(hero->getRole()){
-        case CharacterClass::Thief:
-            return WeaponType::Dagger;
-        case CharacterClass::Mage:
-            return WeaponType::Staff;
-        case CharacterClass::Knight:
-            return WeaponType::Sword;
-        default:
-            break;
-    }
+    if(hero->getRole()==CharacterClass::Thief)
+        return WeaponType::Dagger;
+    else if (hero->getRole()==CharacterClass::Mage)
+        return WeaponType::Staff;
+    else
+        return WeaponType::Sword;
+
 }
 

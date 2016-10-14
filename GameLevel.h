@@ -17,7 +17,7 @@
 
 class GameLevel {
 public:
-    GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> chests,std::vector<Weapon*> weapons,
+    GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> chests,
               std::vector<Orb*> orbs, std::vector<Enemy*> enemies, std::vector<Heart*> hearts);
     ~GameLevel(){
         chests.clear();
@@ -34,6 +34,7 @@ public:
     void checkOrbsCollisions();
     void checkHeartsCollisions();
     void checkEnemiesCollisions();
+    void checkWeaponsCollisions();
     bool checkChestCollision(sf::RectangleShape rect, Face face, int *index);
     bool checkWallCollision(sf::RectangleShape rect, Face face, int* index);
     bool checkCloseEnemy(sf::RectangleShape rect, Face face, int* index);

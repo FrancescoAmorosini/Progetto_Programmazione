@@ -7,8 +7,16 @@
 
 int main() {
 
+    //Winwow
     sf::RenderWindow window(sf::VideoMode(1240, 720), "Progetto Programmazione");
     window.setFramerateLimit(60);
+
+    // View
+    sf::View view1(sf::FloatRect(200, 200, 300, 200));
+    view1.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+    view1.setCenter(sf::Vector2f(view1.getSize().x/2, view1.getSize().y/2));
+    window.setView(view1);
+
 
     GameLevel* level= LevelCreator::createExample();
 
@@ -92,8 +100,12 @@ int main() {
         //LEVEL UPDATE
         level->updateLevel();
 
+        // Player View
+        window.setView(view1);
+        view1.setCenter(level->hero->rect.getPosition());
+
         //Draws Orbs
-        for(int i=0; i< level->orbs.size(); i++){
+        for(int i=0; i< level->orbs.size(); i++)
             window.draw(level->orbs[i]->sprite);
 
         //Draws Spells
@@ -103,7 +115,7 @@ int main() {
         }
         //Draws Hero
         window.draw(level->hero->sprite);
-        }
+
         //Draws Enemies
         for(int i=0; i< level->enemies.size(); i++){
             window.draw(level->enemies[i]->sprite);
@@ -131,4 +143,4 @@ int main() {
 }
 
 
-//TODO: scalette, sprite delle armi, attacco fisico, AI, Googletest, textureLoader
+//TODO: scalette, AI, textureLoader

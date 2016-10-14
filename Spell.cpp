@@ -52,6 +52,5 @@ void Spell::updateSpell() {
 
 }
 
-int Spell::maxSpellRange=240;
 sf::Clock Spell::projectileLife;
 sf::Time Spell::projectileLifeSpan= sf::seconds(0.4);

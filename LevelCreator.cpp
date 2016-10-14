@@ -5,9 +5,9 @@
 #include "LevelCreator.h"
 
 
-GameLevel* LevelCreator::loadLevel(Map* map, PlayableCharacter *hero, std::vector<Chest *> chests, std::vector<Weapon *> weapons,
+GameLevel* LevelCreator::loadLevel(Map* map, PlayableCharacter *hero, std::vector<Chest *> chests,
                                          std::vector<Orb *> orbs, std::vector<Enemy *> enemies, std::vector<Heart *> hearts) {
-     GameLevel* level= new GameLevel (map, hero,chests,weapons,orbs, enemies, hearts);
+     GameLevel* level= new GameLevel (map, hero,chests,orbs, enemies, hearts);
     return level;
 }
 
@@ -15,7 +15,7 @@ GameLevel* LevelCreator::createExample() {
     Map* map= new Map(100,100);
     Weapon* w= new Weapon(0,0,15,WeaponType::Staff);
     Weapon* ww= new Weapon(0,0,30,WeaponType::Staff, true, true);
-    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Thief,"Giorgio", w);
+    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"Giorgio", w);
     Enemy* enemy= new Enemy (100,550,CharacterClass::BigBaldGuy,100,10,3);
     Enemy* enemy2= new Enemy (400,400,CharacterClass::BigBaldGuy,100,10,3);
 
@@ -46,8 +46,6 @@ GameLevel* LevelCreator::createExample() {
     chests.push_back(chest2);
     chests.push_back(chest3);
 
-    std::vector<Weapon*> weapons;
-
     std::vector<Orb*> orbs;
     orbs.push_back(orb1);
     orbs.push_back(orb2);
@@ -57,7 +55,7 @@ GameLevel* LevelCreator::createExample() {
 
 
 
-    return loadLevel(map, hero,chests,weapons,orbs, enemies, hearts);
+    return loadLevel(map, hero,chests,orbs, enemies, hearts);
 
 
 }
