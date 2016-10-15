@@ -32,7 +32,8 @@ public:
     const Orb* getInventory(int index) const throw(RangeException);
     void setInventory(Orb* o);
 
-    sf::Clock damageTimer;
+    sf::Clock damageRate;
+    sf::Clock hitRate;
 
 private:
     std::string name;

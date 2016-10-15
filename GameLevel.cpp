@@ -77,7 +77,7 @@ void GameLevel::updateLevel() {
             Spell::projectileLife.restart();
         } else {
             //PHYSICAL ATTACK IF NOT MAGE
-            if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex)) {
+            if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex) && hero->hitRate.getElapsedTime().asSeconds() > 0.5) {
                 hero->fight(enemies[enemyIndex]);
                 if (enemies[enemyIndex]->getHP() == 0) {
                     if (RNG::throwCoin(Enemy::dropChance))
@@ -170,9 +170,9 @@ void GameLevel::checkWeaponsCollisions() {
 void GameLevel::checkEnemiesCollisions() {
     for (int i = 0; i < enemies.size(); i++) {
         if (hero->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds()) &&
-            hero->damageTimer.getElapsedTime().asSeconds() > 0.8) {
+            hero->damageRate.getElapsedTime().asSeconds() > 0.8) {
             enemies[i]->fight(hero);
-            hero->damageTimer.restart();
+            hero->damageRate.restart();
         }
     }
 }
