@@ -20,12 +20,19 @@ int main() {
 
     GameLevel* level= LevelCreator::createExample();
 
+    sf::Font font;
+    if (!font.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
     sf::Texture Herotexture;
     if(!Herotexture.loadFromFile("hero.png"))
         return EXIT_FAILURE;
     level->hero->sprite.setTexture(Herotexture);
-    for(int i=0; i< level->enemies.size(); i++)
+    level->hero->text.setFont(font);
+    for(int i=0; i< level->enemies.size(); i++) {
         level->enemies[i]->sprite.setTexture(Herotexture);
+        level->enemies[i]->text.setFont(font);
+    }
 
     sf::Texture floor;
     if(!floor.loadFromFile("Floor.png"))
@@ -52,8 +59,10 @@ int main() {
     sf::Texture Chestexture;
     if(!Chestexture.loadFromFile("chest2.png"))
         return EXIT_FAILURE;
-    for(int i=0; i< level->chests.size(); i++)
+    for(int i=0; i< level->chests.size(); i++) {
         level->chests[i]->sprite.setTexture(Chestexture);
+        level->chests[i]->text.setFont(font);
+    }
 
     sf::Texture heartexture;
     if(!heartexture.loadFromFile("hearts.png"))
@@ -64,8 +73,6 @@ int main() {
     sf::Texture weapontexture;
     if(!weapontexture.loadFromFile("weapons-and-equipment.png"))
         return EXIT_FAILURE;
-    for(int i=0; i< level->weapons.size(); i++)
-        level->weapons[i]->sprite.setTexture(weapontexture);
 
 
     // Start the game loop
@@ -83,17 +90,16 @@ int main() {
                 window.close();
             }
         }
-
         // Clear screen
         window.clear();
 
         //Draws Map and Walls
-       for(int i=0; i<level->map->getHeight(); i++){
-           for(int j=0; j<level->map->getWidth(); j++){
-            level->map->getTile(i,j)->sprite.setPosition((32 * i),( 32 * j));
-           window.draw(level->map->getTile(i,j)->sprite);
+       for(int i=0; i<level->map->getHeight(); i++) {
+           for (int j = 0; j < level->map->getWidth(); j++) {
+               level->map->getTile(i, j)->sprite.setPosition((32 * i), (32 * j));
+               window.draw(level->map->getTile(i, j)->sprite);
            }
-        }
+       }
         for(int i=0; i< level->map->wallBuffer.size(); i++)
             window.draw(level->map->wallBuffer[i]->sprite);
 
@@ -115,14 +121,17 @@ int main() {
         }
         //Draws Hero
         window.draw(level->hero->sprite);
+        window.draw(level->hero->text);
 
         //Draws Enemies
         for(int i=0; i< level->enemies.size(); i++){
             window.draw(level->enemies[i]->sprite);
+            window.draw(level->enemies[i]->text);
         }
         //Draws Chests
         for(int i=0; i< level->chests.size(); i++){
             window.draw(level->chests[i]->sprite);
+            window.draw(level->chests[i]->text);
         }
         //Draws Hearts
         for(int i=0; i< level->hearts.size(); i++){
@@ -132,6 +141,8 @@ int main() {
         for(int i=0; i< level->weapons.size(); i++) {
             level->weapons[i]->sprite.setTexture(weapontexture);
             window.draw(level->weapons[i]->sprite);
+            level->weapons[i]->text.setFont(font);
+            window.draw(level->weapons[i]->text);
         }
 
         std::cout<< level->hero->getHP() << std::endl;

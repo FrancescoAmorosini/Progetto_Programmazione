@@ -25,6 +25,9 @@ public:
     Orb* getOrb() const;
     void setOrb(Orb *orb);
 
+    static sf::Clock objectTaken;
+    static sf::Time  delay;
+
 private:
     Weapon* weapon;
     Orb* orb;

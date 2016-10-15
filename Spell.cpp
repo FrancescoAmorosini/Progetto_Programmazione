@@ -49,7 +49,7 @@ void Spell::updateSpell() {
             break;
     }
     sprite.setPosition(rect.getPosition());
-
+    spellRange++;
 }
 
 sf::Clock Spell::projectileLife;

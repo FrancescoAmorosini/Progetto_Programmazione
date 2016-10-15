@@ -15,7 +15,7 @@ GameLevel* LevelCreator::createExample() {
     Map* map= new Map(100,100);
     Weapon* w= new Weapon(0,0,15,WeaponType::Staff);
     Weapon* ww= new Weapon(0,0,30,WeaponType::Staff, true, true);
-    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"Giorgio", w);
+    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"FierFranco", w);
     Enemy* enemy= new Enemy (100,550,CharacterClass::BigBaldGuy,100,10,3);
     Enemy* enemy2= new Enemy (400,400,CharacterClass::BigBaldGuy,100,10,3);
 
@@ -29,8 +29,9 @@ GameLevel* LevelCreator::createExample() {
     Orb* orb3= new Orb(250,25,Color::green);
     Orb* orb4= new Orb(50,250,Color::yellow);
     Orb* orb5= new Orb(100,100,Color::purple);
+    Orb* orb6= new Orb(0,0,Color::blue);
 
-    Chest* chest1=new Chest(450,300,ww);
+    Chest* chest1=new Chest(450,300,orb6);
     Chest* chest2= new Chest(200,560, ww);
     Chest* chest3= new Chest(200,520, ww);
 

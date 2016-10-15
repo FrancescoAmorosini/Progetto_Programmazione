@@ -14,7 +14,7 @@ void GameLevel::updateLevel() {
     int speed = hero->speedMovement;
     int chestIndex = 0;
     int wallIndex = 0;
-    int enemyIndex=0;
+    int enemyIndex = 0;
     //DASH
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && hero->getRole() == CharacterClass::Thief)
         speed = speed * 2;
@@ -60,8 +60,12 @@ void GameLevel::updateLevel() {
         if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable)
             map->wallBuffer.erase(map->wallBuffer.begin() + wallIndex);
             //OPENS CHEST
-        else if (checkChestCollision(hero->rect, hero->face, &chestIndex))
-            chests[chestIndex]->openChest(hero);
+        else if (checkChestCollision(hero->rect, hero->face, &chestIndex)) {
+            if (Chest::objectTaken.getElapsedTime() >= Chest::delay) {
+                chests[chestIndex]->openChest(hero);
+                Chest::objectTaken.restart();
+            }
+        }
             //SHOOTS FIREBALL IF MAGE
         else if (hero->getRole() == CharacterClass::Mage &&
                  Spell::projectileLife.getElapsedTime() >= Spell::projectileLifeSpan) {    //Avoids Spammed Spells
@@ -72,6 +76,7 @@ void GameLevel::updateLevel() {
             spells.push_back(spell);
             Spell::projectileLife.restart();
         } else {
+            //PHYSICAL ATTACK IF NOT MAGE
             if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex)) {
                 hero->fight(enemies[enemyIndex]);
                 if (enemies[enemyIndex]->getHP() == 0) {
@@ -82,7 +87,6 @@ void GameLevel::updateLevel() {
             }
         }
     }
-
     //Update hero sprite
     hero->updatePosition();
     if (hero->walkingCounter == 2)
@@ -95,7 +99,8 @@ void GameLevel::updateLevel() {
     //Manages enemies
     for (int i = 0; i < enemies.size(); i++) {
         if (enemies[i]->walkingTime.getElapsedTime().asSeconds() >= 0.5) {
-            enemies[i]->face = static_cast<Face>(RNG::throwDice(11) - 1);   // 4/10 chance of moving in a random direction
+            enemies[i]->face = static_cast<Face>(RNG::throwDice(11) -
+                                                 1);   // 4/10 chance of moving in a random direction
             enemies[i]->walkingTime.restart();
         }
         if (!checkWallCollision(enemies[i]->rect, enemies[i]->face, &wallIndex) &&
@@ -106,7 +111,6 @@ void GameLevel::updateLevel() {
     //Manages projectiles
     for (int i = 0; i < spells.size(); i++) {
         spells[i]->updateSpell();
-        spells[i]->spellRange++;
         checkProjectileCollisions(spells[i], &i);                                           //checks collisions with enemies
         if (checkChestCollision(spells[i]->rect, spells[i]->face, &chestIndex) ||         //checks colllisions with chests
             checkWallCollision(spells[i]->rect, spells[i]->face, &wallIndex))          //checks collisions with walls

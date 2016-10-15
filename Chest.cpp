@@ -14,6 +14,16 @@ Chest::Chest(float posX, float posY, Weapon *w) : weapon(w){
     sprite.setPosition(rect.getPosition());
 
     weapon->rect.setPosition(rect.getPosition());
+    text.setCharacterSize(16);
+    text.setPosition(rect.getPosition().x - 20 , rect.getPosition().y - 20);
+
+    if(w->isLegendary())
+        text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  LEGENDARY!  ");
+    else if(w->isRare())
+        text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  RARE!  ");
+    else
+        text.setString("STR: " + std::to_string(weapon->getStrenght()));
+
 }
 
 Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
@@ -26,6 +36,32 @@ Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
     sprite.setPosition(rect.getPosition());
 
     orb->rect.setPosition((rect.getPosition()));
+
+    text.setCharacterSize(16);
+    text.setPosition(rect.getPosition().x - 20 , rect.getPosition().y - 20);
+
+    switch(o->getOrbColor()) {
+        case Color::red:
+            text.setColor(sf::Color::Magenta);
+            text.setString("Red Orb");
+            break;
+        case Color::blue:
+            text.setColor(sf::Color::Blue);
+            text.setString("Blue Orb");
+            break;
+        case Color::green:
+            text.setColor(sf::Color::Green);
+            text.setString("Green Orb");
+            break;
+        case Color::yellow:
+            text.setColor(sf::Color::Yellow);
+            text.setString("Yellow Orb");
+            break;
+        case Color::purple:
+            text.setColor(sf::Color::Red);
+            text.setString("Purple Orb");
+            break;
+    }
 }
 
 Chest::~Chest() {
@@ -45,6 +81,7 @@ void Chest::openChest(PlayableCharacter* hero) {
         setWeapon(w);
     }
     sprite.setTextureRect(sf::IntRect(32,0,32,32));
+    text.setString("");
 }
 
 Weapon* Chest::getWeapon() const {
@@ -63,3 +100,5 @@ void Chest::setOrb(Orb *orb) {
     Chest::orb = orb;
 }
 
+sf::Clock Chest::objectTaken;
+sf::Time Chest::delay= sf::seconds(1);

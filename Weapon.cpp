@@ -22,6 +22,16 @@ Weapon::Weapon(float x, float y, int strenght, WeaponType weapon, bool rare, boo
             break;
     }
 
+    text.setCharacterSize(20);
+    text.setPosition(rect.getPosition().x - 20 , rect.getPosition().y - 20);
+
+    if(legendary)
+        text.setString("STR: " + std::to_string(strenght) + ",  LEGENDARY!  ");
+    else if(rare)
+        text.setString("STR: " + std::to_string(strenght) + ",  RARE!  ");
+    else
+        text.setString("STR: " + std::to_string(strenght));
+
 }
 
 int Weapon::useWeapon() {

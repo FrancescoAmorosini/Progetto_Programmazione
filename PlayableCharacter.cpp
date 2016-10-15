@@ -11,6 +11,8 @@ PlayableCharacter::PlayableCharacter(float x, float y, CharacterClass r, std::st
     rect.setPosition(x, y);
     rect.setFillColor(sf::Color::Red);
     sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    text.setString(name);
+    text.setCharacterSize(16);
 }
 
 PlayableCharacter::~PlayableCharacter() {
@@ -21,8 +23,13 @@ PlayableCharacter::~PlayableCharacter() {
 
 void PlayableCharacter::updatePosition() {
     sprite.setPosition(rect.getPosition());
-    if(weapon)
+    int long delay = name.length() * 2;
+    if (name.length() < 5)
+        delay = -name.length();
+    text.setPosition(rect.getPosition().x - delay, rect.getPosition().y - 20);
+    if (weapon)
         weapon->rect.setPosition(rect.getPosition());
+
 }
 
 void PlayableCharacter::fight(GameCharacter* enemy) {
