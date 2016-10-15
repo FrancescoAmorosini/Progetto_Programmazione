@@ -16,8 +16,8 @@ GameLevel* LevelCreator::createExample() {
     Weapon* w= new Weapon(0,0,15,WeaponType::Staff);
     Weapon* ww= new Weapon(0,0,30,WeaponType::Staff, true, true);
     PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"FierFranco", w);
-    Enemy* enemy= new Enemy (100,550,CharacterClass::BigBaldGuy,100,10,3);
-    Enemy* enemy2= new Enemy (400,400,CharacterClass::BigBaldGuy,100,10,3);
+    Enemy* enemy= new Enemy (100,550,CharacterClass::Witch,100,10,3);
+    Enemy* enemy2= new Enemy (400,400,CharacterClass::Witch,100,10,3);
 
     map->createHorizontalWall(6, 50, 600);
     map->createHorizontalWall(6,50,478);

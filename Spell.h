@@ -21,6 +21,7 @@ public:
     int spellRange=0;
 
     sf::Clock static projectileLife;
+    sf::Clock static enemyProjectileLife;
     sf::Time static projectileLifeSpan;
 };
 

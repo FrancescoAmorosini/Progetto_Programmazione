@@ -7,8 +7,8 @@
 
 #include "GameCharacter.h"
 #include "Weapon.h"
-
-
+#include "PlayableCharacter.h"
+#include "Spell.h"
 
 
 class Enemy: virtual public GameCharacter, public DrawableObject{
@@ -17,13 +17,14 @@ public:
 
     void updatePosition() override;
     Weapon* dropWeapon(WeaponType weaponType);
-    void fight(GameCharacter* enemy) override;
+    void fight(GameCharacter* hero) override;
+    void chaseHero(PlayableCharacter* hero);
+    Spell* shootSpell();
+    bool aggroed;
 
     sf::Clock walkingTime;
     int static dropChance;
-private:
     int sightRadius;
-    std::string name;
 };
 
 

@@ -53,4 +53,5 @@ void Spell::updateSpell() {
 }
 
 sf::Clock Spell::projectileLife;
-sf::Time Spell::projectileLifeSpan= sf::seconds(0.4);
+sf::Clock Spell::enemyProjectileLife;
+sf::Time Spell::projectileLifeSpan= sf::seconds(0.5);

@@ -47,9 +47,8 @@ public:
     std::vector<Orb*> orbs;
     std::vector<Enemy*> enemies;
     std::vector<Spell*> spells;
+    std::vector<Spell*> enemySpells;
     std::vector<Heart*> hearts;
-
-
 
 };
 

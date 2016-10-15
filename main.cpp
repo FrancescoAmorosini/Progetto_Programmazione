@@ -119,6 +119,10 @@ int main() {
             level->spells[i]->sprite.setTexture(fireball);
             window.draw(level->spells[i]->sprite);
         }
+        for(int i=0; i< level->enemySpells.size(); i++) {
+            level->enemySpells[i]->sprite.setTexture(fireball);
+            window.draw(level->enemySpells[i]->sprite);
+        }
         //Draws Hero
         window.draw(level->hero->sprite);
         window.draw(level->hero->text);
@@ -131,7 +135,7 @@ int main() {
         //Draws Chests
         for(int i=0; i< level->chests.size(); i++){
             window.draw(level->chests[i]->sprite);
-            window.draw(level->chests[i]->text);
+            window.draw(level->chests[i]->sprite);
         }
         //Draws Hearts
         for(int i=0; i< level->hearts.size(); i++){

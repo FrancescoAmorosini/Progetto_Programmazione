@@ -3,6 +3,7 @@
 //
 
 #include "Enemy.h"
+
 Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int sightRadius, float evade, float critical ) :
         GameCharacter(role,HP,atk,evade,critical), sightRadius(sightRadius) {
     rect.setSize(sf::Vector2f(32, 32));
@@ -15,7 +16,7 @@ Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int sightRa
 
 }
 void Enemy::updatePosition() {
-    int speed = speedMovement;
+    int speed = speedMovement - 1;
 
     switch(face) {
         case Face::Up:
@@ -69,6 +70,32 @@ void Enemy::fight(GameCharacter *hero) {
     if(RNG::throwCoin((10- getCritical())))      // critical=1 -> 10% critical chance
         damage+=damage/2;
     hero->setHP(hero->getHP() - damage);
+}
+
+void Enemy::chaseHero(PlayableCharacter *hero) {
+    // CHASE DOWN
+    if (hero->rect.getPosition().y > rect.getPosition().y &&
+        abs(static_cast<int>(hero->rect.getPosition().x - rect.getPosition().x)) <= 40)
+        face = Face::Down;
+        //CHASE UP
+    else if ((hero->rect.getPosition().x > rect.getPosition().x) &&
+             (abs(static_cast<int>(hero->rect.getPosition().y - rect.getPosition().y)) <= 40))
+        face = Face::Right;
+        //CHASE LEFT
+    else if ((hero->rect.getPosition().x < rect.getPosition().x) &&
+             (abs(static_cast<int>(hero->rect.getPosition().y - rect.getPosition().y)) <= 40))
+        face = Face::Left;
+        //CHASE UP
+    else if ((hero->rect.getPosition().y < rect.getPosition().y) &&
+             (abs(static_cast<int>(hero->rect.getPosition().x - rect.getPosition().x)) <= 40))
+        face = Face::Up;
+
+}
+
+Spell* Enemy::shootSpell() {
+    return new Spell(rect.getPosition().x + rect.getSize().x / 2 - 13,    //13= Half Spell Sprite
+                     rect.getPosition().y + rect.getSize().y / 2 - rect.getSize().y / 2,
+                     face);
 }
 
 int Enemy::dropChance= 3;

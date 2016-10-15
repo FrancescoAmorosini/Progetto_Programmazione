@@ -9,7 +9,7 @@
 #include "RNG.h"
 
 
-enum class CharacterClass {Knight, Thief, Mage, GlassedSlime, Undead, BigBaldGuy, Witch};
+enum class CharacterClass {Knight, Thief, Mage, Undead, BigBaldGuy, Witch};
 enum class Face {Up, Down, Left, Right};
 
 class GameCharacter {
