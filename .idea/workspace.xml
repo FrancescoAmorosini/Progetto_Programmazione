@@ -15,18 +15,7 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0652cc89-39c9-4505-88d1-9ff085c25c91" name="Default" comment="Now Enemies chase you if you hit them, and if they are witches have 1/50 chance per frame of shooting fireballs at you.&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Debug/Progetto_Programmazione" afterPath="$PROJECT_DIR$/Debug/Progetto_Programmazione" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Debug/libcore.a" afterPath="$PROJECT_DIR$/Debug/libcore.a" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Enemy.cpp" afterPath="$PROJECT_DIR$/Enemy.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Enemy.h" afterPath="$PROJECT_DIR$/Enemy.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameCharacter.h" afterPath="$PROJECT_DIR$/GameCharacter.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameLevel.cpp" afterPath="$PROJECT_DIR$/GameLevel.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameLevel.h" afterPath="$PROJECT_DIR$/GameLevel.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LevelCreator.cpp" afterPath="$PROJECT_DIR$/LevelCreator.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Spell.cpp" afterPath="$PROJECT_DIR$/Spell.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Spell.h" afterPath="$PROJECT_DIR$/Spell.h" />
+    <list default="true" id="0652cc89-39c9-4505-88d1-9ff085c25c91" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
     </list>
     <ignored path="Progetto_Programmazione.iws" />
@@ -57,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="924">
-              <caret line="123" column="53" selection-start-line="123" selection-start-column="53" selection-end-line="123" selection-end-column="53" />
+            <state relative-caret-position="2199">
+              <caret line="160" column="50" selection-start-line="160" selection-start-column="50" selection-end-line="160" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -108,10 +97,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameCharacter.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameCharacter.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GameCharacter.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
+            <state relative-caret-position="-201">
               <caret line="11" column="48" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
               <folding>
                 <element signature="e#151#168#0" expanded="true" />
@@ -188,12 +177,12 @@
         <option value="$PROJECT_DIR$/PlayableCharacter.cpp" />
         <option value="$PROJECT_DIR$/GameCharacter.h" />
         <option value="$PROJECT_DIR$/LevelCreator.cpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/Spell.h" />
         <option value="$PROJECT_DIR$/Spell.cpp" />
         <option value="$PROJECT_DIR$/Enemy.h" />
         <option value="$PROJECT_DIR$/GameLevel.cpp" />
         <option value="$PROJECT_DIR$/Enemy.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
       </list>
     </option>
   </component>
@@ -647,7 +636,7 @@
       <workItem from="1476525888100" duration="2361000" />
       <workItem from="1476528256822" duration="1186000" />
       <workItem from="1476533615827" duration="310000" />
-      <workItem from="1476541212090" duration="7872000" />
+      <workItem from="1476541212090" duration="7978000" />
     </task>
     <task id="LOCAL-00001" summary="View now follows the hero.&#10;Bug fixed: when you collect all orbs hero sprite doesn't disappear anymore&#10;Bug fixed: now spells disappear in the right way&#10;Added Weapon drop with 33% chance">
       <created>1476466964402</created>
@@ -670,7 +659,14 @@
       <option name="project" value="LOCAL" />
       <updated>1476533922110</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Now Enemies chase you if you hit them, and if they are witches have 1/50 chance per frame of shooting fireballs at you.&#10;">
+      <created>1476549792132</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1476549792132</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -706,7 +702,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193467000" />
+    <option name="totallyTimeSpent" value="193573000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -723,7 +719,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17503805" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25844157" sideWeight="0.31196582" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25844157" sideWeight="0.31196582" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35194805" sideWeight="0.48753226" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32587063" sideWeight="0.53418803" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1105,14 +1101,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="924">
-          <caret line="123" column="53" selection-start-line="123" selection-start-column="53" selection-end-line="123" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LevelCreator.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1158,11 +1146,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GameCharacter.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
+        <state relative-caret-position="-201">
           <caret line="11" column="48" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
           <folding>
             <element signature="e#151#168#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2199">
+          <caret line="160" column="50" selection-start-line="160" selection-start-column="50" selection-end-line="160" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

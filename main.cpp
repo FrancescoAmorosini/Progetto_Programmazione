@@ -158,4 +158,4 @@ int main() {
 }
 
 
-//TODO: scalette, AI, textureLoader
+//TODO: scalette, AI, textureLoader, fix fireballs
