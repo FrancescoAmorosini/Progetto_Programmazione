@@ -16,30 +16,31 @@
       <sourceFolder url="file://$MODULE_DIR$/test/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Tile.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Wall.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Orb.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CharacterFactory.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Heart.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameLevel.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RangeException.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Map.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Weapon.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LevelDrawer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CharacterFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RNG.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PlayableCharacter.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/LevelCreator.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Orb.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LevelCreator.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Weapon.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PlayableCharacter.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/CharacterFactory.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Enemy.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Map.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameCharacter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RNG.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Chest.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake_modules/FindSFML.cmake" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/LevelCreator.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Spell.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Map.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LevelCreator.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Enemy.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Spell.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameCharacter.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DrawableObject.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Orb.cpp" isTestSource="false" />

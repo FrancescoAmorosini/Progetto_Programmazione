@@ -49,6 +49,16 @@ public:
     std::vector<Spell*> enemySpells;
     std::vector<Heart*> hearts;
 
+    //Resources
+    sf::Font healthFont;
+    sf::Texture heroTexture;
+    sf::Texture floor1;
+    sf::Texture orbTexture;
+    sf::Texture chestTexture;
+    sf::Texture heartTexture;
+    sf::Texture fireballTexture;
+    sf::Texture weaponTexture;
+
 };
 
 

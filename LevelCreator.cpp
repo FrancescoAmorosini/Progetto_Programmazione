@@ -5,19 +5,67 @@
 #include "LevelCreator.h"
 
 
-GameLevel* LevelCreator::loadLevel(Map* map, PlayableCharacter *hero, std::vector<Chest *> chests,
-                                         std::vector<Orb *> orbs, std::vector<Enemy *> enemies, std::vector<Heart *> hearts) {
-     GameLevel* level= new GameLevel (map, hero,chests,orbs, enemies, hearts);
-    return level;
+int LevelCreator::loadLevelExample(GameLevel* level) {
+    if (!level->healthFont.loadFromFile("sansation.ttf")) {
+        return EXIT_FAILURE;
+    }
+
+    if(!level->heroTexture.loadFromFile("hero.png"))
+        return EXIT_FAILURE;
+    level->hero->sprite.setTexture(level->heroTexture);
+    level->hero->text.setFont(level->healthFont);
+    for(int i=0; i< level->enemies.size(); i++) {
+        level->enemies[i]->sprite.setTexture(level->heroTexture);
+        level->enemies[i]->text.setFont(level->healthFont);
+    }
+
+    if(!level->floor1.loadFromFile("Floor.png"))
+        return EXIT_FAILURE;
+
+    for(int i=0; i<level->map->getHeight(); i++) {
+        for(int j=0; j<level->map->getWidth();j++){
+            level->map->getTile(i,j)->sprite.setTexture(level->floor1);
+        }
+    }
+
+    for(int i=0; i< level->map->wallBuffer.size(); i++)
+        level->map->wallBuffer[i]->sprite.setTexture(level->floor1);
+
+    if(!level->orbTexture.loadFromFile("stone-b1.png"))
+        return EXIT_FAILURE;
+    for(int i=0; i< level->orbs.size(); i++)
+        level->orbs[i]->sprite.setTexture(level->orbTexture);
+
+    if(!level->chestTexture.loadFromFile("chest2.png"))
+        return EXIT_FAILURE;
+    for(int i=0; i< level->chests.size(); i++) {
+        level->chests[i]->sprite.setTexture(level->chestTexture);
+        level->chests[i]->text.setFont(level->healthFont);
+    }
+
+    if(!level->heartTexture.loadFromFile("hearts.png"))
+        return EXIT_FAILURE;
+    for(int i=0; i< level->hearts.size(); i++)
+        level->hearts[i]->sprite.setTexture(level->heartTexture);
+
+    if(!level->fireballTexture.loadFromFile("fireball.png"))
+        return EXIT_FAILURE;
+
+    if(!level->weaponTexture.loadFromFile("weapons-and-equipment.png"))
+        return EXIT_FAILURE;
+
+    return 0;
 }
 
 GameLevel* LevelCreator::createExample() {
+    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"FierFranco", nullptr);
     Map* map= new Map(100,100);
-    Weapon* w= new Weapon(0,0,15,WeaponType::Staff);
-    Weapon* ww= new Weapon(0,0,30,WeaponType::Staff, true, true);
-    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"FierFranco", w);
+    Weapon* w= new Weapon(0,0,15,Weapon::matchRole(hero));
+    Weapon* ww= new Weapon(0,0,30,Weapon::matchRole(hero), true, true);
     Enemy* enemy= new Enemy (100,550,CharacterClass::Witch,100,10,3);
     Enemy* enemy2= new Enemy (400,400,CharacterClass::Witch,100,10,3);
+
+    hero->setWeapon(w);
 
     map->createHorizontalWall(6, 50, 600);
     map->createHorizontalWall(6,50,478);
@@ -54,9 +102,9 @@ GameLevel* LevelCreator::createExample() {
     orbs.push_back(orb4);
     orbs.push_back(orb5);
 
+    GameLevel* levelExample= new GameLevel(map, hero,chests,orbs, enemies, hearts);
 
+    loadLevelExample(levelExample);
 
-    return loadLevel(map, hero,chests,orbs, enemies, hearts);
-
-
+    return levelExample;
 }
