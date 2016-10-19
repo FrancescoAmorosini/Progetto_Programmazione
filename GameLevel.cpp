@@ -83,7 +83,7 @@ void GameLevel::updateLevel() {
                 enemies[enemyIndex]->aggroed = true;
                 if (enemies[enemyIndex]->getHP() == 0) {
                     if (RNG::throwCoin(Enemy::dropChance))
-                        weapons.push_back(enemies[enemyIndex]->dropWeapon(matchRole()));
+                        weapons.push_back(enemies[enemyIndex]->dropWeapon(Weapon::matchRole(hero)));
                     enemies.erase(enemies.begin() + enemyIndex);
                 }
             }
@@ -149,7 +149,7 @@ void GameLevel::checkProjectileCollisions(Spell* spell, int* index) {
             enemies[i]->aggroed = true;
             if (enemies[i]->getHP() == 0) {
                 if (RNG::throwCoin(Enemy::dropChance))
-                    weapons.push_back(enemies[i]->dropWeapon(matchRole()));
+                    weapons.push_back(enemies[i]->dropWeapon(Weapon::matchRole(hero)));
                 enemies.erase(enemies.begin() + i);
             }
             break;
@@ -311,15 +311,5 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
         }
     }
     return false;
-}
-
-WeaponType GameLevel::matchRole() {
-    if(hero->getRole()==CharacterClass::Thief)
-        return WeaponType::Dagger;
-    else if (hero->getRole()==CharacterClass::Mage)
-        return WeaponType::Staff;
-    else
-        return WeaponType::Sword;
-
 }
 

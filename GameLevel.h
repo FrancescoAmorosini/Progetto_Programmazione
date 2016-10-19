@@ -38,7 +38,6 @@ public:
     bool checkChestCollision(sf::RectangleShape rect, Face face, int *index);
     bool checkWallCollision(sf::RectangleShape rect, Face face, int* index);
     bool checkCloseEnemy(sf::RectangleShape rect, Face face, int* index);
-    WeaponType matchRole();
 
     Map* map;
     PlayableCharacter* hero;

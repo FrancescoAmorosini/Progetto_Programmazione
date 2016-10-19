@@ -7,6 +7,7 @@
 
 #include "DrawableObject.h"
 #include "RNG.h"
+#include "GameCharacter.h"
 
 enum class WeaponType {Sword, Dagger, Staff};
 
@@ -23,6 +24,7 @@ public:
     bool isLegendary() const;
     void setLegendary(bool legendary);
     WeaponType getWeapon() const;
+    static WeaponType matchRole(GameCharacter* hero);
 
 private:
 
