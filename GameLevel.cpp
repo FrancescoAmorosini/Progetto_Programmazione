@@ -121,13 +121,10 @@ void GameLevel::updateLevel() {
     //Manages projectiles
     for (int i = 0; i < spells.size(); i++) {
         spells[i]->updateSpell();
-        if (checkChestCollision(spells[i]->rect, spells[i]->face, &chestIndex) || //checks colllisions with chests
-            checkWallCollision(spells[i]->rect, spells[i]->face, &wallIndex))    //checks collisions with walls
-            spells.erase(spells.begin() + i);
-        else if (spells[i]->projectileLife.getElapsedTime().asSeconds() > 2)      //erases spells far enough
+        if (spells[i]->projectileLife.getElapsedTime().asSeconds() > 2)      //erases spells far enough
             spells.erase(spells.begin() + i);
         else
-            checkProjectileCollisions(spells[i], &i);                                  //checks collisions with enemies
+            checkProjectileCollisions(spells[i], &i);                    //checks collisions with walls,enemies, chests
     }
     for (int i = 0; i < enemySpells.size(); i++) {
         enemySpells[i]->updateSpell();
@@ -146,16 +143,28 @@ void GameLevel::updateLevel() {
 
 void GameLevel::checkProjectileCollisions(Spell* spell, int* index) {
     for (int i = 0; i < enemies.size(); i++) {
-        if (spell->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds()))
-        {
+        if (spell->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())) {
             spells.erase(spells.begin() + *index);
             hero->fight(enemies[i]);
-            enemies[i]->aggroed=true;
-            if(enemies[i]->getHP() == 0) {
-                if(RNG::throwCoin(Enemy::dropChance))
+            enemies[i]->aggroed = true;
+            if (enemies[i]->getHP() == 0) {
+                if (RNG::throwCoin(Enemy::dropChance))
                     weapons.push_back(enemies[i]->dropWeapon(matchRole()));
                 enemies.erase(enemies.begin() + i);
             }
+            break;
+        }
+    }
+    for (int i = 0; i < chests.size(); i++){
+        if (spell->rect.getGlobalBounds().intersects(chests[i]->rect.getGlobalBounds())) {
+            spells.erase(spells.begin() + *index);
+            break;
+        }
+    }
+    for (int i = 0; i < map->wallBuffer.size(); i++) {
+        if (spell->rect.getGlobalBounds().intersects(map->wallBuffer[i]->rect.getGlobalBounds())) {
+            spells.erase(spells.begin() + *index);
+            break;
         }
     }
 }
