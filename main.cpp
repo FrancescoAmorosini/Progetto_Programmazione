@@ -14,13 +14,17 @@ int main() {
     // View
     sf::View view1(sf::FloatRect(200, 200, 300, 200));
     view1.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
-    view1.setCenter(sf::Vector2f(view1.getSize().x/2, view1.getSize().y/2));
+    view1.setCenter(sf::Vector2f(view1.getSize().x / 2, view1.getSize().y / 2));
     window.setView(view1);
 
     //CHARACTER SELECTION
-    LevelCreator::characterSelection(&window);
+    if (LevelCreator::characterSelection(&window) == 1)
+        return 1;
+    //NAME SELECTION
+    if (LevelCreator::characterName(&window) == 2)
+        return 2;
 
-    GameLevel* level= LevelCreator::createExample();
+    GameLevel *level = LevelCreator::createExample();
 
     // Start the game loop
     while (window.isOpen()) {
@@ -50,7 +54,7 @@ int main() {
         window.setView(view1);
         view1.setCenter(level->hero->rect.getPosition());
 
-        std::cout<< level->hero->getHP() << std::endl;
+        std::cout << level->hero->getHP() << std::endl;
 
         // Update the window
         window.display();

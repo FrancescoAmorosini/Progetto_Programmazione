@@ -11,13 +11,15 @@
 class LevelCreator {
 public:
     //la costruzione di ogni livello dovrà essere un metodo, al termine di ogni metodo costruttore verrà lanciato il metodo loadLevel
-    static int loadLevelExample(GameLevel* level);
     static int characterSelection(sf::RenderWindow* window);
+    static int characterName(sf::RenderWindow* window);
+
+    static int loadLevelExample(GameLevel* level);
     static GameLevel* createExample();
 
 
     static CharacterClass heroclass;
-    std::string heroname;
+    static std::string heroname;
 
 };
 

@@ -22,13 +22,13 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     if (!staffTexture.loadFromFile("splashStaff.png"))
         return EXIT_FAILURE;
     sf::Font font;
-    if (!font.loadFromFile("sansation.ttf"))
+    if (!font.loadFromFile("Berry Rotunda.ttf"))
         return EXIT_FAILURE;
 
     sf::Text text;
     text.setFont(font);
-    text.setPosition(100, 20);
-    text.setCharacterSize(50);
+    text.setPosition(60, 20);
+    text.setCharacterSize(40);
     text.setString("It's dangerous to go alone, take one of these!");
     text.setStyle(sf::Text::Bold);
 
@@ -53,11 +53,13 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window->close();
+                return 1;
             }
 
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window->close();
+                return 1;
             }
         }
         // Clear screen
@@ -98,6 +100,94 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         window->display();
     }
 
+    return EXIT_SUCCESS;
+}
+
+int LevelCreator::characterName(sf::RenderWindow *window) {
+
+    sf::Texture splashTexture;
+    if (!splashTexture.loadFromFile("splash2.jpg"))
+        return EXIT_FAILURE;
+    sf::Font font;
+    if (!font.loadFromFile("Berry Rotunda.ttf"))
+        return EXIT_FAILURE;
+
+    sf::Sprite splash;
+    splash.setTexture(splashTexture);
+    splash.setColor(sf::Color(255, 255, 255, 220));
+
+    sf::RectangleShape line;
+    line.setSize(sf::Vector2f(400, 2));
+    line.setPosition(450, 650);
+    line.setFillColor(sf::Color::White);
+
+    sf::RectangleShape typeBar;
+    typeBar.setSize(sf::Vector2f(1, 45));
+    typeBar.setPosition(475, 600);
+    typeBar.setFillColor(sf::Color::White);
+
+    sf::Text text;
+    text.setFont(font);
+    text.setPosition(370, 500);
+    text.setCharacterSize(50);
+    text.setString("Enter your name!");
+    text.setStyle(sf::Text::Bold);
+
+    sf::Text textInput;
+    textInput.setFont(font);
+    textInput.setPosition(450, 600);
+    textInput.setCharacterSize(40);
+    textInput.setStyle(sf::Text::Bold);
+
+    std::string str;
+
+    while (window->isOpen()) {
+        // Process events
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            // Close window: exit
+            if (event.type == sf::Event::Closed) {
+                window->close();
+                return 2;
+            }
+            // Escape pressed: exit
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                window->close();
+                return 2;
+            }
+            //Return pressed: confirm
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+                return EXIT_SUCCESS;
+            }
+            if (event.type == sf::Event::TextEntered) {   //Backspace pressed: erase a letter
+                if (event.text.unicode == '\b') {
+                    if (str.size() > 0) {
+                        str.erase(str.size() - 1, 1);
+                        typeBar.move(-30, 0);
+                    }
+                }
+                    //Letter pressed: add a letter to the string
+                else if (event.text.unicode < 128 && str.size() < 20) {
+                    str += static_cast<char>(event.text.unicode);
+                    typeBar.move(30, 0);
+                }
+                heroname = str;
+                textInput.setString(str);
+            }
+
+            // Clear screen
+            window->clear();
+
+            window->draw(splash);
+            window->draw(text);
+            window->draw(textInput);
+            window->draw(line);
+            window->draw(typeBar);
+
+            // Update the window
+            window->display();
+        }
+    }
     return EXIT_SUCCESS;
 }
 
@@ -155,7 +245,7 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 }
 
 GameLevel* LevelCreator::createExample() {
-    PlayableCharacter* hero= new PlayableCharacter (400,500,heroclass,"FierFranco", nullptr);
+    PlayableCharacter* hero= new PlayableCharacter (400,500,heroclass,heroname, nullptr);
     Map* map= new Map(100,100);
     Weapon* w= new Weapon(0,0,15,Weapon::matchRole(hero));
     Weapon* ww= new Weapon(0,0,30,Weapon::matchRole(hero), true, true);
@@ -207,3 +297,4 @@ GameLevel* LevelCreator::createExample() {
 }
 
 CharacterClass LevelCreator::heroclass;
+std::string LevelCreator::heroname;
