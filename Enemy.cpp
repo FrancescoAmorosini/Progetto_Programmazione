@@ -39,6 +39,11 @@ void Enemy::updatePosition() {
 
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x, rect.getPosition().y -30);
+    text.setString(std::to_string(getHP()));
+    if(getHP() <= getmaxHP()/2)
+        text.setColor(sf::Color(255,128,0));
+    if(getHP() <= getmaxHP()/ 4)
+        text.setColor(sf::Color::Red);
 
     walkingCounter++;
 

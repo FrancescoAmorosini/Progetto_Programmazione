@@ -44,7 +44,7 @@ void drawLevelExample(GameLevel* level, sf::RenderWindow* window){
     //Draws Chests
     for(int i=0; i< level->chests.size(); i++){
         window->draw(level->chests[i]->sprite);
-        window->draw(level->chests[i]->sprite);
+        window->draw(level->chests[i]->text);
     }
     //Draws Hearts
     for(int i=0; i< level->hearts.size(); i++){

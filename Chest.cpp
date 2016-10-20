@@ -17,10 +17,14 @@ Chest::Chest(float posX, float posY, Weapon *w) : weapon(w){
     text.setCharacterSize(16);
     text.setPosition(rect.getPosition().x - 20 , rect.getPosition().y - 20);
 
-    if(w->isLegendary())
+    if(w->isLegendary()) {
         text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  LEGENDARY!  ");
-    else if(w->isRare())
+        text.setColor(sf::Color(127, 0, 255));
+    }
+    else if(w->isRare()) {
         text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  RARE!  ");
+        text.setColor(sf::Color(255,128,0));
+    }
     else
         text.setString("STR: " + std::to_string(weapon->getStrenght()));
 
@@ -58,7 +62,7 @@ Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
             text.setString("Yellow Orb");
             break;
         case Color::purple:
-            text.setColor(sf::Color::Red);
+            text.setColor(sf::Color(127,0,255));
             text.setString("Purple Orb");
             break;
     }

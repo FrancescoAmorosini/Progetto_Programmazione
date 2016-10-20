@@ -15,15 +15,13 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0652cc89-39c9-4505-88d1-9ff085c25c91" name="Default" comment="Added name selection screen.&#10;Added medieval font for customizing screens.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Resources/Berry Rotunda.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Resources/splash2.jpg" />
+    <list default="true" id="0652cc89-39c9-4505-88d1-9ff085c25c91" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Debug/Progetto_Programmazione" afterPath="$PROJECT_DIR$/Debug/Progetto_Programmazione" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Debug/libcore.a" afterPath="$PROJECT_DIR$/Debug/libcore.a" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LevelCreator.cpp" afterPath="$PROJECT_DIR$/LevelCreator.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LevelCreator.h" afterPath="$PROJECT_DIR$/LevelCreator.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Chest.cpp" afterPath="$PROJECT_DIR$/Chest.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Enemy.cpp" afterPath="$PROJECT_DIR$/Enemy.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LevelDrawer.h" afterPath="$PROJECT_DIR$/LevelDrawer.h" />
     </list>
     <ignored path="Progetto_Programmazione.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,7 +66,7 @@
       <file leaf-file-name="GameLevel.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GameLevel.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1290">
+            <state relative-caret-position="840">
               <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
               <folding>
                 <element signature="e#7765#8064#0" expanded="false" />
@@ -86,18 +84,18 @@
       <file leaf-file-name="GameLevel.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GameLevel.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
+            <state relative-caret-position="300">
               <caret line="51" column="15" selection-start-line="51" selection-start-column="15" selection-end-line="51" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LevelCreator.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LevelCreator.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LevelCreator.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="105" column="58" selection-start-line="105" selection-start-column="58" selection-end-line="105" selection-end-column="58" />
+            <state relative-caret-position="315">
+              <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
               <folding>
                 <element signature="e#81#3305#0" expanded="false" />
                 <element signature="e#3307#6018#0" expanded="false" />
@@ -109,8 +107,28 @@
       <file leaf-file-name="PlayableCharacter.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PlayableCharacter.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
+            <state relative-caret-position="-60">
               <caret line="10" column="27" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Enemy.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Enemy.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Chest.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Chest.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="25" column="44" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -174,7 +192,6 @@
         <option value="$PROJECT_DIR$/test/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/Chest.h" />
-        <option value="$PROJECT_DIR$/Chest.cpp" />
         <option value="$PROJECT_DIR$/PlayableCharacter.h" />
         <option value="$PROJECT_DIR$/PlayableCharacter.cpp" />
         <option value="$PROJECT_DIR$/Spell.h" />
@@ -185,11 +202,12 @@
         <option value="$PROJECT_DIR$/GameLevel.cpp" />
         <option value="$PROJECT_DIR$/GameCharacter.h" />
         <option value="$PROJECT_DIR$/GameLevel.h" />
-        <option value="$PROJECT_DIR$/LevelDrawer.h" />
-        <option value="$PROJECT_DIR$/Enemy.cpp" />
         <option value="$PROJECT_DIR$/LevelCreator.h" />
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/LevelCreator.cpp" />
+        <option value="$PROJECT_DIR$/LevelDrawer.h" />
+        <option value="$PROJECT_DIR$/Enemy.cpp" />
+        <option value="$PROJECT_DIR$/Chest.cpp" />
       </list>
     </option>
   </component>
@@ -645,7 +663,7 @@
       <workItem from="1476533615827" duration="310000" />
       <workItem from="1476541212090" duration="7978000" />
       <workItem from="1476818759707" duration="7734000" />
-      <workItem from="1476985344010" duration="9849000" />
+      <workItem from="1476985344010" duration="10647000" />
     </task>
     <task id="LOCAL-00001" summary="View now follows the hero.&#10;Bug fixed: when you collect all orbs hero sprite doesn't disappear anymore&#10;Bug fixed: now spells disappear in the right way&#10;Added Weapon drop with 33% chance">
       <created>1476466964402</created>
@@ -703,7 +721,14 @@
       <option name="project" value="LOCAL" />
       <updated>1476988513632</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added name selection screen.&#10;Added medieval font for customizing screens.">
+      <created>1476995862309</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1476995862309</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -739,7 +764,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="211156000" />
+    <option name="totallyTimeSpent" value="211954000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1045,13 +1070,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Chest.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="76" selection-start-line="16" selection-start-column="4" selection-end-line="17" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Chest.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -1063,6 +1081,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1091,6 +1110,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+          <folding>
+            <element signature="e#137#164#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1098,6 +1120,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="339">
           <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1139,59 +1162,11 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LevelDrawer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
-          <caret line="54" column="65" selection-start-line="54" selection-start-column="65" selection-end-line="54" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Enemy.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="100" column="24" selection-start-line="100" selection-start-column="24" selection-end-line="100" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LevelCreator.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GameLevel.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="51" column="15" selection-start-line="51" selection-start-column="15" selection-end-line="51" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PlayableCharacter.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GameLevel.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1290">
-          <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
-          <folding>
-            <element signature="e#7765#8064#0" expanded="false" />
-            <element signature="e#8066#8401#0" expanded="false" />
-            <element signature="e#8403#8717#0" expanded="false" />
-            <element signature="e#8719#9061#0" expanded="false" />
-            <element signature="e#9063#10711#0" expanded="false" />
-            <element signature="e#10713#12445#0" expanded="false" />
-            <element signature="e#12447#13328#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1205,14 +1180,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/GameLevel.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="156" column="5" selection-start-line="156" selection-start-column="5" selection-end-line="156" selection-end-column="5" />
+          <folding>
+            <element signature="e#7765#8064#0" expanded="false" />
+            <element signature="e#8066#8401#0" expanded="false" />
+            <element signature="e#8403#8717#0" expanded="false" />
+            <element signature="e#8719#9061#0" expanded="false" />
+            <element signature="e#9063#10711#0" expanded="false" />
+            <element signature="e#10713#12445#0" expanded="false" />
+            <element signature="e#12447#13328#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameLevel.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="51" column="15" selection-start-line="51" selection-start-column="15" selection-end-line="51" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LevelDrawer.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="46" column="43" selection-start-line="46" selection-start-column="43" selection-end-line="46" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PlayableCharacter.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-60">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/LevelCreator.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="105" column="58" selection-start-line="105" selection-start-column="58" selection-end-line="105" selection-end-column="58" />
+        <state relative-caret-position="315">
+          <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
           <folding>
             <element signature="e#81#3305#0" expanded="false" />
             <element signature="e#3307#6018#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Enemy.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="41" column="44" selection-start-line="41" selection-start-column="44" selection-end-line="41" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Chest.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="25" column="44" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
