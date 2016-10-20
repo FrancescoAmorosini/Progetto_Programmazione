@@ -27,7 +27,6 @@ Chest::Chest(float posX, float posY, Weapon *w) : weapon(w){
     }
     else
         text.setString("STR: " + std::to_string(weapon->getStrenght()));
-
 }
 
 Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
