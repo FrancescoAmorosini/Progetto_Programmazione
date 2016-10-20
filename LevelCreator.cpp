@@ -4,6 +4,103 @@
 
 #include "LevelCreator.h"
 
+int LevelCreator::characterSelection(sf::RenderWindow* window) {
+
+    bool choosen = false;
+
+    sf::Texture splashTexture;
+    if (!splashTexture.loadFromFile("splash.jpg"))
+        return EXIT_FAILURE;
+
+    sf::Texture swordTexture;
+    if (!swordTexture.loadFromFile("splashSword.png"))
+        return EXIT_FAILURE;
+    sf::Texture daggerTexture;
+    if (!daggerTexture.loadFromFile("splashDagger.png"))
+        return EXIT_FAILURE;
+    sf::Texture staffTexture;
+    if (!staffTexture.loadFromFile("splashStaff.png"))
+        return EXIT_FAILURE;
+    sf::Font font;
+    if (!font.loadFromFile("sansation.ttf"))
+        return EXIT_FAILURE;
+
+    sf::Text text;
+    text.setFont(font);
+    text.setPosition(100, 20);
+    text.setCharacterSize(50);
+    text.setString("It's dangerous to go alone, take one of these!");
+    text.setStyle(sf::Text::Bold);
+
+    sf::Sprite splash;
+    splash.setTexture(splashTexture);
+    splash.setColor(sf::Color(255, 255, 255, 200));
+
+    sf::Sprite sword;
+    sf::Sprite staff;
+    sf::Sprite dagger;
+    sword.setTexture(swordTexture);
+    staff.setTexture(staffTexture);
+    dagger.setTexture(daggerTexture);
+    sword.setPosition(200, 300);
+    staff.setPosition(500, 300);
+    dagger.setPosition(800, 300);
+
+    while (!choosen) {
+        // Process events
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            // Close window: exit
+            if (event.type == sf::Event::Closed) {
+                window->close();
+            }
+
+            // Escape pressed: exit
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                window->close();
+            }
+        }
+        // Clear screen
+        window->clear();
+
+        //Knight Choosen
+        if (sf::Mouse::getPosition(*window).y > 300 && sf::Mouse::getPosition(*window).y < 526 &&
+            sf::Mouse::getPosition(*window).x > 200 && sf::Mouse::getPosition(*window).x < 456) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                heroclass = CharacterClass::Knight;
+                choosen = true;
+            }
+        }
+        //Mage Choosen
+        if (sf::Mouse::getPosition(*window).y > 300 && sf::Mouse::getPosition(*window).y < 526 &&
+            sf::Mouse::getPosition(*window).x > 500 && sf::Mouse::getPosition(*window).x < 756) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                heroclass = CharacterClass::Mage;
+                choosen = true;
+            }
+        }
+        //Thief Choosen
+        if (sf::Mouse::getPosition(*window).y > 300 && sf::Mouse::getPosition(*window).y < 526 &&
+            sf::Mouse::getPosition(*window).x > 800 && sf::Mouse::getPosition(*window).x < 1056) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                heroclass = CharacterClass::Thief;
+                choosen = true;
+            }
+        }
+
+        window->draw(splash);
+        window->draw(sword);
+        window->draw(staff);
+        window->draw(dagger);
+        window->draw(text);
+
+        // Update the window
+        window->display();
+    }
+
+    return EXIT_SUCCESS;
+}
+
 
 int LevelCreator::loadLevelExample(GameLevel* level) {
     if (!level->healthFont.loadFromFile("sansation.ttf")) {
@@ -58,7 +155,7 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 }
 
 GameLevel* LevelCreator::createExample() {
-    PlayableCharacter* hero= new PlayableCharacter (400,500,CharacterClass::Mage,"FierFranco", nullptr);
+    PlayableCharacter* hero= new PlayableCharacter (400,500,heroclass,"FierFranco", nullptr);
     Map* map= new Map(100,100);
     Weapon* w= new Weapon(0,0,15,Weapon::matchRole(hero));
     Weapon* ww= new Weapon(0,0,30,Weapon::matchRole(hero), true, true);
@@ -108,3 +205,5 @@ GameLevel* LevelCreator::createExample() {
 
     return levelExample;
 }
+
+CharacterClass LevelCreator::heroclass;

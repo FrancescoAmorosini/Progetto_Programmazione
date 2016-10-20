@@ -52,7 +52,7 @@ void drawLevelExample(GameLevel* level, sf::RenderWindow* window){
     }
     //Draws Weapon
     for(int i=0; i< level->weapons.size(); i++) {
-        level->weapons[i]->sprite.setTexture(level->fireballTexture);
+        level->weapons[i]->sprite.setTexture(level->weaponTexture);
         window->draw(level->weapons[i]->sprite);
         level->weapons[i]->text.setFont(level->healthFont);
         window->draw(level->weapons[i]->text);

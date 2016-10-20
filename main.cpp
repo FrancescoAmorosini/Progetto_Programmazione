@@ -8,7 +8,7 @@
 int main() {
 
     //Winwow
-    sf::RenderWindow window(sf::VideoMode(1240, 720), "Progetto Programmazione");
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "Progetto Programmazione");
     window.setFramerateLimit(60);
 
     // View
@@ -16,6 +16,9 @@ int main() {
     view1.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
     view1.setCenter(sf::Vector2f(view1.getSize().x/2, view1.getSize().y/2));
     window.setView(view1);
+
+    //CHARACTER SELECTION
+    LevelCreator::characterSelection(&window);
 
     GameLevel* level= LevelCreator::createExample();
 
