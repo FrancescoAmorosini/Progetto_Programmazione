@@ -8,21 +8,25 @@
 int main() {
 
     //Winwow
-    sf::RenderWindow window(sf::VideoMode(1280, 720), "Progetto Programmazione");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Progetto Programmazione");
     window.setFramerateLimit(60);
 
     // View
     sf::View view1(sf::FloatRect(200, 200, 300, 200));
-    view1.setSize(sf::Vector2f(window.getSize().x, window.getSize().y));
+    view1.setSize(1204, 720);
     view1.setCenter(sf::Vector2f(view1.getSize().x / 2, view1.getSize().y / 2));
     window.setView(view1);
 
     //CHARACTER SELECTION
-    if (LevelCreator::characterSelection(&window) == 1)
-        return 1;
+    if (LevelCreator::characterSelection(&window) == EXIT_FAILURE)
+        return EXIT_FAILURE;
     //NAME SELECTION
-    if (LevelCreator::characterName(&window) == 2)
-        return 2;
+    if (LevelCreator::characterName(&window) == EXIT_FAILURE)
+        return EXIT_FAILURE;
+
+    sf::View view2(sf::FloatRect(200, 200, 300, 200));
+    view2.setSize(sf::Vector2f(window.getSize().x/2, window.getSize().y/2));
+    window.setView(view2);
 
     GameLevel *level = LevelCreator::createExample();
 
@@ -51,8 +55,8 @@ int main() {
         drawLevelExample(level, &window);
 
         //PLAYER VIEW
-        window.setView(view1);
-        view1.setCenter(level->hero->rect.getPosition());
+        window.setView(view2);
+        view2.setCenter(level->hero->rect.getPosition());
 
         std::cout << level->hero->getHP() << std::endl;
 

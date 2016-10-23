@@ -19,11 +19,11 @@ Chest::Chest(float posX, float posY, Weapon *w) : weapon(w){
 
     if(w->isLegendary()) {
         text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  LEGENDARY!  ");
-        text.setColor(sf::Color(127, 0, 255));
+        text.setFillColor(sf::Color::Cyan);
     }
     else if(w->isRare()) {
         text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  RARE!  ");
-        text.setColor(sf::Color(255,128,0));
+        text.setFillColor(sf::Color(255,128,0));
     }
     else
         text.setString("STR: " + std::to_string(weapon->getStrenght()));
@@ -45,23 +45,23 @@ Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
 
     switch(o->getOrbColor()) {
         case Color::red:
-            text.setColor(sf::Color::Magenta);
+            text.setFillColor(sf::Color::Magenta);
             text.setString("Red Orb");
             break;
         case Color::blue:
-            text.setColor(sf::Color::Blue);
+            text.setFillColor(sf::Color::Blue);
             text.setString("Blue Orb");
             break;
         case Color::green:
-            text.setColor(sf::Color::Green);
+            text.setFillColor(sf::Color::Green);
             text.setString("Green Orb");
             break;
         case Color::yellow:
-            text.setColor(sf::Color::Yellow);
+            text.setFillColor(sf::Color::Yellow);
             text.setString("Yellow Orb");
             break;
         case Color::purple:
-            text.setColor(sf::Color(127,0,255));
+            text.setFillColor(sf::Color(127,0,255));
             text.setString("Purple Orb");
             break;
     }
@@ -78,12 +78,12 @@ void Chest::openChest(PlayableCharacter* hero) {
     if (getOrb()) {
         hero->setInventory(getOrb());
         setOrb(nullptr);
-    } else {
-        Weapon* w= hero->getWeapon();
+    } else if (getWeapon()) {
+        Weapon *w = hero->getWeapon();
         hero->setWeapon(weapon);
         setWeapon(w);
     }
-    sprite.setTextureRect(sf::IntRect(32,0,32,32));
+    sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
     text.setString("");
 }
 

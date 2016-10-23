@@ -3,6 +3,7 @@
 //
 
 #include "LevelCreator.h"
+#include <iostream>
 
 int LevelCreator::characterSelection(sf::RenderWindow* window) {
 
@@ -53,37 +54,37 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window->close();
-                return 1;
+                return EXIT_FAILURE;
             }
 
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window->close();
-                return 1;
+                return EXIT_FAILURE;
             }
         }
         // Clear screen
         window->clear();
 
         //Knight Choosen
-        if (sf::Mouse::getPosition(*window).y > 300 && sf::Mouse::getPosition(*window).y < 526 &&
-            sf::Mouse::getPosition(*window).x > 200 && sf::Mouse::getPosition(*window).x < 456) {
+        if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
+            sf::Mouse::getPosition(*window).x > 322 && sf::Mouse::getPosition(*window).x < 720) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Knight;
                 choosen = true;
             }
         }
         //Mage Choosen
-        if (sf::Mouse::getPosition(*window).y > 300 && sf::Mouse::getPosition(*window).y < 526 &&
-            sf::Mouse::getPosition(*window).x > 500 && sf::Mouse::getPosition(*window).x < 756) {
+        if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
+            sf::Mouse::getPosition(*window).x > 800 && sf::Mouse::getPosition(*window).x < 1200) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Mage;
                 choosen = true;
             }
         }
         //Thief Choosen
-        if (sf::Mouse::getPosition(*window).y > 300 && sf::Mouse::getPosition(*window).y < 526 &&
-            sf::Mouse::getPosition(*window).x > 800 && sf::Mouse::getPosition(*window).x < 1056) {
+        if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
+            sf::Mouse::getPosition(*window).x > 1280 && sf::Mouse::getPosition(*window).x < 1670) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Thief;
                 choosen = true;
@@ -95,6 +96,8 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         window->draw(staff);
         window->draw(dagger);
         window->draw(text);
+
+        std::cout<<sf::Mouse::getPosition(*window).x << " " << sf::Mouse::getPosition(*window).y  << std::endl;
 
         // Update the window
         window->display();
@@ -148,12 +151,12 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window->close();
-                return 2;
+                return EXIT_FAILURE;
             }
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window->close();
-                return 2;
+                return EXIT_FAILURE;
             }
             //Return pressed: confirm
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

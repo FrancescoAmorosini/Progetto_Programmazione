@@ -12,7 +12,7 @@ Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int sightRa
     sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
     text.setString(std::to_string(HP));
     text.setCharacterSize(20);
-    text.setColor(sf::Color::Green);
+    text.setFillColor(sf::Color::Green);
 
 }
 void Enemy::updatePosition() {
@@ -41,9 +41,9 @@ void Enemy::updatePosition() {
     text.setPosition(rect.getPosition().x, rect.getPosition().y -30);
     text.setString(std::to_string(getHP()));
     if(getHP() <= getmaxHP()/2)
-        text.setColor(sf::Color(255,128,0));
+        text.setFillColor(sf::Color(255,128,0));
     if(getHP() <= getmaxHP()/ 4)
-        text.setColor(sf::Color::Red);
+        text.setFillColor(sf::Color::Red);
 
     walkingCounter++;
 

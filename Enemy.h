@@ -20,7 +20,7 @@ public:
     void fight(GameCharacter* hero) override;
     void chaseHero(PlayableCharacter* hero);
     Spell* shootSpell();
-    bool aggroed;
+    bool aggroed=false;
 
     sf::Clock walkingTime;
     int static dropChance;
