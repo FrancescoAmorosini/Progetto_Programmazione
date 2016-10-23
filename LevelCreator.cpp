@@ -97,11 +97,12 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         window->draw(dagger);
         window->draw(text);
 
-        std::cout<<sf::Mouse::getPosition(*window).x << " " << sf::Mouse::getPosition(*window).y  << std::endl;
-
         // Update the window
         window->display();
     }
+
+    //Matches weapons with hero class
+        WeaponFactory::heroWeaponType=WeaponFactory::matchHeroWeapon(heroclass);
 
     return EXIT_SUCCESS;
 }
@@ -248,12 +249,17 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 }
 
 GameLevel* LevelCreator::createExample() {
-    PlayableCharacter* hero= new PlayableCharacter (400,500,heroclass,heroname, nullptr);
+    PlayableCharacter* hero= CharacterFactory::createCharacter(400,650,heroclass,heroname);
     Map* map= new Map(100,100);
-    Weapon* w= new Weapon(0,0,15,Weapon::matchRole(hero));
-    Weapon* ww= new Weapon(0,0,30,Weapon::matchRole(hero), true, true);
-    Enemy* enemy= new Enemy (100,550,CharacterClass::Witch,100,10,3);
-    Enemy* enemy2= new Enemy (400,400,CharacterClass::Witch,100,10,3);
+    Weapon* w= WeaponFactory::createWeapon(0,0,15);
+    Weapon* ww= WeaponFactory::createWeapon(0,0,30,true,true);
+
+    std::vector<Enemy*> witches = CharacterFactory::createEnemyArray(2,CharacterClass::Witch,80,12);
+    witches[0]->rect.setPosition(100,550);
+    witches[1]->rect.setPosition(400,400);
+
+    std::vector<Enemy*> bigbaldguy= CharacterFactory::createEnemyArray(1,CharacterClass::BigBaldGuy,150,5);
+    bigbaldguy[0]->rect.setPosition(700,700);
 
     hero->setWeapon(w);
 
@@ -275,10 +281,11 @@ GameLevel* LevelCreator::createExample() {
 
     std::vector<Heart*> hearts;
     hearts.push_back(new Heart(190,60));
-
+    //Merges different enemies array
     std::vector<Enemy*> enemies;
-    enemies.push_back(enemy);
-    enemies.push_back(enemy2);
+    enemies.reserve(bigbaldguy.size() + witches.size());
+    enemies.insert(enemies.end(), bigbaldguy.begin(), bigbaldguy.end());
+    enemies.insert(enemies.end(),witches.begin(), witches.end());
 
     std::vector<Chest*> chests;
     chests.push_back(chest1);

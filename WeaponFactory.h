@@ -5,22 +5,14 @@
 #ifndef PROGETTO_PROGRAMMAZIONE_WEAPONFACTORY_H
 #define PROGETTO_PROGRAMMAZIONE_WEAPONFACTORY_H
 
-#ifndef Included_Weapon_H
-#define Included_Weapon_H
 #include "Weapon.h"
-#endif
-
-#ifndef Included_Character_H
-#define Included_Character_H
-
 #include "PlayableCharacter.h"
-
-#endif
 
 class WeaponFactory {
 public:
-    static WeaponType matchHeroWeapon(PlayableCharacter* hero);
-    static Weapon* createWeapon(int posX, int posY, int strenght, WeaponType w, bool rare=false, bool legendary=false);
+    static WeaponType matchHeroWeapon(CharacterClass role);
+    static Weapon* createWeapon(float posX, float posY, int strenght, bool rare=false, bool legendary=false);
+    static WeaponType heroWeaponType;
 
 };
 

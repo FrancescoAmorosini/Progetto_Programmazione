@@ -4,8 +4,8 @@
 
 #include "Enemy.h"
 
-Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int sightRadius, float evade, float critical ) :
-        GameCharacter(role,HP,atk,evade,critical), sightRadius(sightRadius) {
+Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade, int critical ) :
+        GameCharacter(role,HP,atk,evade,critical) {
     rect.setSize(sf::Vector2f(32, 32));
     rect.setPosition(x, y);
     rect.setFillColor(sf::Color::Cyan);

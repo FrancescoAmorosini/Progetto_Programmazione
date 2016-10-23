@@ -33,12 +33,13 @@
       <sourceFolder url="file://$MODULE_DIR$/CharacterFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Enemy.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/WeaponFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Map.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameCharacter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RNG.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Chest.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake_modules/FindSFML.cmake" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/LevelCreator.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/WeaponFactory.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Spell.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Enemy.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameCharacter.cpp" isTestSource="false" />
@@ -46,6 +47,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Orb.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameLevel.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Spell.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LevelCreator.h" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

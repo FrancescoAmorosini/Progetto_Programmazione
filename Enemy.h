@@ -13,7 +13,7 @@
 
 class Enemy: virtual public GameCharacter, public DrawableObject{
 public:
-    Enemy(float x, float y, CharacterClass role, int HP, int atk,  int sightRadius, float evade=1, float critical=1);
+    Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade=1, int critical=1);
 
     void updatePosition() override;
     Weapon* dropWeapon(WeaponType weaponType);
@@ -24,7 +24,6 @@ public:
 
     sf::Clock walkingTime;
     int static dropChance;
-    int sightRadius;
 };
 
 

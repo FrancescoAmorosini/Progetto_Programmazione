@@ -24,7 +24,6 @@ public:
     bool isLegendary() const;
     void setLegendary(bool legendary);
     WeaponType getWeapon() const;
-    static WeaponType matchRole(GameCharacter* hero);
 
 private:
 

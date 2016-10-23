@@ -5,8 +5,8 @@
 #ifndef PROGETTO_PROGRAMMAZIONE_GAMELEVELFACTORY_H
 #define PROGETTO_PROGRAMMAZIONE_GAMELEVELFACTORY_H
 
-#include "LevelCreator.h"
 #include "GameLevel.h"
+#include "CharacterFactory.h"
 
 class LevelCreator {
 public:

@@ -15,7 +15,7 @@ enum class Face {Up, Down, Left, Right};
 class GameCharacter {
 public:
     GameCharacter(){}
-    GameCharacter(CharacterClass r, int HP=100, int atk=10, float evade=1, float critical=1);
+    GameCharacter(CharacterClass r, int HP=100, int atk=10, int evade=1, int critical=1);
     virtual ~GameCharacter(){}
 
     virtual void updatePosition()=0;

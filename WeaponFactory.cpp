@@ -4,17 +4,17 @@
 
 #include "WeaponFactory.h"
 
-WeaponType WeaponFactory::matchHeroWeapon(PlayableCharacter* hero){
-    if(hero->getRole() == CharacterClass::Thief)
+WeaponType WeaponFactory::matchHeroWeapon(CharacterClass role) {
+    if (CharacterClass::Thief == role)
         return WeaponType::Dagger;
-    if(hero->getRole() == CharacterClass::Knight)
+    else if (CharacterClass::Knight == role)
         return WeaponType::Sword;
-    if(hero->getRole() == CharacterClass::Lancer)
-        return WeaponType::Spear;
     else
         return WeaponType::Staff;
 }
 
-Weapon* WeaponFactory::createWeapon(int posX, int posY, int strenght, WeaponType w, bool rare, bool legendary) {
-    return new Weapon(posX,posY,strenght,w,rare,legendary);
+Weapon* WeaponFactory::createWeapon(float posX, float posY, int strenght, bool rare, bool legendary) {
+    return new Weapon(posX,posY,strenght,heroWeaponType,rare,legendary);
 }
+
+WeaponType WeaponFactory::heroWeaponType;

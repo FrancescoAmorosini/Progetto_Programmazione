@@ -78,14 +78,15 @@ void GameLevel::updateLevel() {
         } else {
             //PHYSICAL ATTACK IF NOT MAGE
             if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex) &&
-                hero->hitRate.getElapsedTime().asSeconds() > 0.5) {
+                hero->hitRate.getElapsedTime().asSeconds() > 0.4) {
                 hero->fight(enemies[enemyIndex]);
                 enemies[enemyIndex]->aggroed = true;
                 if (enemies[enemyIndex]->getHP() == 0) {
                     if (RNG::throwCoin(Enemy::dropChance))
-                        weapons.push_back(enemies[enemyIndex]->dropWeapon(Weapon::matchRole(hero)));
+                        weapons.push_back(enemies[enemyIndex]->dropWeapon(WeaponFactory::heroWeaponType));
                     enemies.erase(enemies.begin() + enemyIndex);
                 }
+                hero->hitRate.restart();
             }
         }
     }
@@ -149,7 +150,7 @@ void GameLevel::checkProjectileCollisions(Spell* spell, int* index) {
             enemies[i]->aggroed = true;
             if (enemies[i]->getHP() == 0) {
                 if (RNG::throwCoin(Enemy::dropChance))
-                    weapons.push_back(enemies[i]->dropWeapon(Weapon::matchRole(hero)));
+                    weapons.push_back(enemies[i]->dropWeapon(WeaponFactory::heroWeaponType));
                 enemies.erase(enemies.begin() + i);
             }
             break;

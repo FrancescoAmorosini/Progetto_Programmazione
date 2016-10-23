@@ -50,15 +50,6 @@ int Weapon::useWeapon() {
     return damage;
 }
 
-WeaponType Weapon::matchRole(GameCharacter* hero) {
-    if(hero->getRole()==CharacterClass::Thief)
-        return WeaponType::Dagger;
-    else if (hero->getRole()==CharacterClass::Mage)
-        return WeaponType::Staff;
-    else
-        return WeaponType::Sword;
-}
-
 int Weapon::getStrenght() const {
     return strenght;
 }

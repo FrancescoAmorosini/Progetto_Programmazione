@@ -4,7 +4,7 @@
 
 #include "GameCharacter.h"
 
-GameCharacter::GameCharacter(CharacterClass r, int HP, int atk, float evade, float critical) :
+GameCharacter::GameCharacter(CharacterClass r, int HP, int atk, int evade, int critical) :
      role(r),  HP(HP), maxHP(HP), atk(atk), evade(evade), critical(critical){
 }
 
