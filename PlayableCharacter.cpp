@@ -5,7 +5,7 @@
 #include "PlayableCharacter.h"
 
 
-PlayableCharacter::PlayableCharacter(float x, float y, CharacterClass r, std::string name, Weapon* w,int HP, int atk,float evade, float critical) throw(std::invalid_argument) :
+PlayableCharacter::PlayableCharacter(float x, float y, CharacterClass r, std::string name, Weapon* w,int HP, int atk, int evade, int critical) throw(std::invalid_argument) :
         GameCharacter(r,HP,atk,evade,critical),name(name), weapon(w){
     rect.setSize(sf::Vector2f(32, 32));
     rect.setPosition(x, y);
@@ -29,7 +29,6 @@ void PlayableCharacter::updatePosition() {
     text.setPosition(rect.getPosition().x - delay, rect.getPosition().y - 20);
     if (weapon)
         weapon->rect.setPosition(rect.getPosition());
-
 }
 
 void PlayableCharacter::fight(GameCharacter* enemy) {

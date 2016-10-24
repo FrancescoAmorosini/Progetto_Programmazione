@@ -52,7 +52,7 @@ void Enemy::updatePosition() {
 
     }
 
-Weapon* Enemy::dropWeapon(WeaponType weaponType) {
+Weapon* Enemy::dropWeapon() {
     int strenght = RNG::throwDice(getmaxHP() / 2);
     bool bonusORmalus = RNG::throwCoin(4);
     if (bonusORmalus)
@@ -65,7 +65,7 @@ Weapon* Enemy::dropWeapon(WeaponType weaponType) {
         legendary = false;
 
 
-    return new Weapon(rect.getPosition().x, rect.getPosition().y, strenght, weaponType, rare, legendary);
+    return WeaponFactory::createWeapon(rect.getPosition().x,rect.getPosition().y,strenght,rare,legendary);
 }
 
 void Enemy::fight(GameCharacter *hero) {

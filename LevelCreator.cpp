@@ -29,7 +29,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     sf::Text text;
     text.setFont(font);
     text.setPosition(60, 20);
-    text.setCharacterSize(40);
+    text.setCharacterSize(32);
     text.setString("It's dangerous to go alone, take one of these!");
     text.setStyle(sf::Text::Bold);
 
@@ -43,9 +43,9 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     sword.setTexture(swordTexture);
     staff.setTexture(staffTexture);
     dagger.setTexture(daggerTexture);
-    sword.setPosition(200, 300);
-    staff.setPosition(500, 300);
-    dagger.setPosition(800, 300);
+    sword.setPosition(70, 300);
+    staff.setPosition(370, 300);
+    dagger.setPosition(670, 300);
 
     while (!choosen) {
         // Process events
@@ -68,7 +68,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
 
         //Knight Choosen
         if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
-            sf::Mouse::getPosition(*window).x > 322 && sf::Mouse::getPosition(*window).x < 720) {
+            sf::Mouse::getPosition(*window).x > 140 && sf::Mouse::getPosition(*window).x < 600) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Knight;
                 choosen = true;
@@ -76,7 +76,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         }
         //Mage Choosen
         if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
-            sf::Mouse::getPosition(*window).x > 800 && sf::Mouse::getPosition(*window).x < 1200) {
+            sf::Mouse::getPosition(*window).x > 700 && sf::Mouse::getPosition(*window).x < 1160) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Mage;
                 choosen = true;
@@ -84,7 +84,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         }
         //Thief Choosen
         if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
-            sf::Mouse::getPosition(*window).x > 1280 && sf::Mouse::getPosition(*window).x < 1670) {
+            sf::Mouse::getPosition(*window).x > 1260 && sf::Mouse::getPosition(*window).x < 1725) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Thief;
                 choosen = true;
@@ -122,24 +122,24 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
 
     sf::RectangleShape line;
     line.setSize(sf::Vector2f(400, 2));
-    line.setPosition(450, 650);
+    line.setPosition(280, 650);
     line.setFillColor(sf::Color::White);
 
     sf::RectangleShape typeBar;
     typeBar.setSize(sf::Vector2f(1, 45));
-    typeBar.setPosition(475, 600);
+    typeBar.setPosition(300, 600);
     typeBar.setFillColor(sf::Color::White);
 
     sf::Text text;
     text.setFont(font);
-    text.setPosition(370, 500);
+    text.setPosition(200, 500);
     text.setCharacterSize(50);
     text.setString("Enter your name!");
     text.setStyle(sf::Text::Bold);
 
     sf::Text textInput;
     textInput.setFont(font);
-    textInput.setPosition(450, 600);
+    textInput.setPosition(280, 600);
     textInput.setCharacterSize(40);
     textInput.setStyle(sf::Text::Bold);
 
@@ -167,13 +167,13 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
                 if (event.text.unicode == '\b') {
                     if (str.size() > 0) {
                         str.erase(str.size() - 1, 1);
-                        typeBar.move(-30, 0);
+                        typeBar.move(-25, 0);
                     }
                 }
                     //Letter pressed: add a letter to the string
                 else if (event.text.unicode < 128 && str.size() < 20) {
                     str += static_cast<char>(event.text.unicode);
-                    typeBar.move(30, 0);
+                    typeBar.move(25, 0);
                 }
                 heroname = str;
                 textInput.setString(str);

@@ -19,7 +19,7 @@ class Orb;
 
 class PlayableCharacter: public GameCharacter, public DrawableObject {
 public:
-    PlayableCharacter(float x, float y,CharacterClass r, std::string name, Weapon* w, int HP=100, int atk=10, float evade=1, float critical=1) throw(std::invalid_argument);
+    PlayableCharacter(float x, float y,CharacterClass r, std::string name, Weapon* w, int HP=100, int atk=10, int evade=1, int critical=1) throw(std::invalid_argument);
     virtual ~PlayableCharacter();
 
     virtual void updatePosition() override;

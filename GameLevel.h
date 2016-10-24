@@ -30,11 +30,12 @@ public:
 
     void updateLevel();
 
-    void checkProjectileCollisions(Spell* spell, int* index);
+    void checkProjectileHit(Spell* spell, int* index);
     void checkOrbsCollisions();
     void checkHeartsCollisions();
     void checkEnemiesCollisions();
     void checkWeaponsCollisions();
+    bool checkProjectileCollisions(Spell* spell);
     bool checkChestCollision(sf::RectangleShape rect, Face face, int *index);
     bool checkWallCollision(sf::RectangleShape rect, Face face, int* index);
     bool checkCloseEnemy(sf::RectangleShape rect, Face face, int* index);

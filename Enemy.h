@@ -6,7 +6,7 @@
 #define PROGETTO_PROGRAMMAZIONE_ENEMY_H
 
 #include "GameCharacter.h"
-#include "Weapon.h"
+#include "WeaponFactory.h"
 #include "PlayableCharacter.h"
 #include "Spell.h"
 
@@ -16,7 +16,7 @@ public:
     Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade=1, int critical=1);
 
     void updatePosition() override;
-    Weapon* dropWeapon(WeaponType weaponType);
+    Weapon* dropWeapon();
     void fight(GameCharacter* hero) override;
     void chaseHero(PlayableCharacter* hero);
     Spell* shootSpell();

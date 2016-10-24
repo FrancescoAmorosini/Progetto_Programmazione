@@ -55,7 +55,8 @@ void GameLevel::updateLevel() {
             hero->walkingCounter++;
         }
 
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         //BREAKS WALL IF BREAKABLE
         if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable)
             map->wallBuffer.erase(map->wallBuffer.begin() + wallIndex);
@@ -83,7 +84,7 @@ void GameLevel::updateLevel() {
                 enemies[enemyIndex]->aggroed = true;
                 if (enemies[enemyIndex]->getHP() == 0) {
                     if (RNG::throwCoin(Enemy::dropChance))
-                        weapons.push_back(enemies[enemyIndex]->dropWeapon(WeaponFactory::heroWeaponType));
+                        weapons.push_back(enemies[enemyIndex]->dropWeapon());
                     enemies.erase(enemies.begin() + enemyIndex);
                 }
                 hero->hitRate.restart();
@@ -103,7 +104,7 @@ void GameLevel::updateLevel() {
     for (int i = 0; i < enemies.size(); i++) {
         if (enemies[i]->aggroed)
             enemies[i]->chaseHero(hero);
-        // 4/10 chance of moving in a random direction if not aggroed
+            // 4/10 chance of moving in a random direction if not aggroed
         else if (enemies[i]->walkingTime.getElapsedTime().asSeconds() >= 0.5) {
             enemies[i]->face = static_cast<Face>(RNG::throwDice(11) - 1);
             enemies[i]->walkingTime.restart();
@@ -111,9 +112,9 @@ void GameLevel::updateLevel() {
         if (!checkWallCollision(enemies[i]->rect, enemies[i]->face, &wallIndex) &&
             !checkChestCollision(enemies[i]->rect, enemies[i]->face, &chestIndex))
             enemies[i]->updatePosition();
-        //1/50 per frame CHANCE OF SHOOTING A SPELL IF WITCH
-        if (RNG::throwCoin(50) && enemies[i]->getRole() == CharacterClass::Witch && enemies[i]->aggroed &&
-            Spell::enemyProjectileLife.getElapsedTime() > Spell::projectileLifeSpan ) {
+        //1/120 per frame CHANCE OF SHOOTING A SPELL IF WITCH
+        if (RNG::throwCoin(120) && enemies[i]->getRole() == CharacterClass::Witch && enemies[i]->aggroed &&
+            Spell::enemyProjectileLife.getElapsedTime() > Spell::projectileLifeSpan) {
             enemySpells.push_back(enemies[i]->shootSpell());
             Spell::enemyProjectileLife.restart();
         }
@@ -122,27 +123,41 @@ void GameLevel::updateLevel() {
     //Manages projectiles
     for (int i = 0; i < spells.size(); i++) {
         spells[i]->updateSpell();
-        if (spells[i]->projectileLife.getElapsedTime().asSeconds() > 2)      //erases spells far enough
+        //Ereases spells
+        if (spells[i]->projectileLife.getElapsedTime().asSeconds() > 2 || checkProjectileCollisions(spells[i]))
             spells.erase(spells.begin() + i);
-        else
-            checkProjectileCollisions(spells[i], &i);                    //checks collisions with walls,enemies, chests
+        //checks if hits an enemy
+        checkProjectileHit(spells[i], &i);
+
     }
     for (int i = 0; i < enemySpells.size(); i++) {
         enemySpells[i]->updateSpell();
-        if (checkChestCollision(enemySpells[i]->rect, enemySpells[i]->face, &chestIndex) ||
-            checkWallCollision(enemySpells[i]->rect, enemySpells[i]->face, &wallIndex))
-            enemySpells.erase(enemySpells.begin() + i);
-        else if (enemySpells[i]->enemyProjectileLife.getElapsedTime().asSeconds() > 2)
+        if (enemySpells[i]->enemyProjectileLife.getElapsedTime().asSeconds() > 2 ||
+            checkProjectileCollisions(enemySpells[i]))
             enemySpells.erase(enemySpells.begin() + i);
         else if (enemySpells[i]->rect.getGlobalBounds().intersects(hero->rect.getGlobalBounds())) {
             enemySpells.erase(enemySpells.begin() + i);
             hero->setHP(hero->getHP() - 10);                           //Spells makes 10 HP damage
         }
     }
-
 }
 
-void GameLevel::checkProjectileCollisions(Spell* spell, int* index) {
+bool GameLevel::checkProjectileCollisions(Spell* spell) {
+    for (int i = 0; i < chests.size(); i++) {
+        if (spell->rect.getGlobalBounds().intersects(chests[i]->rect.getGlobalBounds())) {
+            return true;
+        }
+    }
+
+    for (int i = 0; i < map->wallBuffer.size(); i++) {
+        if (spell->rect.getGlobalBounds().intersects(map->wallBuffer[i]->rect.getGlobalBounds())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void GameLevel::checkProjectileHit(Spell *spell, int *index) {
     for (int i = 0; i < enemies.size(); i++) {
         if (spell->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())) {
             spells.erase(spells.begin() + *index);
@@ -150,21 +165,9 @@ void GameLevel::checkProjectileCollisions(Spell* spell, int* index) {
             enemies[i]->aggroed = true;
             if (enemies[i]->getHP() == 0) {
                 if (RNG::throwCoin(Enemy::dropChance))
-                    weapons.push_back(enemies[i]->dropWeapon(WeaponFactory::heroWeaponType));
+                    weapons.push_back(enemies[i]->dropWeapon());
                 enemies.erase(enemies.begin() + i);
             }
-            break;
-        }
-    }
-    for (int i = 0; i < chests.size(); i++){
-        if (spell->rect.getGlobalBounds().intersects(chests[i]->rect.getGlobalBounds())) {
-            spells.erase(spells.begin() + *index);
-            break;
-        }
-    }
-    for (int i = 0; i < map->wallBuffer.size(); i++) {
-        if (spell->rect.getGlobalBounds().intersects(map->wallBuffer[i]->rect.getGlobalBounds())) {
-            spells.erase(spells.begin() + *index);
             break;
         }
     }
