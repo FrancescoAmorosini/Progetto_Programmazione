@@ -13,7 +13,8 @@ Map::Map(int w, int h) throw(std::invalid_argument) : width(w),height(h) {
         throw (std::invalid_argument("Error: insert valid map dimensions"));
 }
 Map::~Map() {
-    buffer.erase(buffer.begin(),buffer.end());
+    buffer.erase(buffer.begin(), buffer.end());
+    wallBuffer.erase(wallBuffer.begin(), wallBuffer.end());
 }
 
 void Map::setTile(int x, int y, const bool walkable) throw(RangeException){
@@ -32,18 +33,6 @@ Tile* Map::getTile(int x, int y) throw(RangeException) {
         throw RangeException("Error: invalid height coordinates",0,height-1,y);
     else
         return buffer[x + y * width];
-}
-
-void Map::createHorizontalWall(int num, int x, int y) throw(RangeException) {
-    for (int i = 0; i < num; i++) {
-            wallBuffer.push_back(new Wall(x + i * 32, y));
-    }
-}
-
-void Map::createVerticaWall(int num, int x, int y) throw(RangeException) {
-    for (int i = 0; i < num; i++) {
-            wallBuffer.push_back(new Wall(x, y + i * 32));
-    }
 }
 
 int Map::getWidth() const {

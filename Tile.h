@@ -9,9 +9,6 @@
 
 
 class Tile : public DrawableObject {
-private:
-    bool walkable;
-
 public:
     Tile() {
         walkable=true;
@@ -27,6 +24,8 @@ public:
     void setWalkabe(bool walkable) {
         Tile::walkable = walkable;
     }
+
+    bool walkable;
 };
 
 

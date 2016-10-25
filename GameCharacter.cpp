@@ -60,6 +60,3 @@ void GameCharacter::heal(int HP){
     setHP(getHP()+HP);
 }
 
-
-
-

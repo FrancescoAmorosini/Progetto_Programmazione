@@ -26,15 +26,15 @@ void Enemy::move() {
                 break;
         }
     updatePosition();
-    walkingTime.restart();
 }
 void Enemy::turnAround(PlayableCharacter* hero) {
     if (aggroed)
         chaseHero(hero);
-        // 4/10 chance of moving in a random direction if not aggroed
-    else if (walkingTime.getElapsedTime().asSeconds() >= 0.5) {
+        // 1/2 chance of moving in a random direction if not aggroed
+    else if (walkingTime.getElapsedTime().asSeconds() >= 0.5){
         //Changes facing direction
-        face = static_cast<Face>(RNG::throwDice(11) - 1);
+        face = static_cast<Face>(RNG::throwDice(9) - 1);
+        walkingTime.restart();
     }
 }
 

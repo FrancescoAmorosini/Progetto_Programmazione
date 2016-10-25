@@ -22,9 +22,6 @@ public:
     Map(int w, int h)throw(std::invalid_argument);
     ~Map();
 
-    void createHorizontalWall(int num, int x, int y) throw(RangeException);
-    void createVerticaWall(int num, int x, int y) throw(RangeException);
-
     void setTile(int w, int h, const bool walkable) throw(RangeException);
     Tile* getTile(int x, int y) throw(RangeException);
     int getWidth() const;

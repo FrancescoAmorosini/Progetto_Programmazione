@@ -227,7 +227,7 @@ void GameLevel::checkEnemiesCollisions() {
     }
 }
 
-bool GameLevel::checkChestCollision(sf::RectangleShape rect, Face face, int* index) {
+bool GameLevel::checkChestCollision(sf::RectangleShape rect, const Face face, int* index) {
     int toll = 2;
     for (int i = 0; i < chests.size(); i++) {
         switch (face) {

@@ -43,7 +43,6 @@ Weapon* Enemy::dropWeapon() {
     if (!rare)
         legendary = false;
 
-
     return WeaponFactory::createWeapon(rect.getPosition().x,rect.getPosition().y,strenght,rare,legendary);
 }
 

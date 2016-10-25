@@ -37,6 +37,7 @@ public:
     int speedMovement=3;
     int walkingCounter=1;
     Face face= Face::Down;
+
 private:
     int HP;
     int maxHP;

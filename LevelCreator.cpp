@@ -3,7 +3,8 @@
 //
 
 #include "LevelCreator.h"
-#include <iostream>
+#include <fstream>
+
 
 int LevelCreator::characterSelection(sf::RenderWindow* window) {
 
@@ -255,18 +256,13 @@ GameLevel* LevelCreator::createExample() {
     Weapon* ww= WeaponFactory::createWeapon(0,0,30,true,true);
 
     std::vector<Enemy*> witches = CharacterFactory::createEnemyArray(2,CharacterClass::Witch,80,12);
-    witches[0]->rect.setPosition(100,550);
+    witches[0]->rect.setPosition(160,530);
     witches[1]->rect.setPosition(400,400);
 
     std::vector<Enemy*> bigbaldguy= CharacterFactory::createEnemyArray(1,CharacterClass::BigBaldGuy,150,5);
     bigbaldguy[0]->rect.setPosition(700,700);
 
     hero->setWeapon(w);
-
-    map->createHorizontalWall(6, 50, 600);
-    map->createHorizontalWall(6,50,478);
-    map->createVerticaWall(4, 50,478);
-    map->wallBuffer.push_back(new Wall(60,150, true));
 
     Orb* orb1= new Orb(500,500,Color::blue);
     Orb* orb2= new Orb(250,500,Color::red);
@@ -276,8 +272,8 @@ GameLevel* LevelCreator::createExample() {
     Orb* orb6= new Orb(0,0,Color::blue);
 
     Chest* chest1=new Chest(450,300,orb6);
-    Chest* chest2= new Chest(200,560, ww);
-    Chest* chest3= new Chest(200,520, ww);
+    Chest* chest2= new Chest(192,544, ww);
+    Chest* chest3= new Chest(192,480, ww);
 
     std::vector<Heart*> hearts;
     hearts.push_back(new Heart(190,60));
@@ -298,6 +294,30 @@ GameLevel* LevelCreator::createExample() {
     orbs.push_back(orb3);
     orbs.push_back(orb4);
     orbs.push_back(orb5);
+
+    int wallPositionX = 0;
+    int wallPositionY = 0;
+
+    std::ifstream openfile("MapExample.txt");
+    if(openfile.is_open()){
+        while(!openfile.eof()){
+            std::string str;
+            openfile >> str;
+            char x = str[0], y = str[2];
+            //you will be able to create different walls depending on char value
+            if(isdigit(x) && isdigit(y))
+                map->wallBuffer.push_back(new Wall(wallPositionX, wallPositionY));
+            if(openfile.peek() == '\n'){
+                wallPositionX =0;
+                wallPositionY+=32;
+            }
+            else
+                wallPositionX+=32;
+        }
+    }
+
+    map->wallBuffer[5]->breakable=true;
+    map->wallBuffer[7]->breakable=true;
 
     GameLevel* levelExample= new GameLevel(map, hero,chests,orbs, enemies, hearts);
 
