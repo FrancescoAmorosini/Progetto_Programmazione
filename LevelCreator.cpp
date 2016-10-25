@@ -11,20 +11,20 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     bool choosen = false;
 
     sf::Texture splashTexture;
-    if (!splashTexture.loadFromFile("splash.jpg"))
+    if (!splashTexture.loadFromFile("Resources/splash.jpg"))
         return EXIT_FAILURE;
 
     sf::Texture swordTexture;
-    if (!swordTexture.loadFromFile("splashSword.png"))
+    if (!swordTexture.loadFromFile("Resources/splashSword.png"))
         return EXIT_FAILURE;
     sf::Texture daggerTexture;
-    if (!daggerTexture.loadFromFile("splashDagger.png"))
+    if (!daggerTexture.loadFromFile("Resources/splashDagger.png"))
         return EXIT_FAILURE;
     sf::Texture staffTexture;
-    if (!staffTexture.loadFromFile("splashStaff.png"))
+    if (!staffTexture.loadFromFile("Resources/splashStaff.png"))
         return EXIT_FAILURE;
     sf::Font font;
-    if (!font.loadFromFile("Berry Rotunda.ttf"))
+    if (!font.loadFromFile("Resources/Berry Rotunda.ttf"))
         return EXIT_FAILURE;
 
     sf::Text text;
@@ -111,10 +111,10 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
 int LevelCreator::characterName(sf::RenderWindow *window) {
 
     sf::Texture splashTexture;
-    if (!splashTexture.loadFromFile("splash2.jpg"))
+    if (!splashTexture.loadFromFile("Resources/splash2.jpg"))
         return EXIT_FAILURE;
     sf::Font font;
-    if (!font.loadFromFile("Berry Rotunda.ttf"))
+    if (!font.loadFromFile("Resources/Berry Rotunda.ttf"))
         return EXIT_FAILURE;
 
     sf::Sprite splash;
@@ -198,11 +198,11 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
 
 
 int LevelCreator::loadLevelExample(GameLevel* level) {
-    if (!level->healthFont.loadFromFile("sansation.ttf")) {
+    if (!level->healthFont.loadFromFile("Resources/sansation.ttf")) {
         return EXIT_FAILURE;
     }
 
-    if(!level->heroTexture.loadFromFile("hero.png"))
+    if(!level->heroTexture.loadFromFile("Resources/hero.png"))
         return EXIT_FAILURE;
     level->hero->sprite.setTexture(level->heroTexture);
     level->hero->text.setFont(level->healthFont);
@@ -211,7 +211,7 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
         level->enemies[i]->text.setFont(level->healthFont);
     }
 
-    if(!level->floor1.loadFromFile("Floor.png"))
+    if(!level->floor1.loadFromFile("Resources/Floor.png"))
         return EXIT_FAILURE;
 
     for(int i=0; i<level->map->getHeight(); i++) {
@@ -223,27 +223,27 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
     for(int i=0; i< level->map->wallBuffer.size(); i++)
         level->map->wallBuffer[i]->sprite.setTexture(level->floor1);
 
-    if(!level->orbTexture.loadFromFile("stone-b1.png"))
+    if(!level->orbTexture.loadFromFile("Resources/stone-b1.png"))
         return EXIT_FAILURE;
     for(int i=0; i< level->orbs.size(); i++)
         level->orbs[i]->sprite.setTexture(level->orbTexture);
 
-    if(!level->chestTexture.loadFromFile("chest2.png"))
+    if(!level->chestTexture.loadFromFile("Resources/chest2.png"))
         return EXIT_FAILURE;
     for(int i=0; i< level->chests.size(); i++) {
         level->chests[i]->sprite.setTexture(level->chestTexture);
         level->chests[i]->text.setFont(level->healthFont);
     }
 
-    if(!level->heartTexture.loadFromFile("hearts.png"))
+    if(!level->heartTexture.loadFromFile("Resources/hearts.png"))
         return EXIT_FAILURE;
     for(int i=0; i< level->hearts.size(); i++)
         level->hearts[i]->sprite.setTexture(level->heartTexture);
 
-    if(!level->fireballTexture.loadFromFile("fireball.png"))
+    if(!level->fireballTexture.loadFromFile("Resources/fireball.png"))
         return EXIT_FAILURE;
 
-    if(!level->weaponTexture.loadFromFile("weapons-and-equipment.png"))
+    if(!level->weaponTexture.loadFromFile("Resources/weapons-and-equipment.png"))
         return EXIT_FAILURE;
 
     return 0;
@@ -298,7 +298,7 @@ GameLevel* LevelCreator::createExample() {
     int wallPositionX = 0;
     int wallPositionY = 0;
 
-    std::ifstream openfile("MapExample.txt");
+    std::ifstream openfile("Resources/MapExample.txt");
     if(openfile.is_open()){
         while(!openfile.eof()){
             std::string str;
