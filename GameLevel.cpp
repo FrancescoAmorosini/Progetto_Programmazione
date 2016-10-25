@@ -11,20 +11,21 @@ GameLevel::GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> ches
 }
 
 void GameLevel::updateLevel() {
-    int speed = hero->speedMovement;
     int chestIndex = 0;
     int wallIndex = 0;
     int enemyIndex = 0;
+    bool isThief = false;
     //DASH IF THIEF
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && hero->getRole() == CharacterClass::Thief)
-        speed = speed * 2;
+        isThief = true;
+    restart:
     //MOVE UP
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         hero->face = Face::Up;
         hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 32 * 3, 32, 32));
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {         // avoids collisions
-            hero->rect.move(0, -speed);
+            hero->rect.move(0, -hero->speedMovement);
             hero->walkingCounter++;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -33,7 +34,7 @@ void GameLevel::updateLevel() {
         hero->face = Face::Down;
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
-            hero->rect.move(0, speed);
+            hero->rect.move(0, hero->speedMovement);
             hero->walkingCounter++;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -42,7 +43,7 @@ void GameLevel::updateLevel() {
         hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 32 * 1, 32, 32));
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
-            hero->rect.move(-speed, 0);
+            hero->rect.move(-hero->speedMovement, 0);
             hero->walkingCounter++;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
@@ -51,11 +52,23 @@ void GameLevel::updateLevel() {
         hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 32 * 2, 32, 32));
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
-            hero->rect.move(speed, 0);
+            hero->rect.move(hero->speedMovement, 0);
             hero->walkingCounter++;
         }
 
     }
+    //MOVES TWICE IF THIEF
+    if (isThief) {
+        isThief=false;
+        //fixes animation
+        if(hero->walkingCounter!=0)
+            hero->walkingCounter--;
+        if (hero->walkingCounter == 2)
+            hero->walkingCounter = 0;
+
+        goto restart;
+    }
+    //ACTION BOTTON
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         //BREAKS WALL IF BREAKABLE
         if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable)
@@ -102,21 +115,20 @@ void GameLevel::updateLevel() {
 
     //Manages enemies
     for (int i = 0; i < enemies.size(); i++) {
-        if (enemies[i]->aggroed)
-            enemies[i]->chaseHero(hero);
-            // 4/10 chance of moving in a random direction if not aggroed
-        else if (enemies[i]->walkingTime.getElapsedTime().asSeconds() >= 0.5) {
-            enemies[i]->face = static_cast<Face>(RNG::throwDice(11) - 1);
-            enemies[i]->walkingTime.restart();
-        }
+        //Turns in a random direction or hero direction if aggroed
+        enemies[i]->turnAround(hero);
+        //Checks if enemy can move in that direction
         if (!checkWallCollision(enemies[i]->rect, enemies[i]->face, &wallIndex) &&
             !checkChestCollision(enemies[i]->rect, enemies[i]->face, &chestIndex))
-            enemies[i]->updatePosition();
-        //1/120 per frame CHANCE OF SHOOTING A SPELL IF WITCH
-        if (RNG::throwCoin(120) && enemies[i]->getRole() == CharacterClass::Witch && enemies[i]->aggroed &&
-            Spell::enemyProjectileLife.getElapsedTime() > Spell::projectileLifeSpan) {
-            enemySpells.push_back(enemies[i]->shootSpell());
-            Spell::enemyProjectileLife.restart();
+            enemies[i]->move();
+        //Shoots a spell if enough time is passed since last shot
+        if (Spell::enemyProjectileLife.getElapsedTime() > Spell::projectileLifeSpan) {
+            Spell* spell = enemies[i]->shootSpell();
+            // checks if spell a void pointer
+            if(spell) {
+                enemySpells.push_back(spell);
+                Spell::enemyProjectileLife.restart();
+            }
         }
     }
 

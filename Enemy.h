@@ -14,16 +14,20 @@
 class Enemy: virtual public GameCharacter, public DrawableObject{
 public:
     Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade=1, int critical=1);
-
-    void updatePosition() override;
-    Weapon* dropWeapon();
-    void fight(GameCharacter* hero) override;
+    //Strategy method
+    void move();
+    void turnAround(PlayableCharacter* hero);
     void chaseHero(PlayableCharacter* hero);
     Spell* shootSpell();
-    bool aggroed=false;
 
+    Weapon* dropWeapon();
+    void fight(GameCharacter* hero) override;
+    void updatePosition() override;
+
+    bool aggroed=false;
     sf::Clock walkingTime;
     int static dropChance;
+    int speed = speedMovement -1;
 };
 
 

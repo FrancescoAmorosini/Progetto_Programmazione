@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <fstream>
 #include "LevelCreator.h"
 #include "LevelDrawer.h"
 
@@ -13,7 +14,7 @@ int main() {
 
     // View
     sf::View view1(sf::FloatRect(200, 200, 300, 200));
-    view1.setSize(1204, 720);
+    view1.setSize(1024, 720);
     view1.setCenter(sf::Vector2f(view1.getSize().x / 2, view1.getSize().y / 2));
     window.setView(view1);
 

@@ -29,6 +29,7 @@
       <sourceFolder url="file://$MODULE_DIR$/PlayableCharacter.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Orb.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LevelCreator.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Strategy.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PlayableCharacter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CharacterFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Enemy.h" isTestSource="false" />
