@@ -314,9 +314,8 @@ GameLevel* LevelCreator::createExample() {
             std::string str;
             openfile >> str;
             char x = str[0], y = str[2];
-            //you will be able to create different walls depending on char value
             if(isdigit(x) && isdigit(y))
-                map->wallBuffer.push_back(new Wall(wallPositionX, wallPositionY));
+                map->wallBuffer.push_back(new Wall(wallPositionX, wallPositionY, str));
             if(openfile.peek() == '\n'){
                 wallPositionX =0;
                 wallPositionY+=32;
