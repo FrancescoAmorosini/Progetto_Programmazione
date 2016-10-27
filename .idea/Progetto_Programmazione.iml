@@ -19,14 +19,14 @@
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CharacterFactory.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Heart.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Map.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameLevel.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RangeException.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Map.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LevelDrawer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Weapon.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/RNG.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PlayableCharacter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LevelDrawer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Orb.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LevelCreator.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Strategy.cpp" isTestSource="false" />
@@ -49,6 +49,7 @@
       <sourceFolder url="file://$MODULE_DIR$/GameLevel.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Spell.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LevelCreator.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Heart.h" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">

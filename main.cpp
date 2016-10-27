@@ -52,7 +52,7 @@ int main() {
         level->updateLevel();
 
         //DRAW LEVEL
-        drawLevelExample(level, &window);
+        drawLevel(level, &window);
 
         //PLAYER VIEW
         window.setView(view2);
