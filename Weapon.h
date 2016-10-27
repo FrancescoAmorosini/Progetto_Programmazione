@@ -9,7 +9,7 @@
 #include "RNG.h"
 #include "GameCharacter.h"
 
-enum class WeaponType {Sword, Dagger, Staff};
+enum class WeaponType {Axe, Dagger, Staff};
 
 class Weapon : public DrawableObject {
 public:

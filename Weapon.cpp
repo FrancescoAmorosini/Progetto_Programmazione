@@ -14,8 +14,8 @@ Weapon::Weapon(float x, float y, int strenght, WeaponType weapon, bool rare, boo
         case WeaponType::Dagger:
             sprite.setTextureRect(sf::IntRect(2 * 32, 32, 32, 32));
             break;
-        case WeaponType::Sword:
-            sprite.setTextureRect(sf::IntRect(32, 5 * 32, 32, 32));
+        case WeaponType::Axe:
+            sprite.setTextureRect(sf::IntRect(6 * 32, 0, 32, 32));
             break;
         case WeaponType::Staff:
             sprite.setTextureRect(sf::IntRect(6 * 32, 4 * 32, 32, 32));

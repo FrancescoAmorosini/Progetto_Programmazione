@@ -7,7 +7,7 @@
 PlayableCharacter* CharacterFactory::createCharacter(float x, float y, const CharacterClass type, const std::string name)
                                                                                 throw(std::invalid_argument) {
     switch (type) {
-        case CharacterClass::Knight:
+        case CharacterClass::Warrior:
             return new PlayableCharacter(x, y, type, name, WeaponFactory::createWeapon(x, y, 10), 120, 12);
         case CharacterClass::Mage:
             return new PlayableCharacter(x, y, type, name, WeaponFactory::createWeapon(x, y, 10));

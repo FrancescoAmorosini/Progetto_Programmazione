@@ -7,14 +7,14 @@
 #include "../Weapon.h"
 
 TEST(Weapon,Weapon_Construct_Test){
-    Weapon w(1,2,15,WeaponType::Sword);
+    Weapon w(1,2,15,WeaponType::Axe);
 
     ASSERT_EQ(1,w.rect.getPosition().x);
     ASSERT_EQ(2,w.rect.getPosition().y);
     ASSERT_EQ(15,w.getStrenght());
     ASSERT_FALSE(w.isRare());
     ASSERT_FALSE(w.isLegendary());
-    ASSERT_EQ(WeaponType::Sword,w.getWeapon());
+    ASSERT_EQ(WeaponType::Axe,w.getWeapon());
 }
 
 TEST(Weapon,Weapon_setting_Test){
@@ -30,7 +30,7 @@ TEST(Weapon,Weapon_setting_Test){
 }
 
 TEST(Weapon,Weapon_Using_Test) {
-    Weapon *w = new Weapon(1, 2, 15, WeaponType::Sword, true, true);
+    Weapon *w = new Weapon(1, 2, 15, WeaponType::Axe, true, true);
 
     int damage = w->useWeapon();
     if(damage > w->getStrenght() - 13 && damage< w->getStrenght() + 13)

@@ -7,8 +7,8 @@
 WeaponType WeaponFactory::matchHeroWeapon(CharacterClass role) {
     if (CharacterClass::Thief == role)
         return WeaponType::Dagger;
-    else if (CharacterClass::Knight == role)
-        return WeaponType::Sword;
+    else if (CharacterClass::Warrior == role)
+        return WeaponType::Axe;
     else
         return WeaponType::Staff;
 }

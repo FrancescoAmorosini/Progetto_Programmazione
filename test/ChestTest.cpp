@@ -37,7 +37,7 @@ TEST(Chest, Chest_Opening_Test){
     Orb* o= new Orb(0, 0, Color::green);
     Weapon* w= new Weapon(0, 0, 15, WeaponType::Dagger, false, true);
     Weapon* ww= new Weapon(5, 6, 100, WeaponType::Dagger, false, false);
-    PlayableCharacter hero(1,2,CharacterClass::Knight,"Giorgio", ww);
+    PlayableCharacter hero(1,2,CharacterClass::Warrior,"Giorgio", ww);
     Chest* c=new Chest(0, 0, w);
     Chest* ch= new Chest(1, 1, o);
 

@@ -55,4 +55,4 @@ void Enemy::fight(GameCharacter *hero) {
     hero->setHP(hero->getHP() - damage);
 }
 
-int Enemy::dropChance= 3;
+int Enemy::dropChance= 1;

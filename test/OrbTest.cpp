@@ -16,7 +16,7 @@ TEST(Orb, Orb_Construct_Test){
 
 TEST(Orb, Orb_Using_test){
     Orb o(1,2,Color::red);
-    PlayableCharacter hero(1,2,CharacterClass::Knight,"Giorgio", nullptr);
+    PlayableCharacter hero(1,2,CharacterClass::Warrior,"Giorgio", nullptr);
     hero.setInventory(&o);
     o.useOrb(&hero);
 

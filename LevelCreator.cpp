@@ -42,13 +42,13 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     weapons.setSize(sf::Vector2f(256, 256));
     weapons.setFillColor(sf::Color::White);
 
-    sf::Sprite sword;
+    sf::Sprite axe;
     sf::Sprite staff;
     sf::Sprite dagger;
-    sword.setTexture(swordTexture);
+    axe.setTexture(swordTexture);
     staff.setTexture(staffTexture);
     dagger.setTexture(daggerTexture);
-    sword.setPosition(70, 300);
+    axe.setPosition(70, 300);
     staff.setPosition(370, 300);
     dagger.setPosition(670, 300);
 
@@ -77,7 +77,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
             weapons.setPosition(70,300);
             window->draw(weapons);
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                heroclass = CharacterClass::Knight;
+                heroclass = CharacterClass::Warrior;
                 choosen = true;
             }
         }
@@ -103,7 +103,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         }
 
         window->draw(splash);
-        window->draw(sword);
+        window->draw(axe);
         window->draw(staff);
         window->draw(dagger);
         window->draw(text);
