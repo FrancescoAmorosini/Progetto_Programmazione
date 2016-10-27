@@ -38,6 +38,10 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     splash.setTexture(splashTexture);
     splash.setColor(sf::Color(255, 255, 255, 200));
 
+    sf::RectangleShape weapons;
+    weapons.setSize(sf::Vector2f(256, 256));
+    weapons.setFillColor(sf::Color::White);
+
     sf::Sprite sword;
     sf::Sprite staff;
     sf::Sprite dagger;
@@ -70,6 +74,8 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         //Knight Choosen
         if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
             sf::Mouse::getPosition(*window).x > 140 && sf::Mouse::getPosition(*window).x < 600) {
+            weapons.setPosition(70,300);
+            window->draw(weapons);
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Knight;
                 choosen = true;
@@ -78,6 +84,8 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         //Mage Choosen
         if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
             sf::Mouse::getPosition(*window).x > 700 && sf::Mouse::getPosition(*window).x < 1160) {
+            weapons.setPosition(370,300);
+            window->draw(weapons);
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Mage;
                 choosen = true;
@@ -86,6 +94,8 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
         //Thief Choosen
         if (sf::Mouse::getPosition(*window).y > 465 && sf::Mouse::getPosition(*window).y < 830 &&
             sf::Mouse::getPosition(*window).x > 1260 && sf::Mouse::getPosition(*window).x < 1725) {
+            weapons.setPosition(670,300);
+            window->draw(weapons);
             if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                 heroclass = CharacterClass::Thief;
                 choosen = true;
