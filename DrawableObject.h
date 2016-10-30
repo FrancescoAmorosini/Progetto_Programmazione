@@ -9,12 +9,11 @@
 #include <SFML/Graphics.hpp>
 
 class DrawableObject {
-    public:
-        sf::RectangleShape rect;
-        sf::Sprite sprite;
-        sf::Text text;
-
-    };
+public:
+    sf::RectangleShape rect;
+    sf::Sprite sprite;
+    sf::Text text;
+};
 
 
 

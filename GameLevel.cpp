@@ -22,29 +22,23 @@ void GameLevel::updateLevel() {
     //MOVE UP
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         hero->face = Face::Up;
-        hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 32 * 3, 32, 32));
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {         // avoids collisions
             hero->rect.move(0, -hero->speedMovement);
-            hero->walkingCounter++;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         //MOVE DOWN
-        hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 0, 32, 32));
         hero->face = Face::Down;
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
             hero->rect.move(0, hero->speedMovement);
-            hero->walkingCounter++;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         //MOVE LEFT
         hero->face = Face::Left;
-        hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 32 * 1, 32, 32));
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
             hero->rect.move(-hero->speedMovement, 0);
-            hero->walkingCounter++;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         //MOVE RIGHT
@@ -53,23 +47,19 @@ void GameLevel::updateLevel() {
         if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
             !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
             hero->rect.move(hero->speedMovement, 0);
-            hero->walkingCounter++;
         }
 
     }
+    hero->updateDirection();
     //MOVES TWICE IF THIEF
     if (isThief) {
         isThief=false;
-        //fixes animation
-        if(hero->walkingCounter!=0)
-            hero->walkingCounter--;
-        if (hero->walkingCounter == 2)
-            hero->walkingCounter = 0;
-
         goto restart;
     }
-    //ACTION BOTTON
+    //ACTION BUTTON
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        //Start fighting animation;
+        hero->isFighting=true;
         //BREAKS WALL IF BREAKABLE
         if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable)
             map->wallBuffer.erase(map->wallBuffer.begin() + wallIndex);
@@ -106,8 +96,6 @@ void GameLevel::updateLevel() {
     }
     //Update hero sprite
     hero->updatePosition();
-    if (hero->walkingCounter == 2)
-        hero->walkingCounter = 0;
     checkOrbsCollisions();      //picks up orbs
     checkHeartsCollisions();   //picks up hearts
     checkWeaponsCollisions();  // picks up weapons
@@ -149,7 +137,7 @@ void GameLevel::updateLevel() {
             enemySpells.erase(enemySpells.begin() + i);
         else if (enemySpells[i]->rect.getGlobalBounds().intersects(hero->rect.getGlobalBounds())) {
             enemySpells.erase(enemySpells.begin() + i);
-            hero->setHP(hero->getHP() - 10);                           //Spells makes 10 HP damage
+            hero->setHP(hero->getHP() - 5);                           //Spells makes 10 HP damage
         }
     }
 }

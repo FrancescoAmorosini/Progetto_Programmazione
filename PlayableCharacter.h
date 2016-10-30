@@ -24,6 +24,7 @@ public:
 
     virtual void updatePosition() override;
     virtual void fight(GameCharacter* enemy) override;
+    void updateDirection();
 
     const std::string getName() const;
     void setName(const std::string &name);
@@ -34,6 +35,7 @@ public:
 
     sf::Clock damageRate;
     sf::Clock hitRate;
+    bool isFighting = false;
 
 private:
     std::string name;

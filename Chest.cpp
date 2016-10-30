@@ -83,6 +83,7 @@ void Chest::openChest(PlayableCharacter* hero) {
         hero->setWeapon(weapon);
         setWeapon(w);
     }
+
     sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
     text.setString("");
 }

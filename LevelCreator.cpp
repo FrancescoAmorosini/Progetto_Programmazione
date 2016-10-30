@@ -7,6 +7,9 @@
 
 
 int LevelCreator::characterSelection(sf::RenderWindow* window) {
+    if(!menuTheme.openFromFile("Resources/menuTheme.ogg"))
+        return EXIT_FAILURE;
+    menuTheme.play();
 
     bool choosen = false;
 
@@ -14,8 +17,8 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     if (!splashTexture.loadFromFile("Resources/splash.jpg"))
         return EXIT_FAILURE;
 
-    sf::Texture swordTexture;
-    if (!swordTexture.loadFromFile("Resources/splashSword.png"))
+    sf::Texture axeTexture;
+    if (!axeTexture.loadFromFile("Resources/splashAxe.png"))
         return EXIT_FAILURE;
     sf::Texture daggerTexture;
     if (!daggerTexture.loadFromFile("Resources/splashDagger.png"))
@@ -45,7 +48,7 @@ int LevelCreator::characterSelection(sf::RenderWindow* window) {
     sf::Sprite axe;
     sf::Sprite staff;
     sf::Sprite dagger;
-    axe.setTexture(swordTexture);
+    axe.setTexture(axeTexture);
     staff.setTexture(staffTexture);
     dagger.setTexture(daggerTexture);
     axe.setPosition(70, 300);
@@ -172,6 +175,11 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
             }
             //Return pressed: confirm
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+                //stops music
+                for(int vol=0; vol<100; vol++){
+                    menuTheme.setVolume(100 - vol);
+                }
+                menuTheme.stop();
                 return EXIT_SUCCESS;
             }
             if (event.type == sf::Event::TextEntered) {   //Backspace pressed: erase a letter
@@ -208,10 +216,11 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
 
 
 int LevelCreator::loadLevelExample(GameLevel* level) {
+    //FONT
     if (!level->healthFont.loadFromFile("Resources/sansation.ttf")) {
         return EXIT_FAILURE;
     }
-
+    //TEXTURES AND SPRITES
     if(!level->heroTexture.loadFromFile("Resources/hero.png"))
         return EXIT_FAILURE;
     level->hero->sprite.setTexture(level->heroTexture);
@@ -256,7 +265,7 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
     if(!level->weaponTexture.loadFromFile("Resources/weapons-and-equipment.png"))
         return EXIT_FAILURE;
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 GameLevel* LevelCreator::createExample() {
@@ -337,3 +346,4 @@ GameLevel* LevelCreator::createExample() {
 
 CharacterClass LevelCreator::heroclass;
 std::string LevelCreator::heroname;
+sf::Music LevelCreator::menuTheme;

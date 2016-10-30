@@ -10,7 +10,17 @@ PlayableCharacter::PlayableCharacter(float x, float y, CharacterClass r, std::st
     rect.setSize(sf::Vector2f(32, 32));
     rect.setPosition(x, y);
     rect.setFillColor(sf::Color::Red);
-    sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+    switch(r){
+        case CharacterClass::Mage:
+            sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+        case CharacterClass::Thief:
+            sprite.setTextureRect(sf::IntRect(32*6, 0, 32, 32));
+        case CharacterClass::Warrior:
+            sprite.setTextureRect(sf::IntRect(32*3, 0, 32, 32));
+        default:
+            break;
+    }
+
     text.setString(name);
     text.setCharacterSize(16);
 }
@@ -41,6 +51,35 @@ void PlayableCharacter::fight(GameCharacter* enemy) {
         enemy->setHP(enemy->getHP()-damage);
         if(weapon->isRare())
             heal(damage/3);
+    }
+}
+void PlayableCharacter::updateDirection() {
+    walkingCounter++;
+    int role = 0;
+    int fightCounter = 0;
+    if (getRole() == CharacterClass::Warrior)
+        role = 3;
+    if (getRole() == CharacterClass::Thief)
+        role = 6;
+    if (isFighting)
+        fightCounter = 4;
+    switch (face) {
+        case Face::Up:
+            sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * role, 32 * 3 + 32 * fightCounter, 32, 32));
+            break;
+        case Face::Down:
+            sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * role, 32 * 0 + 32 * fightCounter, 32, 32));
+            break;
+        case Face::Left:
+            sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * role, 32 * 1 + 32 * fightCounter, 32, 32));
+            break;
+        case Face::Right:
+            sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * role, 32 * 2 + 32 * fightCounter, 32, 32));
+            break;
+    }
+    if(walkingCounter==2) {
+        walkingCounter=0;
+        isFighting = false;
     }
 }
 
