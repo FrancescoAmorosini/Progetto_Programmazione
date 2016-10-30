@@ -23,11 +23,17 @@ int main() {
     if (LevelCreator::characterName(&window) == EXIT_FAILURE)
         return EXIT_FAILURE;
 
+sf::Music BGM;
+    if(!BGM.openFromFile("Resources/BGM.ogg"))
+        return EXIT_FAILURE;
+
     sf::View view2(sf::FloatRect(200, 200, 300, 200));
     view2.setSize(sf::Vector2f(window.getSize().x/2, window.getSize().y/2));
     window.setView(view2);
 
     GameLevel *level = LevelCreator::createExample();
+
+    BGM.play();
 
     // Start the game loop
     while (window.isOpen()) {
@@ -37,11 +43,13 @@ int main() {
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
+                BGM.stop();
             }
 
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window.close();
+                BGM.stop();
             }
         }
         // Clear screen
