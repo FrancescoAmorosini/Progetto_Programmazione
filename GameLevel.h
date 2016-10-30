@@ -53,6 +53,7 @@ public:
     //Resources
     sf::Font healthFont;
     sf::Texture heroTexture;
+    sf::Texture enemyTexture;
     sf::Texture floor1;
     sf::Texture orbTexture;
     sf::Texture chestTexture;

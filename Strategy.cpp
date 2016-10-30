@@ -7,22 +7,29 @@
 
 void Enemy::move() {
     //moves in the choosen direction
+    int race=0;
+    if(getRole() == CharacterClass::Witch)
+        race=3;
+    if(getRole() == CharacterClass::BigBaldGuy)
+        race=6;
+    if(getRole() == CharacterClass::Undead)
+        race=9;
         switch (face) {
             case Face::Up:
                 rect.move(0, -speed);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32, 32 * 3, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 4, 32 * 3, 32, 32));
                 break;
             case Face::Down:
                 rect.move(0, speed);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32, 0, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 4, 0, 32, 32));
                 break;
             case Face::Left:
                 rect.move(-speed, 0);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32, 32 * 1, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 4, 32 * 1, 32, 32));
                 break;
             case Face::Right:
                 rect.move(speed, 0);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32, 32 * 2, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 4, 32 * 2, 32, 32));
                 break;
         }
     updatePosition();

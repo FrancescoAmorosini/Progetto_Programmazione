@@ -24,6 +24,7 @@ public:
 
     virtual void updatePosition() override;
     virtual void fight(GameCharacter* enemy) override;
+    virtual void setHP(int HP) override;
     void updateDirection();
 
     const std::string getName() const;

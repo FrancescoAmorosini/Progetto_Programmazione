@@ -9,7 +9,7 @@
 #include "RNG.h"
 
 
-enum class CharacterClass {Warrior, Thief, Mage, Undead, BigBaldGuy, Witch};
+enum class CharacterClass {Warrior, Thief, Mage, Undead, BigBaldGuy, Witch, Bat};
 enum class Face {Up, Down, Left, Right};
 
 class GameCharacter {
@@ -22,7 +22,7 @@ public:
     virtual void fight(GameCharacter* enemy)=0;
 
     int getHP() const;
-    void setHP(int HP);
+    virtual void setHP(int HP);
     int getmaxHP() const;
     void setmaxHP(int maxHP);
     void heal(int HP);

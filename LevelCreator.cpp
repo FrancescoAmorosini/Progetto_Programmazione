@@ -225,8 +225,11 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
         return EXIT_FAILURE;
     level->hero->sprite.setTexture(level->heroTexture);
     level->hero->text.setFont(level->healthFont);
+
+    if(!level->enemyTexture.loadFromFile("Resources/enemies.png"))
+        return EXIT_FAILURE;
     for(int i=0; i< level->enemies.size(); i++) {
-        level->enemies[i]->sprite.setTexture(level->heroTexture);
+        level->enemies[i]->sprite.setTexture(level->enemyTexture);
         level->enemies[i]->text.setFont(level->healthFont);
     }
 
@@ -301,6 +304,9 @@ GameLevel* LevelCreator::createExample() {
     enemies.reserve(bigbaldguy.size() + witches.size());
     enemies.insert(enemies.end(), bigbaldguy.begin(), bigbaldguy.end());
     enemies.insert(enemies.end(),witches.begin(), witches.end());
+
+    enemies.push_back(new Enemy(200,230,CharacterClass::Undead,50,12));
+    enemies.push_back(new Enemy(100,100,CharacterClass::Bat,20,5));
 
     std::vector<Chest*> chests;
     chests.push_back(chest1);

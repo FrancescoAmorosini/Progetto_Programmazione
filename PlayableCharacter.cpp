@@ -90,6 +90,27 @@ const std::string PlayableCharacter::getName() const {
 void PlayableCharacter::setName(const std::string &name) {
     PlayableCharacter::name = name;
 }
+void PlayableCharacter::setHP(int HP) {
+  /*  int knockBack= 10;
+    if(getHP() > getHP() - HP){
+        switch (face){
+            case Face::Up:
+                rect.setPosition(rect.getPosition().x,rect.getPosition().y + knockBack);
+                break;
+            case Face::Down:
+                rect.setPosition(rect.getPosition().x,rect.getPosition().y - knockBack);
+                break;
+            case Face::Right:
+                rect.setPosition(rect.getPosition().x - knockBack,rect.getPosition().y);
+                break;
+            case Face::Left:
+                rect.setPosition(rect.getPosition().x + knockBack,rect.getPosition().y);
+                break;
+        }
+    updatePosition();
+    } */
+    GameCharacter::setHP(HP);
+}
 
 Weapon* PlayableCharacter::getWeapon() const {
     return weapon;
