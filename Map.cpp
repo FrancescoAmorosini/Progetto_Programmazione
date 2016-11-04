@@ -4,14 +4,6 @@
 
 #include "Map.h"
 
-Map::Map(int w, int h) throw(std::invalid_argument) : width(w),height(h) {
-    if (w > 0 && h > 0) {
-        for (int i = 0; i < w * h; i++)
-            buffer.push_back(new Tile());
-
-    } else
-        throw (std::invalid_argument("Error: insert valid map dimensions"));
-}
 Map::~Map() {
     buffer.erase(buffer.begin(), buffer.end());
     wallBuffer.erase(wallBuffer.begin(), wallBuffer.end());

@@ -7,11 +7,8 @@
 void drawLevel(GameLevel* level, sf::RenderWindow* window){
 
     //Draws Map and Walls
-    for(int i=0; i<level->map->getHeight(); i++) {
-        for (int j = 0; j < level->map->getWidth(); j++) {
-            level->map->getTile(i, j)->sprite.setPosition((32 * i), (32 * j));
-            window->draw(level->map->getTile(i, j)->sprite);
-        }
+    for(int i=0; i<level->map->buffer.size(); i++) {
+            window->draw(level->map->buffer[i]->sprite);
     }
     for(int i=0; i< level->map->wallBuffer.size(); i++)
         window->draw(level->map->wallBuffer[i]->sprite);

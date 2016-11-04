@@ -16,6 +16,7 @@ Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade, 
 }
 void Enemy::updatePosition() {
     //Updates sprites
+
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x, rect.getPosition().y -30);
     text.setString(std::to_string(getHP()));
@@ -26,7 +27,7 @@ void Enemy::updatePosition() {
 
     walkingCounter++;
 
-    if (walkingCounter == 2)
+    if (walkingCounter >= 2)
         walkingCounter = 0;
     }
 

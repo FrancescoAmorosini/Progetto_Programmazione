@@ -18,6 +18,7 @@ public:
     static GameLevel* createExample();
 
     static sf::Music menuTheme;
+    static sf::Music BGM;
 
     static CharacterClass heroclass;
     static std::string heroname;

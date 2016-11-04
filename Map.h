@@ -19,7 +19,7 @@
 
 class Map {
 public:
-    Map(int w, int h)throw(std::invalid_argument);
+    Map(){}
     ~Map();
 
     void setTile(int w, int h, const bool walkable) throw(RangeException);
@@ -28,11 +28,11 @@ public:
     int getHeight() const;
 
     std::vector<Wall*> wallBuffer;
-
+    std::vector<Tile*> buffer;
 private:
     int width;
     int height;
-    std::vector<Tile*> buffer;
+
 
 };
 

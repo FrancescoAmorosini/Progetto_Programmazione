@@ -8,28 +8,28 @@
 void Enemy::move() {
     //moves in the choosen direction
     int race=0;
-    if(getRole() == CharacterClass::Witch)
+    if(getRole() == CharacterClass::Bat)
         race=3;
-    if(getRole() == CharacterClass::BigBaldGuy)
+    if(getRole() == CharacterClass::Witch)
         race=6;
-    if(getRole() == CharacterClass::Undead)
+    if(getRole() == CharacterClass::BigBaldGuy)
         race=9;
         switch (face) {
             case Face::Up:
                 rect.move(0, -speed);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 5, 32 * 3, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 3, 32, 32));
                 break;
             case Face::Down:
                 rect.move(0, speed);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 5, 0, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 0, 32, 32));
                 break;
             case Face::Left:
                 rect.move(-speed, 0);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 5, 32 * 1, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 1, 32, 32));
                 break;
             case Face::Right:
                 rect.move(speed, 0);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race + 5, 32 * 2, 32, 32));
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 2, 32, 32));
                 break;
         }
     updatePosition();
@@ -68,9 +68,11 @@ void Enemy::chaseHero(PlayableCharacter *hero) {
 Spell* Enemy::shootSpell() {
     //if witch && aggroed enemy has chance of shooting a spell each 2 seconds
     if(RNG::throwCoin(120) && getRole() == CharacterClass::Witch && aggroed) {
-        return new Spell(rect.getPosition().x + rect.getSize().x / 2 - 13,    //13= Half Spell Sprite
-                         rect.getPosition().y + rect.getSize().y / 2 - rect.getSize().y / 2,
-                         face);
+        Spell* spell = new Spell(rect.getPosition().x + rect.getSize().x / 2 - 13,    //13= Half Spell Sprite
+                                 rect.getPosition().y + rect.getSize().y / 2 - rect.getSize().y / 2,
+                                 face);
+        spell->sprite.setColor(sf::Color(255,100,255));
+        return spell;
     }
     else
         return nullptr;

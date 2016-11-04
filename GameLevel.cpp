@@ -104,11 +104,20 @@ void GameLevel::updateLevel() {
     //Manages enemies
     for (int i = 0; i < enemies.size(); i++) {
         //Turns in a random direction or hero direction if aggroed
+        bool bat= false;
+        if(enemies[i]->getRole() == CharacterClass::Bat)
+            bat=true;
+        bat:
         enemies[i]->turnAround(hero);
         //Checks if enemy can move in that direction
         if (!checkWallCollision(enemies[i]->rect, enemies[i]->face, &wallIndex) &&
             !checkChestCollision(enemies[i]->rect, enemies[i]->face, &chestIndex))
             enemies[i]->move();
+        //Doubles speed if bat
+        if(bat) {
+            bat = false;
+            goto bat;
+        }
         //Shoots a spell if enough time is passed since last shot
         if (Spell::enemyProjectileLife.getElapsedTime() > Spell::projectileLifeSpan) {
             Spell* spell = enemies[i]->shootSpell();
@@ -253,37 +262,47 @@ bool GameLevel::checkChestCollision(sf::RectangleShape rect, const Face face, in
 }
 
 bool GameLevel::checkWallCollision(sf::RectangleShape rect,Face face, int *index) {
-    int toll=2;
+    int toll = 2;
     for (int i = 0; i < map->wallBuffer.size(); i++) {
-        switch (face) {
-            case Face::Up:
-                if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y + 32 - rect.getPosition().y)) < toll &&
-                    abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - rect.getPosition().x)) < 32 - toll) {
-                    *index = i;
-                    return true;
-                }
-                break;
-            case Face::Down:
-                if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - 32 - rect.getPosition().y )) < toll &&
-                    abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - rect.getPosition().x)) < 32 - toll) {
-                    *index = i;
-                    return true;
-                }
-                break;
-            case Face::Left:
-                if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - rect.getPosition().y )) < 32 - toll &&
-                    abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x + 32 - rect.getPosition().x)) < toll) {
-                    *index = i;
-                    return true;
-                }
-                break;
-            case Face::Right:
-                if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - rect.getPosition().y )) < 32 - toll &&
-                    abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - 32 - rect.getPosition().x)) < toll) {
-                    *index = i;
-                    return true;
-                }
-                break;
+        if (!map->wallBuffer[i]->isWalkable()) {
+            switch (face) {
+                case Face::Up:
+                    if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y + 32 - rect.getPosition().y)) <
+                        toll &&
+                        abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - rect.getPosition().x)) <
+                        32 - toll) {
+                        *index = i;
+                        return true;
+                    }
+                    break;
+                case Face::Down:
+                    if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - 32 - rect.getPosition().y )) <
+                        toll &&
+                        abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - rect.getPosition().x)) <
+                        32 - toll) {
+                        *index = i;
+                        return true;
+                    }
+                    break;
+                case Face::Left:
+                    if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - rect.getPosition().y )) <
+                        32 - toll &&
+                        abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x + 32 - rect.getPosition().x)) <
+                        toll) {
+                        *index = i;
+                        return true;
+                    }
+                    break;
+                case Face::Right:
+                    if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - rect.getPosition().y )) <
+                        32 - toll &&
+                        abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - 32 - rect.getPosition().x)) <
+                        toll) {
+                        *index = i;
+                        return true;
+                    }
+                    break;
+            }
         }
     }
     return false;
@@ -295,18 +314,18 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
             //ADJUST HITBOX
             case Face::Up:
                 rect.setSize(sf::Vector2f(32, 48));
-                rect.move(0,-10);
+                rect.move(0,-20);
                 break;
             case Face::Down:
                 rect.setSize(sf::Vector2f(32, 48));
-                rect.move(0,5);
+                rect.move(0,15);
             case Face::Left:
                 rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-5,0);
+                rect.move(-15,0);
                 break;
             case Face::Right:
                 rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-3,0);
+                rect.move(-13,0);
                 break;
         }
         if (rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())){

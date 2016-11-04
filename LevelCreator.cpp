@@ -216,6 +216,9 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
 
 
 int LevelCreator::loadLevelExample(GameLevel* level) {
+    //Music
+    if(!BGM.openFromFile("Resources/BGM.ogg"))
+        return EXIT_FAILURE;
     //FONT
     if (!level->healthFont.loadFromFile("Resources/sansation.ttf")) {
         return EXIT_FAILURE;
@@ -236,10 +239,8 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
     if(!level->floor1.loadFromFile("Resources/Floor.png"))
         return EXIT_FAILURE;
 
-    for(int i=0; i<level->map->getHeight(); i++) {
-        for(int j=0; j<level->map->getWidth();j++){
-            level->map->getTile(i,j)->sprite.setTexture(level->floor1);
-        }
+    for(int i=0; i<level->map->buffer.size(); i++) {
+            level->map->buffer[i]->sprite.setTexture(level->floor1);
     }
 
     for(int i=0; i< level->map->wallBuffer.size(); i++)
@@ -273,7 +274,7 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 
 GameLevel* LevelCreator::createExample() {
     PlayableCharacter* hero= CharacterFactory::createCharacter(400,650,heroclass,heroname);
-    Map* map= new Map(100,100);
+    Map* map= new Map();
     Weapon* w= WeaponFactory::createWeapon(0,0,15);
     Weapon* ww= WeaponFactory::createWeapon(0,0,30,true,true);
 
@@ -320,28 +321,28 @@ GameLevel* LevelCreator::createExample() {
     orbs.push_back(orb4);
     orbs.push_back(orb5);
 
-    int wallPositionX = 0;
-    int wallPositionY = 0;
+    int tilePositionX = 0;
+    int tilePositionY = 0;
 
     std::ifstream openfile("Resources/MapExample.txt");
     if(openfile.is_open()){
         while(!openfile.eof()){
             std::string str;
             openfile >> str;
-            char x = str[0], y = str[2];
-            if(isdigit(x) && isdigit(y))
-                map->wallBuffer.push_back(new Wall(wallPositionX, wallPositionY, str));
+            char x = str[0];
+
+            map->buffer.push_back(new Tile(tilePositionX, tilePositionY, str));
+            if(isdigit(x))
+                map->wallBuffer.push_back(new Wall(tilePositionX, tilePositionY, str));
+
             if(openfile.peek() == '\n'){
-                wallPositionX =0;
-                wallPositionY+=32;
+                tilePositionX =0;
+                tilePositionY+=32;
             }
             else
-                wallPositionX+=32;
+                tilePositionX+=32;
         }
     }
-
-    map->wallBuffer[5]->breakable=true;
-    map->wallBuffer[7]->breakable=true;
 
     GameLevel* levelExample= new GameLevel(map, hero,chests,orbs, enemies, hearts);
 
@@ -353,3 +354,4 @@ GameLevel* LevelCreator::createExample() {
 CharacterClass LevelCreator::heroclass;
 std::string LevelCreator::heroname;
 sf::Music LevelCreator::menuTheme;
+sf::Music LevelCreator::BGM;
