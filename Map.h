@@ -19,7 +19,7 @@
 
 class Map {
 public:
-    Map(){}
+    Map(int width, int height);
     ~Map();
 
     void setTile(int w, int h, const bool walkable) throw(RangeException);

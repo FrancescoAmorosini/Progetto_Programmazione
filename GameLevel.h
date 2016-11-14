@@ -13,9 +13,12 @@
 #include "Chest.h"
 #include "Spell.h"
 #include "Heart.h"
+#include "Observer.h"
+#include "Subject.h"
+#include <list>
 
 
-class GameLevel {
+class GameLevel: public Subject {
 public:
     GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> chests,
               std::vector<Orb*> orbs, std::vector<Enemy*> enemies, std::vector<Heart*> hearts);
@@ -40,6 +43,14 @@ public:
     bool checkWallCollision(sf::RectangleShape rect, Face face, int* index);
     bool checkCloseEnemy(sf::RectangleShape rect, Face face, int* index);
 
+    virtual void registerObserver(Observer *o) override;
+    virtual void unregisterObserver(Observer *o) override;
+    virtual void notify() const override;
+
+    int enemiesKilled;
+    int wallsBroken;
+    int chestOpened;
+
     Map* map;
     PlayableCharacter* hero;
     std::vector<Chest*> chests;
@@ -60,6 +71,9 @@ public:
     sf::Texture heartTexture;
     sf::Texture fireballTexture;
     sf::Texture weaponTexture;
+
+private:
+    std::list<Observer*> observers;
 
 };
 

@@ -149,6 +149,8 @@ void GameLevel::updateLevel() {
             hero->setHP(hero->getHP() - 5);                           //Spells makes 10 HP damage
         }
     }
+
+    notify();
 }
 
 bool GameLevel::checkProjectileCollisions(Spell* spell) {
@@ -321,11 +323,11 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
                 rect.move(0,15);
             case Face::Left:
                 rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-15,0);
+                rect.move(-10,0);
                 break;
             case Face::Right:
                 rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-13,0);
+                rect.move(-10,0);
                 break;
         }
         if (rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())){
@@ -336,3 +338,16 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
     return false;
 }
 
+void GameLevel::registerObserver(Observer *O) {
+    observers.push_back(O);
+}
+
+void GameLevel::unregisterObserver(Observer *O) {
+    observers.remove(O);
+}
+
+void GameLevel::notify() const {
+    for (auto itr = std::begin(observers); itr != std::end(observers); itr++){
+        (*itr)->update();
+    }
+}

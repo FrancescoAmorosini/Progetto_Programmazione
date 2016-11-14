@@ -274,7 +274,7 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 
 GameLevel* LevelCreator::createExample() {
     PlayableCharacter* hero= CharacterFactory::createCharacter(400,650,heroclass,heroname);
-    Map* map= new Map();
+    Map* map= new Map(50,50);
     Weapon* w= WeaponFactory::createWeapon(0,0,15);
     Weapon* ww= WeaponFactory::createWeapon(0,0,30,true,true);
 
@@ -289,7 +289,7 @@ GameLevel* LevelCreator::createExample() {
 
     Orb* orb1= new Orb(500,500,Color::blue);
     Orb* orb2= new Orb(250,500,Color::red);
-    Orb* orb3= new Orb(250,25,Color::green);
+    Orb* orb3= new Orb(250,90,Color::green);
     Orb* orb4= new Orb(50,250,Color::yellow);
     Orb* orb5= new Orb(100,100,Color::purple);
     Orb* orb6= new Orb(0,0,Color::blue);
@@ -330,10 +330,10 @@ GameLevel* LevelCreator::createExample() {
             std::string str;
             openfile >> str;
             char x = str[0];
-
-            map->buffer.push_back(new Tile(tilePositionX, tilePositionY, str));
             if(isdigit(x))
                 map->wallBuffer.push_back(new Wall(tilePositionX, tilePositionY, str));
+            if(x == 'X')
+                map->buffer.push_back(new Tile(tilePositionX, tilePositionY, str));
 
             if(openfile.peek() == '\n'){
                 tilePositionX =0;

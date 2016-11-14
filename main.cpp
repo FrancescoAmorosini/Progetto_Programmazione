@@ -1,6 +1,5 @@
 
 #include <iostream>
-#include "LevelCreator.h"
 #include "LevelDrawer.h"
 
 
@@ -23,11 +22,8 @@ int main() {
     if (LevelCreator::characterName(&window) == EXIT_FAILURE)
         return EXIT_FAILURE;
 
-    sf::View view2(sf::FloatRect(200, 200, 300, 200));
-    view2.setSize(sf::Vector2f(window.getSize().x/2, window.getSize().y/2));
-    window.setView(view2);
-
     GameLevel *level = LevelCreator::createExample();
+    LevelDrawer* drawer= new LevelDrawer(level);
 
     //Music Starts
     LevelCreator::BGM.play();
@@ -56,13 +52,7 @@ int main() {
         level->updateLevel();
 
         //DRAW LEVEL
-        drawLevel(level, &window);
-
-        //PLAYER VIEW
-        window.setView(view2);
-        view2.setCenter(level->hero->rect.getPosition());
-
-        std::cout << level->hero->getHP() << std::endl;
+        drawer->drawLevel(&window);
 
         // Update the window
         window.display();
@@ -70,3 +60,5 @@ int main() {
 
     return EXIT_SUCCESS;
 }
+
+//TODO: Observer, Fix Strategy
