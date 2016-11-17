@@ -18,7 +18,7 @@
 #include <list>
 
 
-class GameLevel: public Subject {
+class GameLevel {
 public:
     GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> chests,
               std::vector<Orb*> orbs, std::vector<Enemy*> enemies, std::vector<Heart*> hearts);
@@ -43,15 +43,6 @@ public:
     bool checkWallCollision(sf::RectangleShape rect, Face face, int* index);
     bool checkCloseEnemy(sf::RectangleShape rect, Face face, int* index);
 
-    virtual void registerObserver(Observer *o) override;
-    virtual void unregisterObserver(Observer *o) override;
-    virtual void notify() const override;
-
-    bool chestOpened = false;
-    bool spellshot=false;
-    bool heartpicked=false;
-    bool gameover=false;
-
     Map* map;
     PlayableCharacter* hero;
     std::vector<Chest*> chests;
@@ -72,9 +63,6 @@ public:
     sf::Texture heartTexture;
     sf::Texture fireballTexture;
     sf::Texture weaponTexture;
-
-private:
-    std::list<Observer*> observers;
 
 };
 

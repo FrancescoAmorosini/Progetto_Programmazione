@@ -98,6 +98,7 @@ void Chest::openChest(PlayableCharacter* hero) {
     }
 
     sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
+    hero->addChestOpened();
 }
 
 Weapon* Chest::getWeapon() const {

@@ -56,6 +56,7 @@ void Orb::useOrb(PlayableCharacter *hero) {
                 hero->getWeapon()->setLegendary(true);
             break;
     }
+    hero->addOrbUsed();
 }
 
 Color Orb::getOrbColor() const {

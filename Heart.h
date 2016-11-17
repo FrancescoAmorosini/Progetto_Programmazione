@@ -20,6 +20,7 @@ public:
 
     void restoreHealth(PlayableCharacter* hero){
         hero->heal(25);
+        hero->addHeartPicked();
     }
 };
 #endif //PROGETTO_PROGRAMMAZIONE_HEART_H

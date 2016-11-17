@@ -52,6 +52,8 @@ void PlayableCharacter::fight(GameCharacter* enemy) {
         if(weapon->isRare())
             heal(damage/3);
     }
+    if(!enemy->getHP())
+        addEnemyKilled();
 }
 void PlayableCharacter::updateDirection() {
     walkingCounter++;
@@ -92,6 +94,8 @@ void PlayableCharacter::setName(const std::string &name) {
 }
 void PlayableCharacter::setHP(int HP) {
     GameCharacter::setHP(HP);
+    if(!getHP())
+        setGameOver();
 }
 
 Weapon* PlayableCharacter::getWeapon() const {
@@ -116,3 +120,45 @@ void PlayableCharacter::setInventory(Orb* o){
     inventory.push_back(o);
 }
 
+void PlayableCharacter::addChestOpened() {
+    chestOpened=true;
+    notify();
+}
+
+void PlayableCharacter::addHeartPicked() {
+    heartpicked=true;
+    notify();
+}
+
+void PlayableCharacter::addSpellShot() {
+    spellshot=true;
+    notify();
+}
+
+void PlayableCharacter::addOrbUsed() {
+    orbUsed=true;
+    notify();
+}
+
+void PlayableCharacter::addEnemyKilled() {
+    enemykilled=true;
+    notify();
+}
+
+void PlayableCharacter::setGameOver() {
+    gameover=true;
+    notify();
+}
+void PlayableCharacter::registerObserver(Observer *O) {
+    observers.push_back(O);
+}
+
+void PlayableCharacter::unregisterObserver(Observer *O) {
+    observers.remove(O);
+}
+
+void PlayableCharacter::notify() const {
+    for (auto itr = std::begin(observers); itr != std::end(observers); itr++) {
+        (*itr)->update();
+    }
+}

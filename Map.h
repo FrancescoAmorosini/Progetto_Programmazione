@@ -29,7 +29,7 @@ public:
 
     std::vector<Wall*> wallBuffer;
     std::vector<Tile*> buffer;
-    bool wallBroken = false;
+
 private:
     int width;
     int height;

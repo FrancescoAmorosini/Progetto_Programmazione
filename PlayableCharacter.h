@@ -13,11 +13,14 @@
 
 #include "GameCharacter.h"
 #include "Weapon.h"
+#include "Observer.h"
+#include "Subject.h"
 #include <vector>
+#include <list>
 
 class Orb;
 
-class PlayableCharacter: public GameCharacter, public DrawableObject {
+class PlayableCharacter: public GameCharacter, public DrawableObject, public Subject {
 public:
     PlayableCharacter(float x, float y,CharacterClass r, std::string name, Weapon* w, int HP=100, int atk=10, int evade=1, int critical=1) throw(std::invalid_argument);
     virtual ~PlayableCharacter();
@@ -37,12 +40,31 @@ public:
     sf::Clock damageRate;
     sf::Clock hitRate;
     bool isFighting = false;
-    bool enemyKilled = false;
     std::vector<Orb*> inventory;
+
+    virtual void registerObserver(Observer *o) override;
+    virtual void unregisterObserver(Observer *o) override;
+    virtual void notify() const override;
+
+    bool chestOpened = false;
+    bool spellshot=false;
+    bool heartpicked=false;
+    bool enemykilled=false;
+    bool orbUsed=false;
+    bool gameover=false;
+
+    void addChestOpened();
+    void addSpellShot();
+    void addHeartPicked();
+    void addEnemyKilled();
+    void addOrbUsed();
+    void setGameOver();
+
 
 private:
     std::string name;
     Weapon* weapon;
+    std::list<Observer*> observers;
 
 };
 

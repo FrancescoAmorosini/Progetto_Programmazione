@@ -37,18 +37,21 @@ private:
 
     int killedTime=0;
     int chestTime=0;
-    int wallTime=0;
+    int orbTime=0;
     int heartTime=0;
     int spellTime=0;
 
     int HP;
     int enemiesKilled=0;
-    int wallsBroken=0;
+    int orbUsed=0;
     int chestOpened=0;
     int heartsPicked=0;
     int spellshot=0;
+    bool gameover;
 
-    GameLevel* subject;
+    GameLevel* level;
+
+    PlayableCharacter* subject;
 };
 
 #endif //PROGETTO_PROGRAMMAZIONE_LEVELDRAWER_H

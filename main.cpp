@@ -44,7 +44,7 @@ int main() {
         // Clear screen
         window.clear();
 
-        if(!level->gameover) {
+        if(!level->hero->gameover) {
 
             //LEVEL UPDATE
             level->updateLevel();
