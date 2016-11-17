@@ -12,6 +12,8 @@ public:
 
     void drawLevel(sf::RenderWindow *window);
     void drawHUD(sf::RenderWindow* window);
+    void drawAchievement(sf::RenderWindow* window);
+    void drawGameOver(sf::RenderWindow* window);
     int loadResources();
 
     void attach() override;
@@ -21,16 +23,30 @@ public:
 private:
     sf::View playerview;
     sf::Texture HUD;
-    sf::Texture Bar;
-    sf::Text hptext;
+    sf::Texture achievements;
+    sf::Texture gameOverSplash;
     sf::Sprite emptyBar;
     sf::Sprite hpBar;
-    sf::Sprite frames;
+    sf::Sprite frame;
+    sf::Sprite medal;
+    sf::Text HPtext;
+    sf::Text achievementText;
+
+    sf::Music BGM;
+
+
+    int killedTime=0;
+    int chestTime=0;
+    int wallTime=0;
+    int heartTime=0;
+    int spellTime=0;
 
     int HP;
-    int enemiesKilled;
-    int wallsBroken;
-    int chestOpened;
+    int enemiesKilled=0;
+    int wallsBroken=0;
+    int chestOpened=0;
+    int heartsPicked=0;
+    int spellshot=0;
 
     GameLevel* subject;
 };

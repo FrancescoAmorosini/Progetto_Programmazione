@@ -17,8 +17,10 @@ public:
     static int loadLevelExample(GameLevel* level);
     static GameLevel* createExample();
 
+    static void deleteLevel(GameLevel* level);
+    static bool leveldeleted;
+
     static sf::Music menuTheme;
-    static sf::Music BGM;
 
     static CharacterClass heroclass;
     static std::string heroname;

@@ -25,8 +25,6 @@ int main() {
     GameLevel *level = LevelCreator::createExample();
     LevelDrawer* drawer= new LevelDrawer(level);
 
-    //Music Starts
-    LevelCreator::BGM.play();
 
     // Start the game loop
     while (window.isOpen()) {
@@ -36,28 +34,31 @@ int main() {
             // Close window: exit
             if (event.type == sf::Event::Closed) {
                 window.close();
-                LevelCreator::BGM.stop();
             }
 
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window.close();
-                LevelCreator::BGM.stop();
             }
         }
         // Clear screen
         window.clear();
 
-        //LEVEL UPDATE
-        level->updateLevel();
+        if(!level->gameover) {
 
-        //DRAW LEVEL
-        drawer->drawLevel(&window);
+            //LEVEL UPDATE
+            level->updateLevel();
 
+            //DRAW LEVEL
+            drawer->drawLevel(&window);
+        }
+        else {
+            drawer->drawGameOver(&window);
+        }
         // Update the window
         window.display();
     }
-
+    LevelCreator::deleteLevel(level);
     return EXIT_SUCCESS;
 }
 

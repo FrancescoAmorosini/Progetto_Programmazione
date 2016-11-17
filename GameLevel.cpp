@@ -61,12 +61,15 @@ void GameLevel::updateLevel() {
         //Start fighting animation;
         hero->isFighting=true;
         //BREAKS WALL IF BREAKABLE
-        if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable)
+        if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable) {
             map->wallBuffer.erase(map->wallBuffer.begin() + wallIndex);
+            map->wallBroken=true;
+        }
             //OPENS CHEST
         else if (checkChestCollision(hero->rect, hero->face, &chestIndex)) {
             if (Chest::objectTaken.getElapsedTime() >= Chest::delay) {
                 chests[chestIndex]->openChest(hero);
+                chestOpened=true;
                 Chest::objectTaken.restart();
             }
         }
@@ -79,6 +82,7 @@ void GameLevel::updateLevel() {
                     hero->face);
             spells.push_back(spell);
             Spell::projectileLife.restart();
+            spellshot=true;
         } else {
             //PHYSICAL ATTACK IF NOT MAGE
             if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex) &&
@@ -89,17 +93,32 @@ void GameLevel::updateLevel() {
                     if (RNG::throwCoin(Enemy::dropChance))
                         weapons.push_back(enemies[enemyIndex]->dropWeapon());
                     enemies.erase(enemies.begin() + enemyIndex);
+                    hero->enemyKilled=true;
                 }
                 hero->hitRate.restart();
             }
         }
     }
-    //Update hero sprite
+    // USE ORB
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
+       for(int i=0; i<10; i++){
+           if(hero->getInventory(i) && Orb::usedOrb.getElapsedTime() > sf::seconds(0.5)){
+               hero->getInventory(i)->useOrb(hero);
+               hero->inventory.erase(hero->inventory.begin() +i);
+               Orb::usedOrb.restart();
+               break;
+           }
+       }
+    }
+
+        //Update hero sprite
     hero->updatePosition();
     checkOrbsCollisions();      //picks up orbs
     checkHeartsCollisions();   //picks up hearts
     checkWeaponsCollisions();  // picks up weapons
     checkEnemiesCollisions(); //gets damaged
+    if(hero->getHP() == 0)
+        gameover=true;
 
     //Manages enemies
     for (int i = 0; i < enemies.size(); i++) {
@@ -178,6 +197,7 @@ void GameLevel::checkProjectileHit(Spell *spell, int *index) {
                 if (RNG::throwCoin(Enemy::dropChance))
                     weapons.push_back(enemies[i]->dropWeapon());
                 enemies.erase(enemies.begin() + i);
+                hero->enemyKilled=true;
             }
             break;
         }
@@ -201,6 +221,7 @@ void GameLevel::checkHeartsCollisions(){
             {
                 hearts[i]->restoreHealth(hero);
                 hearts.erase(hearts.begin() + i);
+                heartpicked=true;
                 break;
             }
     }
@@ -327,7 +348,7 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
                 break;
             case Face::Right:
                 rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-10,0);
+                rect.move(-15,0);
                 break;
         }
         if (rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())){

@@ -45,8 +45,8 @@ TEST(PlayableCharacter,PlayableCharacter_Setting_Test){
     ASSERT_EQ(w,g->getWeapon());
     ASSERT_EQ(o,g->getInventory(0));
 
-    ASSERT_THROW(g->getInventory(12),RangeException);
-    ASSERT_THROW(g->getInventory(-1),RangeException);
+    ASSERT_FALSE(g->getInventory(12));
+    ASSERT_FALSE(g->getInventory(-1));
 
 }
 

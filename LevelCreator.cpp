@@ -216,9 +216,6 @@ int LevelCreator::characterName(sf::RenderWindow *window) {
 
 
 int LevelCreator::loadLevelExample(GameLevel* level) {
-    //Music
-    if(!BGM.openFromFile("Resources/BGM.ogg"))
-        return EXIT_FAILURE;
     //FONT
     if (!level->healthFont.loadFromFile("Resources/sansation.ttf")) {
         return EXIT_FAILURE;
@@ -343,6 +340,7 @@ GameLevel* LevelCreator::createExample() {
                 tilePositionX+=32;
         }
     }
+    leveldeleted=false;
 
     GameLevel* levelExample= new GameLevel(map, hero,chests,orbs, enemies, hearts);
 
@@ -351,7 +349,13 @@ GameLevel* LevelCreator::createExample() {
     return levelExample;
 }
 
+void LevelCreator::deleteLevel(GameLevel *level) {
+    if(!leveldeleted)
+        delete level;
+    leveldeleted=true;
+}
+
 CharacterClass LevelCreator::heroclass;
 std::string LevelCreator::heroname;
 sf::Music LevelCreator::menuTheme;
-sf::Music LevelCreator::BGM;
+bool LevelCreator::leveldeleted;

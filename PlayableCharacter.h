@@ -31,17 +31,19 @@ public:
     void setName(const std::string &name);
     Weapon *getWeapon() const;
     void setWeapon(Weapon* weapon);
-    const Orb* getInventory(int index) const throw(RangeException);
+     Orb* getInventory(int index) const throw(RangeException);
     void setInventory(Orb* o);
 
     sf::Clock damageRate;
     sf::Clock hitRate;
     bool isFighting = false;
+    bool enemyKilled = false;
+    std::vector<Orb*> inventory;
 
 private:
     std::string name;
     Weapon* weapon;
-    std::vector<Orb*> inventory;
+
 };
 
 

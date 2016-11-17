@@ -13,10 +13,10 @@ class Orb : public DrawableObject {
 public:
     Orb(float x, float y, Color c);
 
-    std::string useOrb(PlayableCharacter* hero);
+    void useOrb(PlayableCharacter* hero);
 
     Color getOrbColor() const;
-
+   static sf::Clock usedOrb;
 
 private:
     Color orbColor;

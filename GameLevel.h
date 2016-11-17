@@ -47,9 +47,10 @@ public:
     virtual void unregisterObserver(Observer *o) override;
     virtual void notify() const override;
 
-    int enemiesKilled;
-    int wallsBroken;
-    int chestOpened;
+    bool chestOpened = false;
+    bool spellshot=false;
+    bool heartpicked=false;
+    bool gameover=false;
 
     Map* map;
     PlayableCharacter* hero;

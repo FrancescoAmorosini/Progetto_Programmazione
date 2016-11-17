@@ -103,12 +103,12 @@ void PlayableCharacter::setWeapon(Weapon *weapon) {
     this->weapon = weapon;
 }
 
-const Orb* PlayableCharacter::getInventory(int index) const throw(RangeException) {
+Orb* PlayableCharacter::getInventory(int index) const throw(RangeException) {
     if (index>=0 && index<inventory.size()) {
         return inventory[index];
     }
     else
-        throw RangeException("Error: invalid inventory index",0, static_cast<unsigned int>(inventory.size()),index);
+        return nullptr;
 
 }
 

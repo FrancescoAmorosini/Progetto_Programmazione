@@ -82,10 +82,22 @@ void Chest::openChest(PlayableCharacter* hero) {
         Weapon *w = hero->getWeapon();
         hero->setWeapon(weapon);
         setWeapon(w);
+        //Update text
+        if(weapon->isLegendary()) {
+            text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  LEGENDARY!  ");
+            text.setFillColor(sf::Color::Cyan);
+        }
+        else if(weapon->isRare()) {
+            text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  RARE!  ");
+            text.setFillColor(sf::Color(255,128,0));
+        }
+        else {
+            text.setString("STR: " + std::to_string(weapon->getStrenght()));
+            text.setFillColor(sf::Color::White);
+        }
     }
 
     sprite.setTextureRect(sf::IntRect(32, 0, 32, 32));
-    text.setString("");
 }
 
 Weapon* Chest::getWeapon() const {
