@@ -14,6 +14,8 @@ LevelDrawer::LevelDrawer(GameLevel *lvl) : level(lvl), subject(level->hero){
     if(loadResources() == EXIT_FAILURE)
         throw std::runtime_error("Error: Cannot open file");
     BGM.play();
+    orbUsedText.setString("");
+    heroWeapon= subject->getWeapon()->text;
 
     attach();
 }
@@ -83,7 +85,10 @@ void LevelDrawer::drawHUD(sf::RenderWindow *window) {
     hpBar.setTextureRect(sf::IntRect(0, 0, filledBar, 12));
     HPtext.setPosition(emptyBar.getPosition().x - 40, emptyBar.getPosition().y - 5);
     achievementText.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 250);
+    orbUsedText.setPosition(subject->rect.getPosition().x + 5, subject->rect.getPosition().y - 5 - orbTextPos );
 
+
+    //DRAWS INVENTORY
     for (int i = 0; i < 10; i++) {
         frame.setPosition((emptyBar.getPosition().x + 300) + i * 32, emptyBar.getPosition().y);
         if (level->hero->getInventory(i)) {
@@ -93,6 +98,22 @@ void LevelDrawer::drawHUD(sf::RenderWindow *window) {
         }
         window->draw(frame);
     }
+    //DRAWS ORB TEXT
+    if (orbUsedText.getString() != "" && orbTextPos <= 50) {
+        orbUsedText.setFont(level->healthFont);
+        window->draw(orbUsedText);
+        orbTextPos++;
+        if(orbTextPos == 50) {
+            orbTextPos = 0;
+            orbUsedText.setString("");
+        }
+    }
+
+    heroWeapon.setPosition(playerview.getCenter().x + 150, playerview.getCenter().y -250);
+    heroWeapon.setFont(level->healthFont);
+    window->draw(heroWeapon);
+
+
     //Bronze medal
     if (enemiesKilled >= 3) {
         medal.setTextureRect(sf::IntRect(0, 0, 13, 26));
@@ -122,7 +143,7 @@ void LevelDrawer::drawHUD(sf::RenderWindow *window) {
         medal.setPosition(achievementText.getPosition().x + 300, achievementText.getPosition().y);
         window->draw(medal);
     }//Heart medal
-    if (heartsPicked >= 1) {
+    if (heartsPicked >= 3) {
         medal.setTextureRect(sf::IntRect(43, 0, 13, 26));
         medal.setPosition(achievementText.getPosition().x + 350, achievementText.getPosition().y);
         window->draw(medal);
@@ -282,6 +303,8 @@ void LevelDrawer::detach() {
 
 void LevelDrawer::update() {
     HP = subject->getHP();
+    orbUsedText = subject->orbUsedText;
+    heroWeapon = subject->getWeapon()->text;
     if(subject->enemykilled) {
         enemiesKilled ++;
         subject->enemykilled=false;

@@ -23,16 +23,12 @@ Weapon::Weapon(float x, float y, int strenght, WeaponType weapon, bool rare, boo
     }
 
     text.setCharacterSize(20);
-    text.setPosition(rect.getPosition().x - 20 , rect.getPosition().y - 20);
+    text.setPosition(0 ,0);
 
-    if(legendary) {
-        text.setString("STR: " + std::to_string(strenght) + ",  LEGENDARY!  ");
-        text.setFillColor(sf::Color::Cyan);
-    }
-    else if(rare) {
-        text.setString("STR: " + std::to_string(strenght) + ",  RARE!  ");
-        text.setFillColor(sf::Color(255, 128, 0));
-    }
+    if(legendary)
+       setLegendary(true);
+    else if(rare)
+        setRare(true);
     else
         text.setString("STR: " + std::to_string(strenght));
 
@@ -64,6 +60,11 @@ bool Weapon::isRare() const {
 
 void Weapon::setRare(bool rare) {
     Weapon::rare = rare;
+    if(rare){
+        text.setFillColor(sf::Color(224,224,244));
+        text.setString("STR: " + std::to_string(strenght) + ",  RARE!  ");
+        }
+
 }
 
 bool Weapon::isLegendary() const {
@@ -72,6 +73,10 @@ bool Weapon::isLegendary() const {
 
 void Weapon::setLegendary(bool legendary) {
     Weapon::legendary = legendary;
+    if(legendary) {
+        text.setString("STR: " + std::to_string(strenght) + ",  LEGENDARY!  ");
+        text.setFillColor(sf::Color(204,204,0));
+    }
 }
 
 WeaponType Weapon::getWeapon() const {

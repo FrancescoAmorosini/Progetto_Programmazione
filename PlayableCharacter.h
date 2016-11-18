@@ -53,6 +53,8 @@ public:
     bool orbUsed=false;
     bool gameover=false;
 
+    sf::Text orbUsedText;
+
     void addChestOpened();
     void addSpellShot();
     void addHeartPicked();

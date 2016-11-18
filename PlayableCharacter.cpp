@@ -105,6 +105,7 @@ Weapon* PlayableCharacter::getWeapon() const {
 void PlayableCharacter::setWeapon(Weapon *weapon) {
     weapon->rect.setPosition(rect.getPosition());
     this->weapon = weapon;
+    notify();
 }
 
 Orb* PlayableCharacter::getInventory(int index) const throw(RangeException) {

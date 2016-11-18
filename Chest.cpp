@@ -14,19 +14,10 @@ Chest::Chest(float posX, float posY, Weapon *w) : weapon(w){
     sprite.setPosition(rect.getPosition());
 
     weapon->rect.setPosition(rect.getPosition());
+    text = w->text;
     text.setCharacterSize(16);
     text.setPosition(rect.getPosition().x - 20 , rect.getPosition().y - 20);
 
-    if(w->isLegendary()) {
-        text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  LEGENDARY!  ");
-        text.setFillColor(sf::Color::Cyan);
-    }
-    else if(w->isRare()) {
-        text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  RARE!  ");
-        text.setFillColor(sf::Color(255,128,0));
-    }
-    else
-        text.setString("STR: " + std::to_string(weapon->getStrenght()));
 }
 
 Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
@@ -85,11 +76,11 @@ void Chest::openChest(PlayableCharacter* hero) {
         //Update text
         if(weapon->isLegendary()) {
             text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  LEGENDARY!  ");
-            text.setFillColor(sf::Color::Cyan);
+            text.setFillColor(sf::Color(204,204,0));
         }
         else if(weapon->isRare()) {
             text.setString("STR: " + std::to_string(weapon->getStrenght()) + ",  RARE!  ");
-            text.setFillColor(sf::Color(255,128,0));
+            text.setFillColor(sf::Color(224,224,244));
         }
         else {
             text.setString("STR: " + std::to_string(weapon->getStrenght()));

@@ -29,6 +29,7 @@ private:
     sf::Sprite hpBar;
     sf::Sprite frame;
     sf::Sprite medal;
+    sf::Text heroWeapon;
     sf::Text HPtext;
     sf::Text achievementText;
 
@@ -40,6 +41,7 @@ private:
     int orbTime=0;
     int heartTime=0;
     int spellTime=0;
+    int orbTextPos=0;
 
     int HP;
     int enemiesKilled=0;
@@ -47,6 +49,7 @@ private:
     int chestOpened=0;
     int heartsPicked=0;
     int spellshot=0;
+    sf::Text orbUsedText;
     bool gameover;
 
     GameLevel* level;
