@@ -11,61 +11,63 @@ GameLevel::GameLevel(Map* map, PlayableCharacter* hero, std::vector<Chest*> ches
 }
 
 void GameLevel::updateLevel() {
-    int chestIndex = 0;
-    int wallIndex = 0;
-    int enemyIndex = 0;
+    int chestIndex = -1;
+    int wallIndex = -1;
+    int enemyIndex = -1;
     bool isThief = false;
     //DASH IF THIEF
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && hero->getRole() == CharacterClass::Thief)
         isThief = true;
     restart:
+    checkWallCollision(hero->rect, hero, &wallIndex);
+    checkChestCollision(hero->rect, hero, &chestIndex);
     //MOVE UP
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         hero->face = Face::Up;
-        if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
-            !checkWallCollision(hero->rect, hero->face, &wallIndex)) {         // avoids collisions
+        if (hero->canMoveUP) {         // avoids collisions
             hero->rect.move(0, -hero->speedMovement);
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         //MOVE DOWN
         hero->face = Face::Down;
-        if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
-            !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
+        if (hero->canMoveDOWN) {
             hero->rect.move(0, hero->speedMovement);
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         //MOVE LEFT
         hero->face = Face::Left;
-        if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
-            !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
+        if (hero->canMoveLEFT) {
             hero->rect.move(-hero->speedMovement, 0);
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         //MOVE RIGHT
         hero->face = Face::Right;
-        hero->sprite.setTextureRect(sf::IntRect(hero->walkingCounter * 32, 32 * 2, 32, 32));
-        if (!checkChestCollision(hero->rect, hero->face, &chestIndex) &&
-            !checkWallCollision(hero->rect, hero->face, &wallIndex)) {
+        if (hero->canMoveRIGHT) {
             hero->rect.move(hero->speedMovement, 0);
         }
-
     }
-    hero->updateDirection();
+    //Update hero sprite
+    hero->updatePosition();
+    checkOrbsCollisions();      //picks up orbs
+    checkHeartsCollisions();   //picks up hearts
+    checkWeaponsCollisions();  // picks up weapons
+    checkEnemiesCollisions(); //gets damaged
     //MOVES TWICE IF THIEF
     if (isThief) {
         isThief=false;
         goto restart;
     }
+
     //ACTION BUTTON
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         //Start fighting animation;
         hero->isFighting=true;
         //BREAKS WALL IF BREAKABLE
-        if (checkWallCollision(hero->rect, hero->face, &wallIndex) && map->wallBuffer[wallIndex]->breakable) {
+        if (wallIndex != -1 && map->wallBuffer[wallIndex]->breakable) {
             map->wallBuffer.erase(map->wallBuffer.begin() + wallIndex);
         }
             //OPENS CHEST
-        else if (checkChestCollision(hero->rect, hero->face, &chestIndex)) {
+        else if (chestIndex != -1) {
             if (Chest::objectTaken.getElapsedTime() >= Chest::delay) {
                 chests[chestIndex]->openChest(hero);
                 Chest::objectTaken.restart();
@@ -81,12 +83,13 @@ void GameLevel::updateLevel() {
             spells.push_back(spell);
             Spell::projectileLife.restart();
             hero->addSpellShot();
-        } else {
+        }
+        else {
             //PHYSICAL ATTACK IF NOT MAGE
             if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex) &&
                 hero->hitRate.getElapsedTime().asSeconds() > 0.4) {
+                enemies[enemyIndex]->setAggroed();
                 hero->fight(enemies[enemyIndex]);
-                enemies[enemyIndex]->aggroed = true;
                 if (enemies[enemyIndex]->getHP() == 0) {
                     if (RNG::throwCoin(Enemy::dropChance))
                         weapons.push_back(enemies[enemyIndex]->dropWeapon());
@@ -99,7 +102,7 @@ void GameLevel::updateLevel() {
     // USE ORB
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
        for(int i=0; i<10; i++){
-           if(hero->getInventory(i) && Orb::usedOrb.getElapsedTime() > sf::seconds(0.5)){
+           if(hero->getInventory(i) && Orb::usedOrb.getElapsedTime() > sf::seconds(1)){
                hero->getInventory(i)->useOrb(hero);
                hero->inventory.erase(hero->inventory.begin() +i);
                Orb::usedOrb.restart();
@@ -108,13 +111,6 @@ void GameLevel::updateLevel() {
        }
     }
 
-        //Update hero sprite
-    hero->updatePosition();
-    checkOrbsCollisions();      //picks up orbs
-    checkHeartsCollisions();   //picks up hearts
-    checkWeaponsCollisions();  // picks up weapons
-    checkEnemiesCollisions(); //gets damaged
-
     //Manages enemies
     for (int i = 0; i < enemies.size(); i++) {
         //Turns in a random direction or hero direction if aggroed
@@ -122,11 +118,10 @@ void GameLevel::updateLevel() {
         if(enemies[i]->getRole() == CharacterClass::Bat)
             bat=true;
         bat:
-        enemies[i]->turnAround(hero);
         //Checks if enemy can move in that direction
-        if (!checkWallCollision(enemies[i]->rect, enemies[i]->face, &wallIndex) &&
-            !checkChestCollision(enemies[i]->rect, enemies[i]->face, &chestIndex))
-            enemies[i]->move();
+        checkWallCollision(enemies[i]->rect, enemies[i], &wallIndex);
+        checkChestCollision(enemies[i]->rect, enemies[i], &chestIndex);
+        enemies[i]->move(hero);
         //Doubles speed if bat
         if(bat) {
             bat = false;
@@ -135,7 +130,7 @@ void GameLevel::updateLevel() {
         //Shoots a spell if enough time is passed since last shot
         if (Spell::enemyProjectileLife.getElapsedTime() > Spell::projectileLifeSpan) {
             Spell* spell = enemies[i]->shootSpell();
-            // checks if spell a void pointer
+            // checks if spell is a void pointer
             if(spell) {
                 enemySpells.push_back(spell);
                 Spell::enemyProjectileLife.restart();
@@ -185,8 +180,8 @@ void GameLevel::checkProjectileHit(Spell *spell, int *index) {
     for (int i = 0; i < enemies.size(); i++) {
         if (spell->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())) {
             spells.erase(spells.begin() + *index);
+            enemies[i]->setAggroed();
             hero->fight(enemies[i]);
-            enemies[i]->aggroed = true;
             if (enemies[i]->getHP() == 0) {
                 if (RNG::throwCoin(Enemy::dropChance))
                     weapons.push_back(enemies[i]->dropWeapon());
@@ -239,88 +234,67 @@ void GameLevel::checkEnemiesCollisions() {
     }
 }
 
-bool GameLevel::checkChestCollision(sf::RectangleShape rect, const Face face, int* index) {
+void GameLevel::checkChestCollision(sf::RectangleShape rect, GameCharacter* c, int* index) {
     int toll = 2;
     for (int i = 0; i < chests.size(); i++) {
-        switch (face) {
-            case Face::Up:
                 if (abs(static_cast<int>(chests[i]->rect.getPosition().y + 32 - rect.getPosition().y)) < toll &&
                     abs(static_cast<int>(chests[i]->rect.getPosition().x - rect.getPosition().x)) < 32 - toll) {
                     *index = i;
-                    return true;
+                    c->canMoveUP= false;
                 }
-                break;
-            case Face::Down:
                 if (abs(static_cast<int>(chests[i]->rect.getPosition().y - rect.getPosition().y )) < 32 &&
                     abs(static_cast<int>(chests[i]->rect.getPosition().x - rect.getPosition().x)) < 32 - toll) {
                     *index = i;
-                    return true;
+                    c->canMoveDOWN= false;
                 }
-                break;
-            case Face::Left:
                 if (abs(static_cast<int>(chests[i]->rect.getPosition().y - rect.getPosition().y )) < 32 - toll &&
                     abs(static_cast<int>(chests[i]->rect.getPosition().x + 32 - rect.getPosition().x)) < toll) {
                     *index = i;
-                    return true;
+                    c->canMoveLEFT= false;
                 }
-                break;
-            case Face::Right:
                 if (abs(static_cast<int>(chests[i]->rect.getPosition().y - rect.getPosition().y )) < 32 - toll &&
                     abs(static_cast<int>(chests[i]->rect.getPosition().x - 32 - rect.getPosition().x)) < toll) {
                     *index = i;
-                    return true;
+                    c->canMoveRIGHT= false;
                 }
-                break;
         }
-    }
-    return false;
 }
 
-bool GameLevel::checkWallCollision(sf::RectangleShape rect,Face face, int *index) {
+void GameLevel::checkWallCollision(sf::RectangleShape rect, GameCharacter* c, int *index) {
     int toll = 2;
     for (int i = 0; i < map->wallBuffer.size(); i++) {
         if (!map->wallBuffer[i]->isWalkable()) {
-            switch (face) {
-                case Face::Up:
                     if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y + 32 - rect.getPosition().y)) <
                         toll &&
                         abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - rect.getPosition().x)) <
                         32 - toll) {
                         *index = i;
-                        return true;
+                        c->canMoveUP=false;
                     }
-                    break;
-                case Face::Down:
                     if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - 32 - rect.getPosition().y )) <
                         toll &&
                         abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - rect.getPosition().x)) <
                         32 - toll) {
                         *index = i;
-                        return true;
+                        c->canMoveDOWN=false;
                     }
-                    break;
-                case Face::Left:
+
                     if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - rect.getPosition().y )) <
                         32 - toll &&
                         abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x + 32 - rect.getPosition().x)) <
                         toll) {
                         *index = i;
-                        return true;
+                        c->canMoveLEFT=false;
                     }
-                    break;
-                case Face::Right:
                     if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y - rect.getPosition().y )) <
                         32 - toll &&
                         abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().x - 32 - rect.getPosition().x)) <
                         toll) {
                         *index = i;
-                        return true;
+                        c->canMoveRIGHT=false;
                     }
-                    break;
             }
         }
-    }
-    return false;
 }
 
 bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) {
@@ -340,7 +314,7 @@ bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) 
                 break;
             case Face::Right:
                 rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-15,0);
+                rect.move(10,0);
                 break;
         }
         if (rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())){

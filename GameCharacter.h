@@ -34,6 +34,12 @@ public:
     void setCritical(int critical);
     CharacterClass getRole() const;
 
+
+    bool canMoveUP=true;
+    bool canMoveDOWN=true;
+    bool canMoveLEFT=true;
+    bool canMoveRIGHT=true;
+
     int speedMovement=3;
     int walkingCounter=1;
     Face face= Face::Down;

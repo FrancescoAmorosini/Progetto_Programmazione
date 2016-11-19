@@ -39,8 +39,8 @@ public:
     void checkEnemiesCollisions();
     void checkWeaponsCollisions();
     bool checkProjectileCollisions(Spell* spell);
-    bool checkChestCollision(sf::RectangleShape rect, Face face, int *index);
-    bool checkWallCollision(sf::RectangleShape rect, Face face, int* index);
+    void checkChestCollision(sf::RectangleShape rect, GameCharacter* c, int *index);
+    void checkWallCollision(sf::RectangleShape rect, GameCharacter* c, int* index);
     bool checkCloseEnemy(sf::RectangleShape rect, Face face, int* index);
 
     Map* map;

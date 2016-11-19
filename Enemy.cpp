@@ -5,7 +5,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade, int critical ) :
-        GameCharacter(role,HP,atk,evade,critical) {
+        GameCharacter(role,HP,atk,evade,critical), behavior(new TurnAround()) {
     rect.setSize(sf::Vector2f(32, 32));
     rect.setPosition(x, y);
     rect.setFillColor(sf::Color::Cyan);
@@ -16,7 +16,6 @@ Enemy::Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade, 
 }
 void Enemy::updatePosition() {
     //Updates sprites
-
     sprite.setPosition(rect.getPosition());
     text.setPosition(rect.getPosition().x, rect.getPosition().y -30);
     text.setString(std::to_string(getHP()));
@@ -29,6 +28,11 @@ void Enemy::updatePosition() {
 
     if (walkingCounter >= 2)
         walkingCounter = 0;
+
+    canMoveUP=true;
+    canMoveLEFT=true;
+    canMoveRIGHT=true;
+    canMoveDOWN=true;
     }
 
 Weapon* Enemy::dropWeapon() {
@@ -53,6 +57,75 @@ void Enemy::fight(GameCharacter *hero) {
     if(RNG::throwCoin((10- getCritical())))      // critical=1 -> 10% critical chance
         damage+=damage/2;
     hero->setHP(hero->getHP() - damage);
+}
+
+void Enemy::move(PlayableCharacter* hero) {
+    //chooses direction
+    behavior->movementBehavior(hero, this);
+
+    //moves in that direcition
+    int race=0;
+    if(getRole() == CharacterClass::Bat)
+        race=3;
+    if(getRole() == CharacterClass::Witch)
+        race=6;
+    if(getRole() == CharacterClass::BigBaldGuy)
+        race=9;
+    switch (face) {
+        case Face::Up:
+            if(canMoveUP) {
+                rect.move(0, -speed);
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 3, 32, 32));
+            }
+            break;
+        case Face::Down:
+            if(canMoveDOWN) {
+                rect.move(0, speed);
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 0, 32, 32));
+            }
+            break;
+        case Face::Left:
+            if(canMoveLEFT) {
+                rect.move(-speed, 0);
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 1, 32, 32));
+            }
+            break;
+        case Face::Right:
+            if(canMoveRIGHT) {
+                rect.move(speed, 0);
+                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 2, 32, 32));
+            }
+            break;
+    }
+    updatePosition();
+}
+
+Spell* Enemy::shootSpell() {
+    //if witch && aggroed enemy has chance of shooting a spell each 2 seconds
+    if (RNG::throwCoin(120) && getRole() == CharacterClass::Witch && aggroed) {
+        Spell *spell = new Spell(rect.getPosition().x + rect.getSize().x / 2 - 13,    //13= Half Spell Sprite
+                                 rect.getPosition().y + rect.getSize().y / 2 - rect.getSize().y / 2,
+                                 face);
+        spell->sprite.setColor(sf::Color(255, 100, 255));
+        return spell;
+    } else
+        return nullptr;
+}
+
+void Enemy::setAggroed(){
+    aggroed=true;
+    setStrategy(new ChaseHero());
+}
+
+void Enemy::setHP(int HP) {
+    GameCharacter::setHP(HP);
+    if(getHP() < 30)
+        setStrategy(new Flee());
+}
+
+void Enemy::setStrategy(Strategy* s){
+    delete behavior;
+    behavior= s;
 }
 
 int Enemy::dropChance= 3;

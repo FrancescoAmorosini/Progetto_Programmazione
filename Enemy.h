@@ -9,25 +9,32 @@
 #include "WeaponFactory.h"
 #include "PlayableCharacter.h"
 #include "Spell.h"
+#include "Strategy.h"
 
+class Strategy;
 
 class Enemy: virtual public GameCharacter, public DrawableObject{
 public:
     Enemy(float x, float y, CharacterClass role, int HP, int atk, int evade=1, int critical=1);
     //Strategy method
-    void move();
-    void turnAround(PlayableCharacter* hero);
-    void chaseHero(PlayableCharacter* hero);
+    void move(PlayableCharacter* hero);
+
+    void setAggroed();
+    void setStrategy(Strategy* s);
+    void setHP (int HP) override;
     Spell* shootSpell();
 
     Weapon* dropWeapon();
     void fight(GameCharacter* hero) override;
     void updatePosition() override;
 
-    bool aggroed=false;
     sf::Clock walkingTime;
     int static dropChance;
     int speed = speedMovement -1;
+private:
+    bool aggroed=false;
+    Strategy* behavior;
+
 };
 
 

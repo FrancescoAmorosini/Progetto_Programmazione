@@ -31,6 +31,7 @@
       <sourceFolder url="file://$MODULE_DIR$/LevelDrawer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GameLevel.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Weapon.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Strategy.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LevelCreator.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Strategy.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PlayableCharacter.h" isTestSource="false" />

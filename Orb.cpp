@@ -17,7 +17,7 @@ Orb::Orb(float x, float y, Color c) :orbColor(c) {
             break;
         case Color::blue:
             sprite.setTextureRect(sf::IntRect(21, 0, 21, 21));
-            text.setString("+30 HP");
+            text.setString("+30 MAX HP");
             text.setFillColor(sf::Color::Blue);
             break;
         case Color::green:

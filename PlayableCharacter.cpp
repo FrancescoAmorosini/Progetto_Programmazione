@@ -10,16 +10,6 @@ PlayableCharacter::PlayableCharacter(float x, float y, CharacterClass r, std::st
     rect.setSize(sf::Vector2f(32, 32));
     rect.setPosition(x, y);
     rect.setFillColor(sf::Color::Red);
-    switch(r){
-        case CharacterClass::Mage:
-            sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
-        case CharacterClass::Thief:
-            sprite.setTextureRect(sf::IntRect(32*6, 0, 32, 32));
-        case CharacterClass::Warrior:
-            sprite.setTextureRect(sf::IntRect(32*3, 0, 32, 32));
-        default:
-            break;
-    }
 
     text.setString(name);
     text.setCharacterSize(16);
@@ -32,13 +22,18 @@ PlayableCharacter::~PlayableCharacter() {
 }
 
 void PlayableCharacter::updatePosition() {
-    sprite.setPosition(rect.getPosition());
+    updateDirection();
+
     int long delay = name.length() * 2;
     if (name.length() < 5)
         delay = -name.length();
     text.setPosition(rect.getPosition().x - delay, rect.getPosition().y - 20);
-    if (weapon)
-        weapon->rect.setPosition(rect.getPosition());
+    sprite.setPosition(rect.getPosition());
+
+    canMoveUP=true;
+    canMoveDOWN=true;
+    canMoveLEFT=true;
+    canMoveRIGHT=true;
 }
 
 void PlayableCharacter::fight(GameCharacter* enemy) {

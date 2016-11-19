@@ -23,7 +23,7 @@ Weapon::Weapon(float x, float y, int strenght, WeaponType weapon, bool rare, boo
     }
 
     text.setCharacterSize(20);
-    text.setPosition(0 ,0);
+    text.setPosition(rect.getPosition().x -20 ,rect.getPosition().y -20);
 
     if(legendary)
        setLegendary(true);

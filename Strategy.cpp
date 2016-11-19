@@ -2,78 +2,123 @@
 // Created by francesco amorosini on 24/10/16.
 //
 
-#include "Enemy.h"
+#include "Strategy.h"
 
-
-void Enemy::move() {
-    //moves in the choosen direction
-    int race=0;
-    if(getRole() == CharacterClass::Bat)
-        race=3;
-    if(getRole() == CharacterClass::Witch)
-        race=6;
-    if(getRole() == CharacterClass::BigBaldGuy)
-        race=9;
-        switch (face) {
-            case Face::Up:
-                rect.move(0, -speed);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 3, 32, 32));
-                break;
-            case Face::Down:
-                rect.move(0, speed);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 0, 32, 32));
-                break;
-            case Face::Left:
-                rect.move(-speed, 0);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 1, 32, 32));
-                break;
-            case Face::Right:
-                rect.move(speed, 0);
-                sprite.setTextureRect(sf::IntRect(walkingCounter * 32 + 32 * race - 8, 32 * 2, 32, 32));
-                break;
-        }
-    updatePosition();
-}
-void Enemy::turnAround(PlayableCharacter* hero) {
-    if (aggroed)
-        chaseHero(hero);
-        // 1/2 chance of moving in a random direction if not aggroed
-    else if (walkingTime.getElapsedTime().asSeconds() >= 0.5){
-        //Changes facing direction
-        face = static_cast<Face>(RNG::throwDice(9) - 1);
-        walkingTime.restart();
-    }
-}
-
-void Enemy::chaseHero(PlayableCharacter *hero) {
+void ChaseHero::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
     // CHASE DOWN
-    if (hero->rect.getPosition().y > rect.getPosition().y &&
-        abs(static_cast<int>(hero->rect.getPosition().x - rect.getPosition().x)) <= 32)
-        face = Face::Down;
-        //CHASE UP
-    else if ((hero->rect.getPosition().x > rect.getPosition().x) &&
-             (abs(static_cast<int>(hero->rect.getPosition().y - rect.getPosition().y)) <= 32))
-        face = Face::Right;
+    if (hero->rect.getPosition().y > enemy->rect.getPosition().y &&
+        abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32) {
+        if(enemy->canMoveDOWN)
+            enemy->face = Face::Down;
+        else if(enemy->canMoveRIGHT)
+            enemy->face = Face::Right;
+        else if(enemy->canMoveLEFT)
+            enemy->face = Face::Left;
+    }
+        //CHASE RIGHT
+    else if ((hero->rect.getPosition().x > enemy->rect.getPosition().x) &&
+             (abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) <= 32)) {
+        if (enemy->canMoveRIGHT)
+            enemy->face = Face::Right;
+        else if (enemy->canMoveUP)
+            enemy->face = Face::Up;
+        else if (enemy->canMoveDOWN)
+            enemy->face = Face::Down;
+    }
         //CHASE LEFT
-    else if ((hero->rect.getPosition().x < rect.getPosition().x) &&
-             (abs(static_cast<int>(hero->rect.getPosition().y - rect.getPosition().y)) <= 32))
-        face = Face::Left;
+    else if ((hero->rect.getPosition().x < enemy->rect.getPosition().x) &&
+             (abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) <= 32)) {
+        if (enemy->canMoveLEFT)
+            enemy->face = Face::Left;
+        else if (enemy->canMoveDOWN)
+            enemy->face = Face::Down;
+        else if (enemy->canMoveUP)
+            enemy->face = Face::Up;
+    }
         //CHASE UP
-    else if ((hero->rect.getPosition().y < rect.getPosition().y) &&
-             (abs(static_cast<int>(hero->rect.getPosition().x - rect.getPosition().x)) <= 32))
-        face = Face::Up;
-
+    else if ((hero->rect.getPosition().y < enemy->rect.getPosition().y) &&
+             (abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32)) {
+        if (enemy->canMoveUP)
+            enemy->face = Face::Up;
+        else if (enemy->canMoveLEFT)
+            enemy->face = Face::Left;
+        else if (enemy->canMoveRIGHT)
+            enemy->face = Face::Right;
+    }
 }
 
-Spell* Enemy::shootSpell() {
-    //if witch && aggroed enemy has chance of shooting a spell each 2 seconds
-    if(RNG::throwCoin(120) && getRole() == CharacterClass::Witch && aggroed) {
-        Spell* spell = new Spell(rect.getPosition().x + rect.getSize().x / 2 - 13,    //13= Half Spell Sprite
-                                 rect.getPosition().y + rect.getSize().y / 2 - rect.getSize().y / 2,
-                                 face);
-        spell->sprite.setColor(sf::Color(255,100,255));
-        return spell;
+void TurnAround::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
+    if (enemy->walkingTime.getElapsedTime().asSeconds() >= 0.5) {
+        //Changes facing direction
+        bool ammitted = false;
+        while (!ammitted) {
+            enemy->face = static_cast<Face>(RNG::throwDice(9) - 1);
+
+            switch (enemy->face) {
+                case Face::Down:
+                    if (enemy->canMoveDOWN)
+                        ammitted = true;
+                    break;
+                case Face::Up:
+                    if (enemy->canMoveUP)
+                        ammitted = true;
+                    break;
+
+                case Face::Left:
+                    if (enemy->canMoveLEFT)
+                        ammitted = true;
+                    break;
+
+                case Face::Right:
+                    if (enemy->canMoveDOWN)
+                        ammitted = true;
+                    break;
+
+            }
+            enemy->walkingTime.restart();
+        }
     }
-    else
-        return nullptr;
+}
+
+void Flee::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
+    // FLEE UP
+    if (hero->rect.getPosition().y > enemy->rect.getPosition().y &&
+        abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32) {
+        if(enemy->canMoveUP)
+            enemy->face = Face::Up;
+        else if(enemy->canMoveRIGHT)
+            enemy->face = Face::Right;
+        else if(enemy->canMoveLEFT)
+            enemy->face = Face::Left;
+    }
+        //FLEE LEFT
+    else if ((hero->rect.getPosition().x > enemy->rect.getPosition().x) &&
+             (abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) <= 32)) {
+        if (enemy->canMoveLEFT)
+            enemy->face = Face::Left;
+        else if (enemy->canMoveUP)
+            enemy->face = Face::Up;
+        else if (enemy->canMoveDOWN)
+            enemy->face = Face::Down;
+    }
+        //FLEE RIGHT
+    else if ((hero->rect.getPosition().x < enemy->rect.getPosition().x) &&
+             (abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) <= 32)) {
+        if (enemy->canMoveRIGHT)
+            enemy->face = Face::Right;
+        else if (enemy->canMoveDOWN)
+            enemy->face = Face::Down;
+        else if (enemy->canMoveUP)
+            enemy->face = Face::Up;
+    }
+        //FLEE DOWN
+    else if ((hero->rect.getPosition().y < enemy->rect.getPosition().y) &&
+             (abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32)) {
+        if (enemy->canMoveDOWN)
+            enemy->face = Face::Down;
+        else if (enemy->canMoveLEFT)
+            enemy->face = Face::Left;
+        else if (enemy->canMoveRIGHT)
+            enemy->face = Face::Right;
+    }
 }

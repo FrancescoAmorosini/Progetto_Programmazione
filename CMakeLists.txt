@@ -8,7 +8,7 @@ set(SOURCE_FILES main.cpp GameCharacter.cpp GameCharacter.h PlayableCharacter.cp
         Orb.h Weapon.cpp Weapon.h RNG.h Chest.cpp Chest.h Tile.h Map.cpp Map.h RangeException.h CharacterFactory.cpp
         CharacterFactory.h DrawableObject.h Enemy.cpp Enemy.h GameLevel.h GameLevel.cpp Wall.h LevelCreator.cpp
         LevelCreator.h Spell.h Spell.cpp Heart.h RNG.cpp RNG.h LevelDrawer.cpp WeaponFactory.cpp WeaponFactory.h
-        Strategy.cpp Observer.h Subject.h)
+        Strategy.cpp Observer.h Subject.h Strategy.h)
 add_executable(Progetto_Programmazione ${SOURCE_FILES})
 
 #Linking Googletest
