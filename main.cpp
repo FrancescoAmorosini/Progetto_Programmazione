@@ -51,6 +51,7 @@ int main() {
 
             //DRAW LEVEL
             drawer->drawLevel(&window);
+            std::cout<<level->hero->rect.getPosition().x / 32 << " " << level->hero->rect.getPosition().y / 32 << std::endl;
         }
         else {
             drawer->drawGameOver(&window);

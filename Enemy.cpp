@@ -112,9 +112,10 @@ Spell* Enemy::shootSpell() {
         return nullptr;
 }
 
-void Enemy::setAggroed(){
-    aggroed=true;
-    setStrategy(new ChaseHero());
+void Enemy::setAggroed(bool aggroed){
+    this->aggroed=aggroed;
+    if(this->aggroed)
+        setStrategy(new ChaseHero());
 }
 
 void Enemy::setHP(int HP) {

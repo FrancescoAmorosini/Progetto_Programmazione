@@ -19,7 +19,7 @@ public:
     //Strategy method
     void move(PlayableCharacter* hero);
 
-    void setAggroed();
+    void setAggroed(bool aggroed);
     void setStrategy(Strategy* s);
     void setHP (int HP) override;
     Spell* shootSpell();
@@ -30,7 +30,7 @@ public:
 
     sf::Clock walkingTime;
     int static dropChance;
-    int speed = speedMovement -1;
+    int speed = speedMovement -2;
 private:
     bool aggroed=false;
     Strategy* behavior;

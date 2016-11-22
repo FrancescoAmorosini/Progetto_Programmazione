@@ -5,7 +5,7 @@
 #include <iostream>
 #include "LevelDrawer.h"
 
-LevelDrawer::LevelDrawer(GameLevel *lvl) : level(lvl), subject(level->hero){
+LevelDrawer::LevelDrawer(GameLevel *lvl) : level(lvl), data(new HUD(lvl)){
     //Sets View
     sf::View view(sf::FloatRect(200, 200, 300, 200));
     playerview = view;
@@ -14,10 +14,6 @@ LevelDrawer::LevelDrawer(GameLevel *lvl) : level(lvl), subject(level->hero){
     if(loadResources() == EXIT_FAILURE)
         throw std::runtime_error("Error: Cannot open file");
     BGM.play();
-    orbUsedText.setString("");
-    heroWeapon= subject->getWeapon()->text;
-
-    attach();
 }
 
 void LevelDrawer::drawLevel( sf::RenderWindow* window){
@@ -85,7 +81,7 @@ void LevelDrawer::drawHUD(sf::RenderWindow *window) {
     hpBar.setTextureRect(sf::IntRect(0, 0, filledBar, 12));
     HPtext.setPosition(emptyBar.getPosition().x - 40, emptyBar.getPosition().y - 5);
     achievementText.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 250);
-    orbUsedText.setPosition(subject->rect.getPosition().x + 5, subject->rect.getPosition().y - 5 - orbTextPos );
+    data->orbUsedText.setPosition(playerview.getCenter().x + 5, playerview.getCenter().y - 5 - data->orbTextPos);
 
 
     //DRAWS INVENTORY
@@ -99,56 +95,56 @@ void LevelDrawer::drawHUD(sf::RenderWindow *window) {
         window->draw(frame);
     }
     //DRAWS ORB TEXT
-    if (orbUsedText.getString() != "" && orbTextPos <= 50) {
-        orbUsedText.setFont(level->healthFont);
-        window->draw(orbUsedText);
-        orbTextPos++;
-        if(orbTextPos == 50) {
-            orbTextPos = 0;
-            orbUsedText.setString("");
+    if (data->orbUsedText.getString() != "" && data->orbTextPos <= 50) {
+        data->orbUsedText.setFont(level->healthFont);
+        window->draw(data->orbUsedText);
+        data->orbTextPos++;
+        if(data->orbTextPos == 50) {
+            data->orbTextPos = 0;
+            data->orbUsedText.setString("");
         }
     }
 
-    heroWeapon.setPosition(playerview.getCenter().x + 150, playerview.getCenter().y -250);
-    heroWeapon.setFont(level->healthFont);
-    window->draw(heroWeapon);
+    data->heroWeapon.setPosition(playerview.getCenter().x + 150, playerview.getCenter().y -250);
+    data->heroWeapon.setFont(level->healthFont);
+    window->draw(data->heroWeapon);
 
 
     //Bronze medal
-    if (enemiesKilled >= 3) {
+    if (data->getEnemiesKilled() >= 5) {
         medal.setTextureRect(sf::IntRect(0, 0, 13, 26));
         medal.setPosition(achievementText.getPosition().x + 200, achievementText.getPosition().y);
         window->draw(medal);
     }
     //Silver medal
-    if (enemiesKilled >= 5) {
+    if (data->getEnemiesKilled() >= 10) {
         medal.setTextureRect(sf::IntRect(13, 0, 13, 26));
         medal.setPosition(achievementText.getPosition().x + 225, achievementText.getPosition().y);
         window->draw(medal);
     }
     //Golden medal
-    if (enemiesKilled >= 10) {
+    if (data->getEnemiesKilled() >= 20) {
         medal.setTextureRect(sf::IntRect(26, 0, 13, 26));
         medal.setPosition(achievementText.getPosition().x + 250, achievementText.getPosition().y);
         window->draw(medal);
     }
     //Chest medal
-    if (chestOpened >= 3) {
+    if (data->getChestOpened() >= 5) {
         medal.setTextureRect(sf::IntRect(60, 0, 13, 26));
         medal.setPosition(achievementText.getPosition().x + 275, achievementText.getPosition().y);
         window->draw(medal);
-    }//Wall medal
-    if (orbUsed >= 5) {
+    }//Orb medal
+    if (data->getOrbUsed() >= 10) {
         medal.setTextureRect(sf::IntRect(73, 0, 26, 26));
         medal.setPosition(achievementText.getPosition().x + 300, achievementText.getPosition().y);
         window->draw(medal);
     }//Heart medal
-    if (heartsPicked >= 3) {
+    if (data->getHeartsPicked() >= 5) {
         medal.setTextureRect(sf::IntRect(43, 0, 13, 26));
         medal.setPosition(achievementText.getPosition().x + 350, achievementText.getPosition().y);
         window->draw(medal);
     }//Spell medal
-    if (spellshot >= 10) {
+    if (data->getSpellshot() >= 30) {
         medal.setTextureRect(sf::IntRect(102, 0, 26, 26));
         medal.setPosition(achievementText.getPosition().x + 375, achievementText.getPosition().y);
         window->draw(medal);
@@ -161,90 +157,90 @@ void LevelDrawer::drawHUD(sf::RenderWindow *window) {
 }
 
 void LevelDrawer::drawAchievement(sf::RenderWindow *window) {
-    //3 ENEMIES KILLED
-    if (enemiesKilled >= 3 && killedTime < 200) {
+    //5 ENEMIES KILLED
+    if (data->getEnemiesKilled() >= 5 && data->killedTime < 200) {
         sf::Text bronzekill;
         bronzekill.setFont(level->healthFont);
-        bronzekill.setString("Achievement unlocked : 3 enemies killed! ");
+        bronzekill.setString("Achievement unlocked : 5 enemies killed! ");
         bronzekill.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(0, 0, 13, 26));
         bronzekill.setCharacterSize(20);
         window->draw(bronzekill);
         window->draw(medal);
-        killedTime++;
-    }//5 ENEMIES KILLED
-    else if (enemiesKilled >= 5 && killedTime < 400) {
+        data->killedTime++;
+    }//10 ENEMIES KILLED
+    else if (data->getEnemiesKilled() >= 10 && data->killedTime < 400) {
         sf::Text silverkill;
         silverkill.setFont(level->healthFont);
-        silverkill.setString("Achievement unlocked : 5 enemies killed! ");
+        silverkill.setString("Achievement unlocked : 10 enemies killed! ");
         silverkill.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(13, 0, 13, 26));
         silverkill.setCharacterSize(20);
         window->draw(silverkill);
         window->draw(medal);
-        killedTime++;
-    }// 10ENEMIES KILLED
-    else if (enemiesKilled >= 10 && killedTime < 600) {
+        data->killedTime++;
+    }// 20ENEMIES KILLED
+    else if (data->getEnemiesKilled() >= 20 && data->killedTime < 600) {
         sf::Text goldenkill;
         goldenkill.setFont(level->healthFont);
-        goldenkill.setString("Achievement unlocked : 10 enemies killed! ");
+        goldenkill.setString("Achievement unlocked : 20 enemies killed! ");
         goldenkill.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(26, 0, 13, 26));
         goldenkill.setCharacterSize(20);
         window->draw(goldenkill);
         window->draw(medal);
-        killedTime++;
-    }//3 CHESTS OPENED
-    else if (chestOpened >= 3 && chestTime < 200) {
+        data->killedTime++;
+    }//5 CHESTS OPENED
+    else if (data->getChestOpened() >= 5 && data->chestTime < 200) {
         sf::Text chestopen;
         chestopen.setFont(level->healthFont);
-        chestopen.setString("Achievement unlocked : 3 chest opened! ");
+        chestopen.setString("Achievement unlocked : 5 chest opened! ");
         chestopen.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(60, 0, 13, 26));
         chestopen.setCharacterSize(20);
         window->draw(chestopen);
         window->draw(medal);
-        chestTime++;
-    }//5 ORBS USED
-    else if (orbUsed>= 5 && orbTime < 200) {
+        data->chestTime++;
+    }//10 ORBS USED
+    else if (data->getOrbUsed()>= 10 && data->orbTime < 200) {
         sf::Text orbtext;
         orbtext.setFont(level->healthFont);
-        orbtext.setString("Achievement unlocked : 5 orbs used! ");
+        orbtext.setString("Achievement unlocked : 10 orbs used! ");
         orbtext.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(73, 0, 26, 26));
         orbtext.setCharacterSize(20);
         window->draw(orbtext);
         window->draw(medal);
-        orbTime++;
-    }//3 HEARTS PICKED UP
-    else if (heartsPicked >= 3 && heartTime < 200) {
+        data->orbTime++;
+    }//5 HEARTS PICKED UP
+    else if (data->getHeartsPicked() >= 5 && data->heartTime < 200) {
         sf::Text heartpicked;
         heartpicked.setFont(level->healthFont);
-        heartpicked.setString("Achievement unlocked : 3 hearts picked! ");
+        heartpicked.setString("Achievement unlocked : 5 hearts picked! ");
         heartpicked.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(43, 0, 13, 26));
         heartpicked.setCharacterSize(20);
         window->draw(heartpicked);
         window->draw(medal);
-        heartTime++;
+        data->heartTime++;
     }
-    else if (spellshot >= 10 && spellTime < 200) {
+    else if (data->getSpellshot() >= 30 && data->spellTime < 200) {
         sf::Text spelltext;
         spelltext.setFont(level->healthFont);
-        spelltext.setString("Achievement unlocked : 10 spells shot! ");
+        spelltext.setString("Achievement unlocked : 30 spells shot! ");
         spelltext.setPosition(playerview.getCenter().x - 450, playerview.getCenter().y - 220);
         medal.setPosition(playerview.getCenter().x + 100, playerview.getCenter().y - 220);
         medal.setTextureRect(sf::IntRect(102, 0, 26, 26));
         spelltext.setCharacterSize(20);
         window->draw(spelltext);
         window->draw(medal);
-        spellTime++;
+        data->spellTime++;
     }
 }
 
@@ -255,14 +251,14 @@ int LevelDrawer::loadResources() {
     BGM.setLoop(true);
 
     //Load HUD
-    if(!HUD.loadFromFile("Resources/HUD.png"))
+    if(!hud.loadFromFile("Resources/HUD.png"))
         return EXIT_FAILURE;
     emptyBar.setTextureRect(sf::IntRect(0,16,106,16));
-    emptyBar.setTexture(HUD);
+    emptyBar.setTexture(hud);
     hpBar.setTextureRect(sf::IntRect(0,0,106,13));
-    hpBar.setTexture(HUD);
+    hpBar.setTexture(hud);
     frame.setTextureRect(sf::IntRect(106,1,32,32));
-    frame.setTexture(HUD);
+    frame.setTexture(hud);
     //Load Achievements
     if(!achievements.loadFromFile("Resources/Achievements.png"))
         return EXIT_FAILURE;
@@ -280,7 +276,7 @@ int LevelDrawer::loadResources() {
     return EXIT_SUCCESS;
 }
 void LevelDrawer::drawGameOver(sf::RenderWindow *window) {
-    detach();
+    data->detach();
     playerview.setCenter(0,0);
     window->setView(playerview);
     sf::Sprite gameover;
@@ -290,41 +286,3 @@ void LevelDrawer::drawGameOver(sf::RenderWindow *window) {
     BGM.stop();
 }
 
-void LevelDrawer::attach() {
-    subject->registerObserver(this);
-}
-
-void LevelDrawer::detach() {
-    if(subject) {
-        subject->unregisterObserver(this);
-        subject = nullptr;
-    }
-}
-
-void LevelDrawer::update() {
-    HP = subject->getHP();
-    orbUsedText = subject->orbUsedText;
-    heroWeapon = subject->getWeapon()->text;
-    if(subject->enemykilled) {
-        enemiesKilled ++;
-        subject->enemykilled=false;
-    }
-    if(subject->orbUsed) {
-        orbUsed ++;
-        subject->orbUsed=false;
-    }
-    if(subject->chestOpened) {
-        chestOpened++;
-        subject->chestOpened = false;
-    }
-    if(subject->spellshot) {
-        spellshot++;
-        subject->spellshot = false;
-    }
-    if(subject->heartpicked) {
-        heartsPicked++;
-        subject->heartpicked = false;
-    }
-
-    gameover=subject->gameover;
-}

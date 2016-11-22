@@ -270,58 +270,88 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 }
 
 GameLevel* LevelCreator::createExample() {
-    PlayableCharacter* hero= CharacterFactory::createCharacter(400,650,heroclass,heroname);
-    Map* map= new Map(50,50);
-    Weapon* w= WeaponFactory::createWeapon(0,0,15);
-    Weapon* ww= WeaponFactory::createWeapon(0,0,30,true,true);
-
-    std::vector<Enemy*> witches = CharacterFactory::createEnemyArray(2,CharacterClass::Witch,80,12);
-    witches[0]->rect.setPosition(160,530);
-    witches[1]->rect.setPosition(400,400);
-
-    std::vector<Enemy*> bigbaldguy= CharacterFactory::createEnemyArray(1,CharacterClass::BigBaldGuy,150,5);
-    bigbaldguy[0]->rect.setPosition(700,700);
-
+    PlayableCharacter* hero= CharacterFactory::createCharacter(32* 15,32* 116,heroclass,heroname);
+    Map* map= new Map(150,150);
+    Weapon* w= WeaponFactory::createWeapon(0,0,20);
     hero->setWeapon(w);
 
-    Orb* orb1= new Orb(500,500,Color::blue);
-    Orb* orb2= new Orb(250,500,Color::red);
-    Orb* orb3= new Orb(250,90,Color::green);
-    Orb* orb4= new Orb(50,250,Color::yellow);
-    Orb* orb5= new Orb(100,100,Color::purple);
-    Orb* orb6= new Orb(0,0,Color::blue);
+    std::vector<Enemy*> witches = CharacterFactory::createEnemyArray(5,CharacterClass::Witch,80,15);
+    witches[0]->rect.setPosition(32*90,32*116);
+    witches[1]->rect.setPosition(32*89,32*116);
+    witches[2]->rect.setPosition(32*89,32*117);
+    witches[3]->rect.setPosition(32*88,32*117);
+    witches[4]->rect.setPosition(32*88,32*115);
 
-    Chest* chest1=new Chest(450,300,orb6);
-    Chest* chest2= new Chest(192,544, ww);
-    Chest* chest3= new Chest(192,480, ww);
+    std::vector<Enemy*> bigbaldguy= CharacterFactory::createEnemyArray(3,CharacterClass::BigBaldGuy,100,12);
+    bigbaldguy[0]->rect.setPosition(32*15, 32*95);
+    bigbaldguy[1]->rect.setPosition(32*18, 32*95);
+    bigbaldguy[2]->rect.setPosition(32*20, 32*95);
+
+    std::vector<Enemy*> skeletons= CharacterFactory::createEnemyArray(2,CharacterClass::Undead,50,10);
+    skeletons[0]->rect.setPosition(32*15, 32*110);
+    skeletons[1]->rect.setPosition(32*20, 32*117);
+
+    std::vector<Enemy*> bats= CharacterFactory::createEnemyArray(15,CharacterClass::Bat,20,5);
+    bats[0]->rect.setPosition(32*48,32*110);
+    bats[1]->rect.setPosition(32*50,32*110);
+    bats[2]->rect.setPosition(32*55,32*110);
+    bats[3]->rect.setPosition(32*52,32*110);
+    bats[4]->rect.setPosition(32*17,32*70);
+    bats[5]->rect.setPosition(32*17,32*71);
+    bats[6]->rect.setPosition(32*17,32*72);
+    bats[7]->rect.setPosition(32*17,32*73);
+    bats[8]->rect.setPosition(32*17,32*74);
+    bats[9]->rect.setPosition(32*17,32*75);
+    bats[10]->rect.setPosition(32*17,32*71);
+    bats[11]->rect.setPosition(32*17,32*72);
+    bats[12]->rect.setPosition(32*17,32*73);
+    bats[13]->rect.setPosition(32*17,32*74);
+    bats[14]->rect.setPosition(32*17,32*75);
+
 
     std::vector<Heart*> hearts;
-    hearts.push_back(new Heart(190,60));
+    hearts.push_back(new Heart(32*36,32*110));
+    hearts.push_back(new Heart(32*36,32*114));
+    hearts.push_back(new Heart(32*61,32*88));
+    hearts.push_back(new Heart(32*78,32*83));
+    hearts.push_back(new Heart(32*28,32*42));
+    hearts.push_back(new Heart(32*32,32*42));
+    hearts.push_back(new Heart(32*68,32*52));
     //Merges different enemies array
     std::vector<Enemy*> enemies;
-    enemies.reserve(bigbaldguy.size() + witches.size());
+    enemies.reserve(bigbaldguy.size() + witches.size() + skeletons.size() + bats.size());
     enemies.insert(enemies.end(), bigbaldguy.begin(), bigbaldguy.end());
     enemies.insert(enemies.end(),witches.begin(), witches.end());
+    enemies.insert(enemies.end(),skeletons.begin(), skeletons.end());
+    enemies.insert(enemies.end(),bats.begin(), bats.end());
 
     enemies.push_back(new Enemy(200,230,CharacterClass::Undead,50,12));
     enemies.push_back(new Enemy(100,100,CharacterClass::Bat,20,5));
 
     std::vector<Chest*> chests;
-    chests.push_back(chest1);
-    chests.push_back(chest2);
-    chests.push_back(chest3);
+    chests.push_back(new Chest(32*14,32*104,new Orb(32*14,32*104,Color::red)));
+    chests.push_back(new Chest(32*17,32*70, new Orb(32*17,32*71,Color::yellow)));
+    chests.push_back(new Chest(32*15,32*69, new Orb(32*15,32*69,Color::green)));
+    chests.push_back(new Chest(32*19,32*69, new Orb(32*19,32*69,Color::purple)));
+    chests.push_back(new Chest(32*36,32*112, WeaponFactory::createWeapon(32*30,32*117,10,true)));
+    chests.push_back(new Chest(32*90,32*117,WeaponFactory::createWeapon(32*100,32*110,20,true, true)));
+    chests.push_back(new Chest(32*15,32*88, WeaponFactory::createWeapon(32*15,32*88,50)));
 
     std::vector<Orb*> orbs;
-    orbs.push_back(orb1);
-    orbs.push_back(orb2);
-    orbs.push_back(orb3);
-    orbs.push_back(orb4);
-    orbs.push_back(orb5);
-
+    orbs.push_back(new Orb(32*30, 32*112,Color::green));
+    orbs.push_back(new Orb(32*40, 32*112,Color::blue));
+    orbs.push_back(new Orb(32*50, 32*112,Color::red));
+    orbs.push_back(new Orb(32*60, 32*80,Color::purple));
+    orbs.push_back(new Orb(32*50, 32*90,Color::blue));
+    orbs.push_back(new Orb(32*50, 32*70,Color::red));
+    orbs.push_back(new Orb(32*70, 32*90,Color::purple));
+    orbs.push_back(new Orb(32*60, 32*95,Color::green));
+    orbs.push_back(new Orb(32*32, 32*86,Color::blue));
+    orbs.push_back(new Orb(32*23, 32*86,Color::red));
     int tilePositionX = 0;
     int tilePositionY = 0;
 
-    std::ifstream openfile("Resources/MapExample.txt");
+    std::ifstream openfile("Resources/LEVEL1.txt");
     if(openfile.is_open()){
         while(!openfile.eof()){
             std::string str;

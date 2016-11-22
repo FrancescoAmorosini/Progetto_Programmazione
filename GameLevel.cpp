@@ -86,9 +86,9 @@ void GameLevel::updateLevel() {
         }
         else {
             //PHYSICAL ATTACK IF NOT MAGE
-            if (checkCloseEnemy(hero->rect, hero->face, &enemyIndex) &&
+            if (checkCloseEnemy(hero, &enemyIndex) &&
                 hero->hitRate.getElapsedTime().asSeconds() > 0.4) {
-                enemies[enemyIndex]->setAggroed();
+                enemies[enemyIndex]->setAggroed(true);
                 hero->fight(enemies[enemyIndex]);
                 if (enemies[enemyIndex]->getHP() == 0) {
                     if (RNG::throwCoin(Enemy::dropChance))
@@ -180,7 +180,7 @@ void GameLevel::checkProjectileHit(Spell *spell, int *index) {
     for (int i = 0; i < enemies.size(); i++) {
         if (spell->rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())) {
             spells.erase(spells.begin() + *index);
-            enemies[i]->setAggroed();
+            enemies[i]->setAggroed(true);
             hero->fight(enemies[i]);
             if (enemies[i]->getHP() == 0) {
                 if (RNG::throwCoin(Enemy::dropChance))
@@ -297,24 +297,21 @@ void GameLevel::checkWallCollision(sf::RectangleShape rect, GameCharacter* c, in
         }
 }
 
-bool GameLevel::checkCloseEnemy(sf::RectangleShape rect, Face face, int *index) {
+bool GameLevel::checkCloseEnemy(PlayableCharacter* hero, int *index) {
+    sf::RectangleShape rect = hero->rect;
     for (int i = 0; i < enemies.size(); i++) {
-        switch (face) {
+        switch (hero->face) {
             //ADJUST HITBOX
             case Face::Up:
-                rect.setSize(sf::Vector2f(32, 48));
-                rect.move(0,-20);
+                rect.setSize(sf::Vector2f(32, -60));
                 break;
             case Face::Down:
-                rect.setSize(sf::Vector2f(32, 48));
-                rect.move(0,15);
+                rect.setSize(sf::Vector2f(32, 60));
             case Face::Left:
-                rect.setSize(sf::Vector2f(48, 32));
-                rect.move(-10,0);
+                rect.setSize(sf::Vector2f(50, 62));
                 break;
             case Face::Right:
-                rect.setSize(sf::Vector2f(48, 32));
-                rect.move(10,0);
+                rect.setSize(sf::Vector2f(60, 32));
                 break;
         }
         if (rect.getGlobalBounds().intersects(enemies[i]->rect.getGlobalBounds())){

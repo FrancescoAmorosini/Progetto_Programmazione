@@ -81,6 +81,7 @@ void TurnAround::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
 }
 
 void Flee::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
+    enemy->setAggroed(false);
     // FLEE UP
     if (hero->rect.getPosition().y > enemy->rect.getPosition().y &&
         abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32) {

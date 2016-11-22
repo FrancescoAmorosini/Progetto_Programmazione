@@ -36,7 +36,7 @@ Chest::Chest(float posX, float posY, Orb *o) : orb(o) {
 
     switch(o->getOrbColor()) {
         case Color::red:
-            text.setFillColor(sf::Color::Magenta);
+            text.setFillColor(sf::Color::Red);
             text.setString("Red Orb");
             break;
         case Color::blue:
