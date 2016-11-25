@@ -3,14 +3,15 @@
 //
 
 #include "Map.h"
-Map::Map(int width, int height) : width(width), height(height) {
+Map::Map(int width, int height) : width(width), height(height), exit(new Tile(0,0, "E,E")) {
     if(width <= 0 || height <= 0)
         throw std::invalid_argument("Error: invalid map coordinates");
-    else
-        for(int i=0; i<width; i++){
-            for(int j=0; j<height;j++)
-                buffer.push_back(new Tile (i*32, j*32, "x,x"));
+    else {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++)
+                buffer.push_back(new Tile(i * 32, j * 32, "x,x"));
         }
+    }
 }
 
 Map::~Map() {

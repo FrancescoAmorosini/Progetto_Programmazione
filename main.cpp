@@ -23,7 +23,7 @@ int main() {
         return EXIT_FAILURE;
 
     GameLevel *level = LevelCreator::createExample();
-    LevelDrawer* drawer= new LevelDrawer(level);
+    LevelDrawer *drawer = new LevelDrawer(level);
 
 
     // Start the game loop
@@ -43,24 +43,27 @@ int main() {
         }
         // Clear screen
         window.clear();
-
-        if(!level->hero->gameover) {
+        //Game Over
+        if (level->hero->gameover) {
+            drawer->drawGameOver(&window);
+        }//Level Completed
+        else if (level->map->levelCompleted) {
+            drawer->drawVictoriousSplash(&window);
+        }
+        else if (!level->hero->gameover && !level->map->levelCompleted) {
 
             //LEVEL UPDATE
             level->updateLevel();
 
             //DRAW LEVEL
             drawer->drawLevel(&window);
-            std::cout<<level->hero->rect.getPosition().x / 32 << " " << level->hero->rect.getPosition().y / 32 << std::endl;
+            std::cout << level->hero->rect.getPosition().x / 32 << " " << level->hero->rect.getPosition().y / 32
+                      << std::endl;
         }
-        else {
-            drawer->drawGameOver(&window);
-        }
+
         // Update the window
         window.display();
     }
     LevelCreator::deleteLevel(level);
     return EXIT_SUCCESS;
 }
-
-//TODO: Observer, Fix Strategy

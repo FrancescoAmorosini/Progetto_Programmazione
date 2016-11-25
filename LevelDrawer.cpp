@@ -25,6 +25,7 @@ void LevelDrawer::drawLevel( sf::RenderWindow* window){
     }
     for(int i=0; i< level->map->wallBuffer.size(); i++)
         window->draw(level->map->wallBuffer[i]->sprite);
+    window->draw(level->map->exit->sprite);
 
     //Draws Orbs
     for(int i=0; i< level->orbs.size(); i++)
@@ -265,6 +266,8 @@ int LevelDrawer::loadResources() {
     medal.setTexture(achievements);
     if(!gameOverSplash.loadFromFile("Resources/gameover.jpg"))
         return EXIT_FAILURE;
+    if(!victorySplash.loadFromFile("Resources/victorySplash.jpg"))
+        return EXIT_FAILURE;
     //Sets Text
     HPtext.setFont(level->healthFont);
     HPtext.setString("HP ");
@@ -275,6 +278,7 @@ int LevelDrawer::loadResources() {
 
     return EXIT_SUCCESS;
 }
+
 void LevelDrawer::drawGameOver(sf::RenderWindow *window) {
     data->detach();
     playerview.setCenter(0,0);
@@ -283,6 +287,17 @@ void LevelDrawer::drawGameOver(sf::RenderWindow *window) {
     gameover.setPosition(-430,-300);
     gameover.setTexture(gameOverSplash);
     window->draw(gameover);
+    BGM.stop();
+}
+
+void LevelDrawer::drawVictoriousSplash(sf::RenderWindow *window) {
+    data->detach();
+    playerview.setCenter(0,0);
+    window->setView(playerview);
+    sf::Sprite victory;
+    victory.setPosition(-300,-160);
+    victory.setTexture(victorySplash);
+    window->draw(victory);
     BGM.stop();
 }
 

@@ -57,7 +57,9 @@ public:
         //[X,5] = Plain Route
         if (tiletype[0] == 'X' && tiletype[2] == '5')
             sprite.setTextureRect(sf::IntRect(32*6, 32*2, 32, 32));
-
+        //EXIT
+        if (tiletype[0] == 'E' && tiletype[2] == 'E')
+            sprite.setTextureRect(sf::IntRect(0, 0, 30, 31));
 
     }
 

@@ -235,10 +235,12 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 
     if(!level->floor1.loadFromFile("Resources/Floor.png"))
         return EXIT_FAILURE;
+    if(!level->stairs.loadFromFile("Resources/stairs.png"))
+        return EXIT_FAILURE;
 
     for(int i=0; i<level->map->buffer.size(); i++) {
             level->map->buffer[i]->sprite.setTexture(level->floor1);
-    }
+    } level->map->exit->sprite.setTexture(level->stairs);
 
     for(int i=0; i< level->map->wallBuffer.size(); i++)
         level->map->wallBuffer[i]->sprite.setTexture(level->floor1);
@@ -271,25 +273,56 @@ int LevelCreator::loadLevelExample(GameLevel* level) {
 
 GameLevel* LevelCreator::createExample() {
     PlayableCharacter* hero= CharacterFactory::createCharacter(32* 15,32* 116,heroclass,heroname);
-    Map* map= new Map(150,150);
-    Weapon* w= WeaponFactory::createWeapon(0,0,20);
+    Map* map= new Map(120,130);
+    map->exit->rect.setPosition(32*83,32*65);
+    map->exit->sprite.setPosition(map->exit->rect.getPosition());
+    Weapon* w= WeaponFactory::createWeapon(0,0,15);
     hero->setWeapon(w);
 
-    std::vector<Enemy*> witches = CharacterFactory::createEnemyArray(5,CharacterClass::Witch,80,15);
+    std::vector<Enemy*> witches = CharacterFactory::createEnemyArray(7,CharacterClass::Witch,80,15);
     witches[0]->rect.setPosition(32*90,32*116);
     witches[1]->rect.setPosition(32*89,32*116);
     witches[2]->rect.setPosition(32*89,32*117);
     witches[3]->rect.setPosition(32*88,32*117);
     witches[4]->rect.setPosition(32*88,32*115);
+    witches[5]->rect.setPosition(32*25,32*88);
+    witches[6]->rect.setPosition(32*29,32*88);
+    std::vector<Enemy*> witchesStrong = CharacterFactory::createEnemyArray(5,CharacterClass::Witch,100,25);
+    witchesStrong[0]->rect.setPosition(32*84,32*70);
+    witchesStrong[1]->rect.setPosition(32*86,32*73);
+    witchesStrong[2]->rect.setPosition(32*85,32*75);
+    witchesStrong[3]->rect.setPosition(32*86,32*68);
+    witchesStrong[4]->rect.setPosition(32*85,32*77);
+    witches.reserve(witchesStrong.size());
+    witches.insert(witches.end(), witchesStrong.begin(), witchesStrong.end());
 
-    std::vector<Enemy*> bigbaldguy= CharacterFactory::createEnemyArray(3,CharacterClass::BigBaldGuy,100,12);
+    std::vector<Enemy*> bigbaldguy= CharacterFactory::createEnemyArray(6,CharacterClass::BigBaldGuy,100,12);
     bigbaldguy[0]->rect.setPosition(32*15, 32*95);
     bigbaldguy[1]->rect.setPosition(32*18, 32*95);
     bigbaldguy[2]->rect.setPosition(32*20, 32*95);
+    bigbaldguy[3]->rect.setPosition(32*27, 32*91);
+    std::vector<Enemy*> BBBStrong=CharacterFactory::createEnemyArray(7,CharacterClass::BigBaldGuy,150,15);
+    BBBStrong[0]->rect.setPosition(32*75, 32*68);
+    BBBStrong[1]->rect.setPosition(32*74, 32*67);
+    BBBStrong[2]->rect.setPosition(32*70, 32*65);
+    BBBStrong[3]->rect.setPosition(32*74, 32*64);
+    BBBStrong[4]->rect.setPosition(32*70, 32*62);
+    BBBStrong[3]->rect.setPosition(32*74, 32*70);
+    BBBStrong[4]->rect.setPosition(32*70, 32*71);
 
-    std::vector<Enemy*> skeletons= CharacterFactory::createEnemyArray(2,CharacterClass::Undead,50,10);
+    bigbaldguy.reserve(BBBStrong.size());
+    bigbaldguy.insert(bigbaldguy.end(), BBBStrong.begin(), BBBStrong.end());
+
+    std::vector<Enemy*> skeletons= CharacterFactory::createEnemyArray(6,CharacterClass::Undead,50,10);
     skeletons[0]->rect.setPosition(32*15, 32*110);
     skeletons[1]->rect.setPosition(32*20, 32*117);
+    skeletons[2]->rect.setPosition(32*27, 32*90);
+    skeletons[3]->rect.setPosition(32*27, 32*89);
+    std::vector<Enemy*> SkeletonsStrong = CharacterFactory::createEnemyArray(3,CharacterClass::Undead,80,12);
+    SkeletonsStrong[0]->rect.setPosition(32*75, 32*64);
+    SkeletonsStrong[1]->rect.setPosition(32*75, 32*65);
+    skeletons.reserve(SkeletonsStrong.size());
+    skeletons.insert(skeletons.end(), SkeletonsStrong.begin(), SkeletonsStrong.end());
 
     std::vector<Enemy*> bats= CharacterFactory::createEnemyArray(15,CharacterClass::Bat,20,5);
     bats[0]->rect.setPosition(32*48,32*110);
@@ -307,6 +340,15 @@ GameLevel* LevelCreator::createExample() {
     bats[12]->rect.setPosition(32*17,32*73);
     bats[13]->rect.setPosition(32*17,32*74);
     bats[14]->rect.setPosition(32*17,32*75);
+    std::vector<Enemy*>batStrong= CharacterFactory::createEnemyArray(6,CharacterClass::Bat,40,15);
+    batStrong[0]->rect.setPosition(32*84,32*56);
+    batStrong[1]->rect.setPosition(32*85,32*56);
+    batStrong[2]->rect.setPosition(32*83,32*56);
+    batStrong[3]->rect.setPosition(32*83,32*56);
+    batStrong[4]->rect.setPosition(32*86,32*56);
+    batStrong[5]->rect.setPosition(32*87,32*56);
+    bats.reserve(batStrong.size());
+    bats.insert(bats.end(),batStrong.begin(),batStrong.end());
 
 
     std::vector<Heart*> hearts;
@@ -333,6 +375,7 @@ GameLevel* LevelCreator::createExample() {
     chests.push_back(new Chest(32*17,32*70, new Orb(32*17,32*71,Color::yellow)));
     chests.push_back(new Chest(32*15,32*69, new Orb(32*15,32*69,Color::green)));
     chests.push_back(new Chest(32*19,32*69, new Orb(32*19,32*69,Color::purple)));
+    chests.push_back(new Chest(32*27,32*88,WeaponFactory::createWeapon(32*27,32*88,35,true)));
     chests.push_back(new Chest(32*36,32*112, WeaponFactory::createWeapon(32*30,32*117,10,true)));
     chests.push_back(new Chest(32*90,32*117,WeaponFactory::createWeapon(32*100,32*110,20,true, true)));
     chests.push_back(new Chest(32*15,32*88, WeaponFactory::createWeapon(32*15,32*88,50)));

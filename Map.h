@@ -29,6 +29,8 @@ public:
 
     std::vector<Wall*> wallBuffer;
     std::vector<Tile*> buffer;
+    Tile* exit;
+    bool levelCompleted=false;
 
 private:
     int width;

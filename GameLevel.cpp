@@ -159,6 +159,9 @@ void GameLevel::updateLevel() {
         }
     }
 
+    if(hero->rect.getGlobalBounds().intersects(map->exit->rect.getGlobalBounds()))
+        map->levelCompleted=true;
+
 }
 
 bool GameLevel::checkProjectileCollisions(Spell* spell) {

@@ -63,6 +63,7 @@ public:
     sf::Texture heartTexture;
     sf::Texture fireballTexture;
     sf::Texture weaponTexture;
+    sf::Texture stairs;
 
 };
 

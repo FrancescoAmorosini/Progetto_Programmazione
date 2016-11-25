@@ -5,11 +5,14 @@
 #include "Strategy.h"
 
 void ChaseHero::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
+
     // CHASE DOWN
     if (hero->rect.getPosition().y > enemy->rect.getPosition().y &&
         abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32) {
-        if(enemy->canMoveDOWN)
+        if(enemy->canMoveDOWN) {
             enemy->face = Face::Down;
+            enemy->previousFace=enemy->face;
+        }
         else if(enemy->canMoveRIGHT)
             enemy->face = Face::Right;
         else if(enemy->canMoveLEFT)
@@ -18,8 +21,10 @@ void ChaseHero::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
         //CHASE RIGHT
     else if ((hero->rect.getPosition().x > enemy->rect.getPosition().x) &&
              (abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) <= 32)) {
-        if (enemy->canMoveRIGHT)
+        if (enemy->canMoveRIGHT){
             enemy->face = Face::Right;
+            enemy->previousFace=enemy->face;
+        }
         else if (enemy->canMoveUP)
             enemy->face = Face::Up;
         else if (enemy->canMoveDOWN)
@@ -28,8 +33,10 @@ void ChaseHero::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
         //CHASE LEFT
     else if ((hero->rect.getPosition().x < enemy->rect.getPosition().x) &&
              (abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) <= 32)) {
-        if (enemy->canMoveLEFT)
+        if (enemy->canMoveLEFT) {
             enemy->face = Face::Left;
+            enemy->previousFace = enemy->face;
+        }
         else if (enemy->canMoveDOWN)
             enemy->face = Face::Down;
         else if (enemy->canMoveUP)
@@ -38,8 +45,10 @@ void ChaseHero::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
         //CHASE UP
     else if ((hero->rect.getPosition().y < enemy->rect.getPosition().y) &&
              (abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) <= 32)) {
-        if (enemy->canMoveUP)
+        if (enemy->canMoveUP) {
             enemy->face = Face::Up;
+            enemy->previousFace=enemy->face;
+        }
         else if (enemy->canMoveLEFT)
             enemy->face = Face::Left;
         else if (enemy->canMoveRIGHT)

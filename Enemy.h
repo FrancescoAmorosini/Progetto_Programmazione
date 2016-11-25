@@ -31,10 +31,11 @@ public:
     sf::Clock walkingTime;
     int static dropChance;
     int speed = speedMovement -2;
+    Face previousFace=Face::Down;
+
 private:
     bool aggroed=false;
     Strategy* behavior;
-
 };
 
 

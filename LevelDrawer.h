@@ -19,6 +19,7 @@ public:
     void drawHUD(sf::RenderWindow* window);
     void drawAchievement(sf::RenderWindow* window);
     void drawGameOver(sf::RenderWindow* window);
+    void drawVictoriousSplash(sf::RenderWindow* window);
     int loadResources();
 
 private:
@@ -26,6 +27,7 @@ private:
     sf::Texture hud;
     sf::Texture achievements;
     sf::Texture gameOverSplash;
+    sf::Texture victorySplash;
     sf::Sprite emptyBar;
     sf::Sprite hpBar;
     sf::Sprite frame;
