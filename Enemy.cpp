@@ -116,6 +116,7 @@ void Enemy::setAggroed(bool aggroed){
     this->aggroed=aggroed;
     if(this->aggroed)
         setStrategy(new ChaseHero());
+    walkingTime.restart();
 }
 
 void Enemy::setHP(int HP) {

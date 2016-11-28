@@ -264,7 +264,7 @@ void GameLevel::checkChestCollision(sf::RectangleShape rect, GameCharacter* c, i
 }
 
 void GameLevel::checkWallCollision(sf::RectangleShape rect, GameCharacter* c, int *index) {
-    int toll = 2;
+    int toll = 3;
     for (int i = 0; i < map->wallBuffer.size(); i++) {
         if (!map->wallBuffer[i]->isWalkable()) {
                     if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y + 32 - rect.getPosition().y)) <
