@@ -20,6 +20,7 @@ public:
     void drawAchievement(sf::RenderWindow* window);
     void drawGameOver(sf::RenderWindow* window);
     void drawVictoriousSplash(sf::RenderWindow* window);
+    void drawInstructions(sf::RenderWindow* window);
     int loadResources();
 
 private:

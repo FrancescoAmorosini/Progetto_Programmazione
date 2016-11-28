@@ -301,3 +301,53 @@ void LevelDrawer::drawVictoriousSplash(sf::RenderWindow *window) {
     BGM.stop();
 }
 
+void LevelDrawer::drawInstructions(sf::RenderWindow *window) {
+    window->clear();
+
+    sf::Clock splashClock;
+    sf::Text instructions;
+    instructions.setFont(level->healthFont);
+
+    bool keyPressed = true;
+
+    while (keyPressed) {
+        // Process events
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            // Close window: exit
+            if (event.type == sf::Event::Closed) {
+                keyPressed=false;
+            }
+
+            // Escape pressed: exit
+            if (event.type == sf::Event::KeyPressed && splashClock.getElapsedTime().asSeconds() > 1) {
+                keyPressed=false;
+            }
+        }
+        // Clear screen
+        window->clear();
+
+        //Draw Tutorial
+        instructions.setCharacterSize(28);
+        instructions.setString(" Press WASD to Move.");
+        instructions.setPosition(20, 20);
+        window->draw(instructions);
+        instructions.setString(" Press Spacebar to Attack.");
+        instructions.setPosition(20, 80);
+        window->draw(instructions);
+        instructions.setString(" Press I to use Orbs.");
+        instructions.setPosition(20, 140);
+        window->draw(instructions);
+        instructions.setString(" If your class is Thief, press LeftShift to dash.");
+        instructions.setPosition(20, 200);
+        window->draw(instructions);
+        instructions.setString(" Press any key to continue.");
+        instructions.setPosition(20, 400);
+        window->draw(instructions);
+
+        // Update the window
+        window->display();
+    }
+
+}
+

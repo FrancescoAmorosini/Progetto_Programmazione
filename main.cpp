@@ -25,6 +25,8 @@ int main() {
     GameLevel *level = LevelCreator::createExample();
     LevelDrawer *drawer = new LevelDrawer(level);
 
+    //DRAWS TUTORIAL
+    drawer->drawInstructions(&window);
 
     // Start the game loop
     while (window.isOpen()) {

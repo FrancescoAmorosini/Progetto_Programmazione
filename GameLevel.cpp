@@ -155,7 +155,7 @@ void GameLevel::updateLevel() {
             enemySpells.erase(enemySpells.begin() + i);
         else if (enemySpells[i]->rect.getGlobalBounds().intersects(hero->rect.getGlobalBounds())) {
             enemySpells.erase(enemySpells.begin() + i);
-            hero->setHP(hero->getHP() - 5);                           //Spells makes 10 HP damage
+            hero->setHP(hero->getHP() - 10);                           //Spells makes 10 HP damage
         }
     }
 
@@ -264,7 +264,7 @@ void GameLevel::checkChestCollision(sf::RectangleShape rect, GameCharacter* c, i
 }
 
 void GameLevel::checkWallCollision(sf::RectangleShape rect, GameCharacter* c, int *index) {
-    int toll = 3;
+    int toll = 5;
     for (int i = 0; i < map->wallBuffer.size(); i++) {
         if (!map->wallBuffer[i]->isWalkable()) {
                     if (abs(static_cast<int>(map->wallBuffer[i]->rect.getPosition().y + 32 - rect.getPosition().y)) <

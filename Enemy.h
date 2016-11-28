@@ -30,7 +30,7 @@ public:
 
     sf::Clock walkingTime;
     int static dropChance;
-    int speed = speedMovement -2;
+    int speed = speedMovement -1;
 
 private:
     bool aggroed=false;

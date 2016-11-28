@@ -82,6 +82,10 @@ void TurnAround::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
             enemy->walkingTime.restart();
         }
     }
+
+    if(abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) < 80 &&
+            abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) < 80)
+        enemy->setAggroed(true);
 }
 
 void Flee::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
