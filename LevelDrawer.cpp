@@ -307,6 +307,7 @@ void LevelDrawer::drawInstructions(sf::RenderWindow *window) {
     sf::Clock splashClock;
     sf::Text instructions;
     instructions.setFont(level->healthFont);
+    instructions.setCharacterSize(28);
 
     bool keyPressed = true;
 
@@ -328,7 +329,6 @@ void LevelDrawer::drawInstructions(sf::RenderWindow *window) {
         window->clear();
 
         //Draw Tutorial
-        instructions.setCharacterSize(28);
         instructions.setString(" Press WASD to Move.");
         instructions.setPosition(20, 20);
         window->draw(instructions);

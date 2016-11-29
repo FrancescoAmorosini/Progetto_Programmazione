@@ -29,6 +29,7 @@ void PlayableCharacter::updatePosition() {
         delay = -name.length();
     text.setPosition(rect.getPosition().x - delay, rect.getPosition().y - 20);
     sprite.setPosition(rect.getPosition());
+    weapon->rect.setPosition(rect.getPosition());
 
     canMoveUP=true;
     canMoveDOWN=true;

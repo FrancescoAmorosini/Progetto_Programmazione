@@ -83,8 +83,8 @@ void TurnAround::movementBehavior(PlayableCharacter* hero, Enemy* enemy) {
         }
     }
 
-    if(abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) < 80 &&
-            abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) < 80)
+    if(abs(static_cast<int>(hero->rect.getPosition().x - enemy->rect.getPosition().x)) < 50 &&
+            abs(static_cast<int>(hero->rect.getPosition().y - enemy->rect.getPosition().y)) < 50)
         enemy->setAggroed(true);
 }
 
